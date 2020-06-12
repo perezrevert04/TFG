@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Configuracion">
+
+    <item android:icon="@android:drawable/ic_menu_delete"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:title="Añadir">
+
+        <menu>
+
+            <item
+                android:id="@+id/MenuBorrarBD"
+                android:title="Vaciar BD"
+                android:icon="@android:drawable/ic_menu_delete">
+                //android:actionLayout="@layout/nuevo_profesor"
+
+            </item>
+
+        </menu>
+    </item>
+
+</menu>

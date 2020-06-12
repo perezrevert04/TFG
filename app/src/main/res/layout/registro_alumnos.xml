@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistroAlumnos"
+    android:background="@drawable/fondo"
+    tools:ignore="MissingDefaultResource">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Acerque la tarjeta para leer Identificador"
+        android:textColor="#0A0F4C"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        android:gravity="center_horizontal"/>
+
+    <Button
+        android:id="@+id/buttonMenu"
+        android:layout_width="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="470dp"
+        android:layout_height="wrap_content"
+        android:text="Enviar PDF por Correo"
+        android:textSize="21sp"
+        android:textColor="#31588B"
+        android:background="@drawable/boton_redondo"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/buttonPdf"
+        android:layout_width="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="420dp"
+        android:layout_height="wrap_content"
+        android:text="@string/buttonPdf"
+        android:textSize="21sp"
+        android:textColor="#31588B"
+        android:background="@drawable/boton_redondo"
+        android:textStyle="bold"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="400dp"
+        android:layout_marginTop="60dp"
+        app:srcCompat="@drawable/nfc" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="300dp"
+        android:layout_width="wrap_content"
+        android:textSize="200sp"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"/>
+
+
+</RelativeLayout>

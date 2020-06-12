@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ProyectoNFC</string>
+    <string name="buttonPdf">Crear PDF</string>
+    <string name="buttonInsertar">Insertar Alumno</string>
+    <string name="buttonBorrar">Borrar Alumno</string>
+    <string name="act_scan">Scan</string>
+    <string name="buttonAsistencia">Asistencia</string>
+    <string name="buttonAltaAlumno">Alta Alumno</string>
+    <string name="Spinner_Asignatura">Elija una Asignatura</string>
+    <string name="Configuracion">Configuración</string>
+    <string name="numeroProfesores"></string>
+
+
+    <item name="numeroProfesores" type="id" />
+</resources>
+

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Asignaturas"
+    android:background="@drawable/fondo"
+    tools:ignore="MissingDefaultResource">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_marginTop="20dp"
+        android:layout_width="390dp"
+        android:layout_height="500dp"
+        app:elevation="4dp"
+        android:background="@drawable/corners3"
+        android:backgroundTint="#70FFFFFF"
+        android:minHeight="?attr/actionBarSize"
+        android:radius="20dp"
+        android:theme="?attr/actionBarTheme"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:layout_height="100dp"
+        android:layout_width="340dp"
+        android:text="   Ver Datos Asignatura   "
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        android:textColor="#31588B"
+        android:background="@drawable/boton_redondo"
+        android:id="@+id/buttonDatosAsignatura"/>
+
+    <Button android:layout_height="100dp"
+        android:layout_width="340dp"
+        android:text="   Ver Profesores Asignatura   "
+        android:layout_marginTop="160dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        android:textColor="#31588B"
+        android:background="@drawable/boton_redondo"
+        android:id="@+id/buttonProfesores"/>
+
+    <Button android:layout_height="100dp"
+        android:layout_width="340dp"
+        android:text="   Ver Alumnos Asignatura   "
+        android:layout_marginTop="280dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        android:background="@drawable/boton_redondo"
+        android:textColor="#31588B"
+        android:id="@+id/buttonAlumnos"/>
+
+    <Button android:layout_height="100dp"
+        android:layout_width="340dp"
+        android:text="   Ver Grupos Asignatura   "
+        android:layout_marginTop="400dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        android:background="@drawable/boton_redondo"
+        android:textColor="#31588B"
+        android:id="@+id/buttonGrupos"/>
+
+</RelativeLayout>

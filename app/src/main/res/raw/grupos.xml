@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <Gupos>
+
+        <TBDA1>
+            <Identificador>TBD-A1</Identificador>
+            <grupo>A1</grupo>
+            <hEntrada>10:00</hEntrada>
+            <hSalida>11:00</hSalida>
+            <Aula>0.1G</Aula>
+        </TBDA1>
+
+        <TBDA2>
+            <Identificador>TBD-A2</Identificador>
+            <grupo>A2</grupo>
+            <hEntrada>11:00</hEntrada>
+            <hSalida>12:00</hSalida>
+            <Aula>0.2G</Aula>
+        </TBDA2>
+
+        <TBDA3>
+            <Identificador>TBD-A3</Identificador>
+            <grupo>A3</grupo>
+            <hEntrada>12:00</hEntrada>
+            <hSalida>13:00</hSalida>
+            <Aula>0.3G</Aula>
+        </TBDA3>
+
+        <TALB1>
+            <Identificador>TAL-B1</Identificador>
+            <grupo>B1</grupo>
+            <hEntrada>13:00</hEntrada>
+            <hSalida>14:00</hSalida>
+            <Aula>0.4G</Aula>
+        </TALB1>
+
+        <TALB2>
+            <Identificador>TAL-B2</Identificador>
+            <grupo>B2</grupo>
+            <hEntrada>16:00</hEntrada>
+            <hSalida>17:00</hSalida>
+            <Aula>0.5G</Aula>
+        </TALB2>
+
+        <TALB3>
+            <Identificador>TAL-B3</Identificador>
+            <grupo>B3</grupo>
+            <hEntrada>17:00</hEntrada>
+            <hSalida>18:00</hSalida>
+            <Aula>0.6G</Aula>
+        </TALB3>
+
+        <IPCC1>
+            <Identificador>IPC-C1</Identificador>
+            <grupo>C1</grupo>
+            <hEntrada>18:00</hEntrada>
+            <hSalida>19:00</hSalida>
+            <Aula>0.7G</Aula>
+        </IPCC1>
+
+        <IPCC2>
+            <Identificador>IPC-C2</Identificador>
+            <grupo>C2</grupo>
+            <hEntrada>19:00</hEntrada>
+            <hSalida>20:00</hSalida>
+            <Aula>0.8G</Aula>
+        </IPCC2>
+
+        <IPCC3>
+            <Identificador>IPC-C3</Identificador>
+            <grupo>C3</grupo>
+            <hEntrada>20:00</hEntrada>
+            <hSalida>21:00</hSalida>
+            <Aula>0.9G</Aula>
+        </IPCC3>
+
+    </Gupos>
+</resources>

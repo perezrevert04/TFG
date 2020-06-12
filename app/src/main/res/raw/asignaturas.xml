@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <Asignaturas>
+
+        <TBD>
+            <Identificador>TBD</Identificador>
+            <Nombre>Tecnologia de Base de Datos</Nombre>
+            <Titulacion>TIT-1111</Titulacion>
+            <Curso>2019</Curso>
+            <Gestora>Disca</Gestora>
+            <Idioma>Castellano</Idioma>
+            <Duracion>90</Duracion>
+        </TBD>
+
+        <IPC>
+            <Identificador>IPC</Identificador>
+            <Nombre>Interfaz Persona Computador</Nombre>
+            <Titulacion>TIT-2222</Titulacion>
+            <Curso>2019</Curso>
+            <Gestora>Disca</Gestora>
+            <Idioma>Castellano</Idioma>
+            <Duracion>90</Duracion>
+        </IPC>
+
+        <DCU>
+            <Identificador>DCU</Identificador>
+            <Nombre>TIT-333</Nombre>
+            <Titulacion>Ingenieria Informatica</Titulacion>
+            <Curso>2019</Curso>
+            <Gestora>Disca</Gestora>
+            <Idioma>Castellano</Idioma>
+            <Duracion>90</Duracion>
+        </DCU>
+
+        <TAL>
+            <Identificador>TAL</Identificador>
+            <Nombre>Teoría de Autómatas Lógicos</Nombre>
+            <Titulacion>TIT-4444</Titulacion>
+            <Curso>2019</Curso>
+            <Gestora>Disca</Gestora>
+            <Idioma>Castellano</Idioma>
+            <Duracion>90</Duracion>
+        </TAL>
+
+    </Asignaturas>
+</resources>

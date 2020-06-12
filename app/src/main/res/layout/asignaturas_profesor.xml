@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo"
+    tools:context=".AsignaturasProfesor">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/corners2"
+        android:backgroundTint="#70FFFFFF"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_marginTop="5dp"
+        android:theme="?attr/actionBarTheme"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="Asignatura seleccionada: "
+        android:textStyle="bold"
+        android:textColor="#31588B"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"/>
+
+    <TextView
+        android:id="@+id/asignaturaSeleccionada"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:textColor="#31588B"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="185dp"/>
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_marginTop="70dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        app:elevation="4dp"
+        android:background="@drawable/corners2"
+        android:backgroundTint="#70FFFFFF"
+        android:minHeight="?attr/actionBarSize"
+        android:radius="20dp"
+        android:theme="?attr/actionBarTheme"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ASIGNATURAS"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#31588B"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/corners"
+        android:layout_marginTop="70dp"
+        android:gravity="center" />
+    <ListView
+        android:id="@+id/listaAsignaturas"
+        android:layout_width="match_parent"
+        android:layout_height="290dp"
+        android:layout_marginTop="130dp"
+        android:background="#70FFFFFF"
+        android:textColor="#31588B"
+        android:textSize="22sp"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/buttonRecuperacion"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="430dp"
+        android:textSize="21dp"
+        android:textColor="#31588B"
+        android:textStyle="bold"
+        android:background="@drawable/boton_redondo"
+        android:text="Asistencia Extraoficial" />
+
+    <Button
+        android:id="@+id/buttonNormal"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="500dp"
+        android:textSize="21dp"
+        android:textColor="#31588B"
+        android:textStyle="bold"
+        android:background="@drawable/boton_redondo"
+        android:text="Asistencia Normal" />
+
+
+</RelativeLayout>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo"
+    tools:context=".clases.EditarAlumno">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/corners4"
+        android:backgroundTint="#70FFFFFF"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_marginTop="5dp"
+        android:theme="?attr/actionBarTheme"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/buttonModificarAlumno"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="450dp"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        android:textColor="#31588B"
+        android:background="@drawable/boton_redondo"
+        android:text="Finalizar" />
+
+    <TextView android:textColor="#31588B" android:textStyle="bold" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Identificador:" android:layout_marginTop="20dp" android:layout_marginLeft="15dp" android:id="@+id/textView4"/>
+
+    <TextView android:textColor="#31588B" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content"  android:layout_marginTop="20dp" android:layout_marginLeft="140dp" android:id="@+id/textIdentificador"/>
+
+    <TextView android:textColor="#31588B" android:textStyle="bold" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Dni:" android:layout_marginTop="60dp" android:layout_marginLeft="15dp" android:id="@+id/textView5"/>
+
+    <EditText android:textColor="#31588B" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="200dp"  android:layout_marginTop="50dp" android:layout_marginLeft="110dp" android:id="@+id/textDni"/>
+
+    <TextView android:textColor="#31588B" android:textStyle="bold" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Nombre:" android:layout_marginTop="100dp" android:layout_marginLeft="15dp" android:id="@+id/textView6"/>
+
+    <EditText android:textColor="#31588B" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content"  android:layout_marginTop="90dp" android:layout_marginLeft="110dp" android:id="@+id/textNombre"/>
+
+</RelativeLayout>

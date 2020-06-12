@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Profesores">
+
+    <item android:icon="@android:drawable/ic_input_add"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:title="Añadir">
+
+        <menu>
+
+            <item
+                android:id="@+id/MenuProfesor"
+                android:title="Añadir profesor"
+                android:icon="@drawable/profesor">
+                //android:actionLayout="@layout/nuevo_profesor"
+
+            </item>
+
+        </menu>
+    </item>
+
+</menu>
