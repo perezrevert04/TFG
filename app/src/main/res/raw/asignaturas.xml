@@ -4,7 +4,9 @@
 
     <Asignaturas>
 
-        <TBD>
+        <NumeroAsignaturas>4</NumeroAsignaturas>
+
+        <Asignatura1>
             <Identificador>TBD</Identificador>
             <Nombre>Tecnologia de Base de Datos</Nombre>
             <Titulacion>TIT-1111</Titulacion>
@@ -12,9 +14,9 @@
             <Gestora>Disca</Gestora>
             <Idioma>Castellano</Idioma>
             <Duracion>90</Duracion>
-        </TBD>
+        </Asignatura1>
 
-        <IPC>
+        <Asignatura2>
             <Identificador>IPC</Identificador>
             <Nombre>Interfaz Persona Computador</Nombre>
             <Titulacion>TIT-2222</Titulacion>
@@ -22,9 +24,9 @@
             <Gestora>Disca</Gestora>
             <Idioma>Castellano</Idioma>
             <Duracion>90</Duracion>
-        </IPC>
+        </Asignatura2>
 
-        <DCU>
+        <Asignatura3>
             <Identificador>DCU</Identificador>
             <Nombre>TIT-333</Nombre>
             <Titulacion>Ingenieria Informatica</Titulacion>
@@ -32,9 +34,9 @@
             <Gestora>Disca</Gestora>
             <Idioma>Castellano</Idioma>
             <Duracion>90</Duracion>
-        </DCU>
+        </Asignatura3>
 
-        <TAL>
+        <Asignatura4>
             <Identificador>TAL</Identificador>
             <Nombre>Teoría de Autómatas Lógicos</Nombre>
             <Titulacion>TIT-4444</Titulacion>
@@ -42,7 +44,7 @@
             <Gestora>Disca</Gestora>
             <Idioma>Castellano</Idioma>
             <Duracion>90</Duracion>
-        </TAL>
+        </Asignatura4>
 
     </Asignaturas>
 </resources>
