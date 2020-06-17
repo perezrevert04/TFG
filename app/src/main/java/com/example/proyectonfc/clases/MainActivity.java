@@ -1,12 +1,9 @@
 package com.example.proyectonfc.clases;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
 
