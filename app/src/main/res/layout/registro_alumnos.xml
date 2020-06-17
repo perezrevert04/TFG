@@ -24,14 +24,14 @@
     <Button
         android:id="@+id/buttonMenu"
         android:layout_width="300dp"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="470dp"
-        android:layout_height="wrap_content"
-        android:text="Enviar PDF por Correo"
-        android:textSize="21sp"
-        android:textColor="#31588B"
         android:background="@drawable/boton_redondo"
-        android:textStyle="bold"/>
+        android:text="Siguiente"
+        android:textColor="#31588B"
+        android:textSize="21sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/buttonPdf"
