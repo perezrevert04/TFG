@@ -28,6 +28,8 @@ class AddComment : AppCompatActivity() {
             intent.putExtra("comments", valueComment.text.toString())
             setResult(Activity.RESULT_OK, intent)
             finish()
+
+            toast("Observación modificada")
         }
 
         speak.setOnClickListener {
