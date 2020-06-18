@@ -40,8 +40,8 @@ class CreacionParte : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        recibirDatos()
         setContentView(R.layout.activity_creacion_parte)
+        recibirDatos()
 
         buttonAddComment.setOnClickListener {
             val intent = Intent(this, AddComment::class.java)
@@ -82,24 +82,41 @@ class CreacionParte : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1234 && resultCode == Activity.RESULT_OK) {
             comments = data?.extras?.getString("comments") ?: ""
+            textViewComments.text = comments
         }
     }
 
     fun recibirDatos() {
-        listaIdentificadores = intent.getStringArrayListExtra("listaIdentificadores")
+        val sdf = SimpleDateFormat("dd/M/yyyy")
+        textViewFecha.text = sdf.format( Date() )
 
-        nombreprofesor = intent.getStringExtra("nombreprofesor")
+        listaIdentificadores = intent.getStringArrayListExtra("listaIdentificadores")
+        textViewCount.text = listaIdentificadores.size.toString()
+
         asignatura = intent.getStringExtra("asignatura")
         nombre = intent.getStringExtra("nombre")
-        titulacion = intent.getStringExtra("titulacion")
+        textViewSubject.text = "$asignatura: $nombre"
+
+        nombreprofesor = intent.getStringExtra("nombreprofesor")
+        dniprofesor = intent.getStringExtra("dniprofesor")
+        textViewTeacher.text = "$nombreprofesor ($dniprofesor)"
+
         grupo = intent.getStringExtra("grupo")
+        textViewGroup.text = grupo
+
+        aula = intent.getStringExtra("aula")
+        textViewClassroom.text = aula
+
+        horaInicio = intent.getStringExtra("horaInicio")
+        textViewHour.text = horaInicio
+
+        duracion = intent.getStringExtra("duracion")
+        textViewDuration.text = duracion
+
+        titulacion = intent.getStringExtra("titulacion")
         curso = intent.getStringExtra("curso")
         gestoria = intent.getStringExtra("gestoria")
         idioma = intent.getStringExtra("idioma")
-        duracion = intent.getStringExtra("duracion")
-        horaInicio = intent.getStringExtra("horaInicio")
-        aula = intent.getStringExtra("aula")
-        dniprofesor = intent.getStringExtra("dniprofesor")
     }
 
     fun generarPdf(nombre_documento: String, fecha: String) {
