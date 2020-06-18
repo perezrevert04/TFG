@@ -17,7 +17,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".clases.AddComment"></activity>
+        <activity
+            android:name=".clases.AddComment"
+            android:label="Observaciones"
+            android:screenOrientation="portrait">
+        </activity>
         <activity android:name=".CreacionParte" />
         <activity
             android:name=".util.CaptureActivityPortrait"
@@ -146,7 +150,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.MainActivity"
-            android:label="HOME - Parte Firmas UPV"
+            android:label="Parte Firmas UPV"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
