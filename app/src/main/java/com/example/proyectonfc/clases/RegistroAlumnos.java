@@ -32,25 +32,8 @@ import java.util.List;
 
 public class RegistroAlumnos extends AppCompatActivity {
 
-    int sum;
-    private int count;
-    private int cont;
-    private String nombre_documento;
-    private String nombre_documentoXml;
-    private final static String NOMBRE_DIRECTORIO = "ParteFirmasUPV";
-    private final static String NOMBRE_DIRECTORIO_2 = "DatosParteFirmasUPV";
-
-    private final static String ETIQUETA_ERROR = "ERROR";
-    private int longui= 0;
-    private String[] listIdentificador = new String[1000];
-    private String[] listDni = new String[1000];
-    private String[] listNombre  = new String[1000];
     private ArrayList<String> listaIdentificadores = new ArrayList<>();
-    private String[] listaIdentificadoresNoRepetidos  = new String[1000];
-    private ArrayList<String> listaDni = new ArrayList<>();
-    private ArrayList<String> listaNombre = new ArrayList<>();
     Button btnGenerar;
-    private Spinner spinner2;
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
     private TextView text;
@@ -65,28 +48,15 @@ public class RegistroAlumnos extends AppCompatActivity {
     private String idioma;
     private String duracion;
     private String horaInicio;
-    private String fecha;
     private String aula;
     private String dniprofesor;
-    private int alumnos;
-    private CountDownTimer timer;
-    private int secondsUntilFinished = 10000;
-    private TextView textTimer;
-    DataBase dataBase;
     private String identificadorTemporal;
-    private String identificadorFijo;
-
-    private String nombre_directorioPdf;
-    private String nombre_directorioXml;
-    private String direccion;
-    private EditText textDireccion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registro_alumnos);
         text = (TextView) findViewById(R.id.text);
-
 
         nombreprofesor = getIntent().getStringExtra( "NOMBREPROFESOR");
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
@@ -128,7 +98,6 @@ public class RegistroAlumnos extends AppCompatActivity {
         });
 
         btnGenerar=(Button) findViewById(R.id.buttonPdf);
-        final DataBase dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
@@ -146,9 +115,7 @@ public class RegistroAlumnos extends AppCompatActivity {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,}, 1000);
-        } else {
         }
-
 
     }
 
@@ -161,8 +128,6 @@ public class RegistroAlumnos extends AppCompatActivity {
         super.onResume();
 
         if (nfcAdapter != null) {
-            //showWirelessSettings();
-
             nfcAdapter.enableForegroundDispatch(this, pendingIntent, null, null);
         }
     }
@@ -238,7 +203,7 @@ public class RegistroAlumnos extends AppCompatActivity {
         //select * from usuarios
 
 
-        Cursor cursor=db.rawQuery("SELECT * FROM ALUMNO WHERE id = '"+asignatura+String.valueOf(toDec(identificador))+"'", null);
+        Cursor cursor=db.rawQuery("SELECT * FROM ALUMNO WHERE id = '"+asignatura+toDec(identificador)+"'", null);
 
         while (cursor.moveToNext()){
             identificadorTemporal = cursor.getString(0);
@@ -250,7 +215,7 @@ public class RegistroAlumnos extends AppCompatActivity {
             identificadorTemporal = identificadorTemporal.substring(3);
         }
 
-        identificadorFijo = String.valueOf(toDec(identificador));
+        String identificadorFijo = String.valueOf(toDec(identificador));
         if(identificadorTemporal.equals(identificadorFijo)){
 
             try {
@@ -266,13 +231,9 @@ public class RegistroAlumnos extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Fichaje realizado.", Toast.LENGTH_SHORT).show();
             }
             Log.d("AppLog", "Alumno registrado. Total: " + listaIdentificadores.size());
-            count++;
-            sum++;
         }else{
             Toast.makeText(getApplicationContext(), "EL ALUMNO CON IDENTIFIFCADOR: "+String.valueOf(toDec(identificador))+"NO ESTÁ DADO DE ALTA", Toast.LENGTH_SHORT).show();
         }
-
-        alumnos = count;
 
         return sb.toString();
     }
@@ -289,131 +250,5 @@ public class RegistroAlumnos extends AppCompatActivity {
     }
 
 /*****************************************************FIN LECTOR NFC*****************************************************************/
-
-
-    /******************************************************GENERAR XML*****************************************************/
-
-//    public void escribirXml() {
-//
-//        try {
-//
-//            XmlSerializer serializer = Xml.newSerializer();
-//            String documento = "ParteFirmas-" + asignatura + "-" + grupo + "-" +
-//                    fecha.replace('/', '-');
-//            nombre_documentoXml = "ParteFirmas-" + asignatura + "-" + grupo + "-" +
-//                    fecha.replace('/', '-') + ".xml";
-//            File f = crearFichero2(nombre_documentoXml);
-//            FileOutputStream ficheroXml = new FileOutputStream(f.getAbsolutePath());
-//            OutputStreamWriter fout =
-//                    new OutputStreamWriter(ficheroXml);
-//            try {
-//                serializer.setOutput(fout);
-//                serializer.startDocument("UTF-8", true);
-//                serializer.startTag("", "ParteFirmas");
-//
-//                serializer.startTag("", documento);
-//
-//                serializer.startTag("", "espacio");
-//                serializer.text(aula);
-//                serializer.endTag("", "espacio");
-//
-//                serializer.startTag("", "asignatura");
-//                serializer.text(asignatura + "-" + nombre);
-//                serializer.endTag("", "asignatura");
-//
-//                serializer.startTag("", "titulacion");
-//                serializer.text(titulacion);
-//                serializer.endTag("", "titulacion");
-//
-//                serializer.startTag("", "grupo");
-//                serializer.text(grupo);
-//                serializer.endTag("", "grupo");
-//
-//                serializer.startTag("", "nombreProfesor");
-//                serializer.text(nombreprofesor);
-//                serializer.endTag("", "nombreProfesor");
-//
-//                serializer.startTag("", "dni");
-//                serializer.text(dniprofesor);
-//                serializer.endTag("", "dni");
-//
-//                serializer.startTag("", "curso");
-//                serializer.text(curso);
-//                serializer.endTag("", "curso");
-//
-//                serializer.startTag("", "gestora");
-//                serializer.text(gestoria);
-//                serializer.endTag("", "gestora");
-//
-//                serializer.startTag("", "idioma");
-//                serializer.text(idioma);
-//                serializer.endTag("", "idioma");
-//
-//                serializer.startTag("", "fecha");
-//                serializer.text(fecha);
-//                serializer.endTag("", "fecha");
-//
-//                serializer.startTag("", "horaInicio");
-//                serializer.text(horaInicio);
-//                serializer.endTag("", "horaInicio");
-//
-//                serializer.startTag("", "duracion");
-//                serializer.text(duracion);
-//                serializer.endTag("", "duracion");
-//
-//                serializer.startTag("", "numeroAlumnos");
-//                serializer.text(String.valueOf(alumnos));
-//                serializer.endTag("", "numeroAlumnos");
-//
-//                serializer.endTag("", documento);
-//
-//                serializer.endTag("", "ParteFirmas");
-//                serializer.endDocument();
-//                fout.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//        } catch (IOException e) {
-//
-//            Log.e(ETIQUETA_ERROR, e.getMessage());
-//
-//        }
-//
-//    }
-//
-//    private File crearFichero2(String nombreFichero2) {
-//        File ruta2 = getRuta2();
-//        File fichero2 = null;
-//        if (ruta2!= null)
-//            fichero2 = new File(ruta2, nombreFichero2);
-//        return fichero2;
-//
-//    }
-//
-//    private File getRuta2() {
-//        File ruta2 = null;
-//        if (Environment.MEDIA_MOUNTED.equals(Environment
-//                .getExternalStorageState())) {
-//            ruta2 = new File(
-//                    Environment
-//                            .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-//                    NOMBRE_DIRECTORIO_2);
-//
-//
-//            if (ruta2 != null) {
-//                if (!ruta2.mkdirs()) {
-//                    if (!ruta2.exists()) {
-//                        return null;
-//                    }
-//                }
-//            }
-//        } else {
-//        }
-//
-//        return ruta2;
-//    }
-
-    /******************************************************FIN-GENERAR XML*****************************************************/
 
 }
