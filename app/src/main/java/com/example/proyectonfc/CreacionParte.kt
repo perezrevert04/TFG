@@ -83,8 +83,9 @@ class CreacionParte : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1234 && resultCode == Activity.RESULT_OK) {
-            Log.d("AppLog", "Recibiendo resultados: " +(data?.extras?.getString("comments") ?: "Sin resultados" ))
+            comments = data?.extras?.getString("comments") ?: ""
         }
     }
 
@@ -156,7 +157,7 @@ class CreacionParte : AppCompatActivity() {
             tablaC.addCell("Firma: \n\n\n")
             val tablaD = PdfPTable(1)
             tablaD.widthPercentage = 100.00f
-            tablaD.addCell("\nObservaciones: \n\n\n")
+            tablaD.addCell("\nObservaciones: $comments\n\n\n")
 
             documento.add(tablaB)
             documento.add(tablaC)

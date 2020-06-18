@@ -1,5 +1,6 @@
 package com.example.proyectonfc.clases
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
@@ -23,9 +24,11 @@ class AddComment : AppCompatActivity() {
         valueComment.setText(intent.getStringExtra("comments"))
         Log.d("AppLog", "original comments received")
 
-//        intent.putExtra("comments", "comments edited")
-//        setResult(Activity.RESULT_OK, intent)
-//        finish()
+        fab.setOnClickListener {
+            intent.putExtra("comments", valueComment.text.toString())
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
 
         speak.setOnClickListener {
             val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
