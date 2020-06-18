@@ -33,18 +33,6 @@
         android:textSize="21sp"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/buttonPdf"
-        android:layout_width="300dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="420dp"
-        android:layout_height="wrap_content"
-        android:text="@string/buttonPdf"
-        android:textSize="21sp"
-        android:textColor="#31588B"
-        android:background="@drawable/boton_redondo"
-        android:textStyle="bold"/>
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"

@@ -17,23 +17,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
 import com.example.proyectonfc.CreacionParte;
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
 import com.example.proyectonfc.parser.NdefMessageParser;
 import com.example.proyectonfc.record.ParsedNdefRecord;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class RegistroAlumnos extends AppCompatActivity {
 
     private ArrayList<String> listaIdentificadores = new ArrayList<>();
-    Button btnGenerar;
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
     private TextView text;
@@ -97,10 +93,7 @@ public class RegistroAlumnos extends AppCompatActivity {
             startActivity(intent);
         });
 
-        btnGenerar=(Button) findViewById(R.id.buttonPdf);
-
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-
 
         if (nfcAdapter == null) {
             Toast.makeText(this, "No NFC", Toast.LENGTH_SHORT).show();
@@ -118,8 +111,6 @@ public class RegistroAlumnos extends AppCompatActivity {
         }
 
     }
-
-
 
     /******************************************************LECTOR NFC********************************************************************/
 
