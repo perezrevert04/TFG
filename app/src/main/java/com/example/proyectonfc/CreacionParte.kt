@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
+import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.clases.RegistroAlumnos
@@ -97,8 +98,7 @@ class CreacionParte : AppCompatActivity() {
             //Creación archivo pdf
             val f = crearFichero(nombre_documento)
             val ficheroPdf = FileOutputStream(f.absolutePath)
-            val writer = PdfWriter.getInstance(documento, ficheroPdf)
-
+            PdfWriter.getInstance(documento, ficheroPdf)
 
             // Incluimos el pie de pagina y una cabecera
 
@@ -173,29 +173,8 @@ class CreacionParte : AppCompatActivity() {
         }
     }
 
-    fun crearFichero(nombreFichero: String): File {
-        val ruta = getRuta()
-        var fichero: File? = null
-        if (ruta != null) fichero = File(ruta, nombreFichero)
-        return fichero!!
-    }
-
-    fun getRuta(): File? {
-
-        // El fichero sera almacenado en un directorio dentro del directorio Descargas
-        var ruta: File? = null
-        if (Environment.MEDIA_MOUNTED == Environment
-                        .getExternalStorageState()) {
-            ruta = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "ParteFirmasUPV")
-            if (ruta != null) {
-                if (!ruta.mkdirs()) {
-                    if (!ruta.exists()) {
-                        return null
-                    }
-                }
-            }
-        }
-
-        return ruta
+    fun crearFichero(filename: String): File {
+        val path = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "ParteFirmasUPV").path
+        return File(path, filename)
     }
 }

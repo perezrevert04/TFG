@@ -20,21 +20,17 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
 import com.example.proyectonfc.CreacionParte;
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
 import com.example.proyectonfc.parser.NdefMessageParser;
 import com.example.proyectonfc.record.ParsedNdefRecord;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class RegistroAlumnos extends AppCompatActivity {
-
 
     int sum;
     private int count;
@@ -418,10 +414,6 @@ public class RegistroAlumnos extends AppCompatActivity {
 //        return ruta2;
 //    }
 
-
     /******************************************************FIN-GENERAR XML*****************************************************/
-
-
-
 
 }
