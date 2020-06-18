@@ -7,15 +7,13 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
-import android.util.Log
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.clases.AddComment
-import com.example.proyectonfc.clases.RegistroAlumnos
 import com.lowagie.text.*
 import com.lowagie.text.pdf.PdfPTable
 import com.lowagie.text.pdf.PdfWriter
 import harmony.java.awt.Color
+import kotlinx.android.synthetic.main.activity_creacion_parte.*
 import org.jetbrains.anko.toast
 import java.io.File
 import java.io.FileOutputStream
@@ -45,14 +43,12 @@ class CreacionParte : AppCompatActivity() {
         recibirDatos()
         setContentView(R.layout.activity_creacion_parte)
 
-        val buttonAddComment = findViewById<Button>(R.id.buttonAddComment)
         buttonAddComment.setOnClickListener {
             val intent = Intent(this, AddComment::class.java)
             intent.putExtra("comments", comments)
             startActivityForResult(intent, 1234)
         }
 
-        val buttonCrearPdf = findViewById<Button>(R.id.buttonCrearPdf)
         buttonCrearPdf.setOnClickListener {
             try {
                 val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")

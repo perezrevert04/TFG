@@ -20,9 +20,13 @@
         <activity
             android:name=".clases.AddComment"
             android:label="Observaciones"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:parentActivityName=".CreacionParte">
         </activity>
-        <activity android:name=".CreacionParte" />
+        <activity
+            android:name=".CreacionParte"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".util.CaptureActivityPortrait"
             android:screenOrientation="portrait"
@@ -37,6 +41,7 @@
             android:name=".clases.DatosXml"
             android:label="Buscar Parte de Firmas"
             android:parentActivityName=".clases.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.EditarGrupo"

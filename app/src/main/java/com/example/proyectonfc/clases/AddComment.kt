@@ -5,7 +5,6 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.R
 import kotlinx.android.synthetic.main.activity_add_comment.*
@@ -22,7 +21,6 @@ class AddComment : AppCompatActivity() {
         setContentView(R.layout.activity_add_comment)
 
         valueComment.setText(intent.getStringExtra("comments"))
-        Log.d("AppLog", "original comments received")
 
         fab.setOnClickListener {
             intent.putExtra("comments", valueComment.text.toString())

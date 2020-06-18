@@ -17,13 +17,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
 import com.example.proyectonfc.CreacionParte;
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
 import com.example.proyectonfc.parser.NdefMessageParser;
 import com.example.proyectonfc.record.ParsedNdefRecord;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +74,6 @@ public class RegistroAlumnos extends AppCompatActivity {
 
         Button btnSiguiente = (Button) findViewById(R.id.buttonMenu);
         btnSiguiente.setOnClickListener((View.OnClickListener) v -> {
-            Log.d("AppLog", "Identificadores size: " + listaIdentificadores.size());
 
             Intent intent = new Intent(this, CreacionParte.class);
 
@@ -212,7 +214,7 @@ public class RegistroAlumnos extends AppCompatActivity {
             try {
                 dataBase.agregarAlumnoTemporal(String.valueOf(toDec(identificador)));
             }catch (Exception e){
-                Log.d("AppLog", "El alumno " + identificador + " ya figura en la base de datos.");
+                Log.e("AppLog", "El alumno " + identificador + " ya figura en la base de datos.");
             }
             String idAux = String.valueOf(toDec(identificador));
             if (listaIdentificadores.contains(idAux)) {
@@ -221,7 +223,6 @@ public class RegistroAlumnos extends AppCompatActivity {
                 listaIdentificadores.add(idAux);
                 Toast.makeText(getApplicationContext(), "Fichaje realizado.", Toast.LENGTH_SHORT).show();
             }
-            Log.d("AppLog", "Alumno registrado. Total: " + listaIdentificadores.size());
         }else{
             Toast.makeText(getApplicationContext(), "EL ALUMNO CON IDENTIFIFCADOR: "+String.valueOf(toDec(identificador))+"NO ESTÁ DADO DE ALTA", Toast.LENGTH_SHORT).show();
         }
