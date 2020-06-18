@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CreacionParte"></activity>
+        <activity android:name=".clases.AddComment"></activity>
+        <activity android:name=".CreacionParte" />
         <activity
             android:name=".util.CaptureActivityPortrait"
             android:screenOrientation="portrait"

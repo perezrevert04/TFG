@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/buttonObservaciones"
+            android:id="@+id/buttonAddComment"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -38,8 +38,8 @@
             android:textColor="#31588B"
             android:textSize="21sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/buttonObservaciones"
-            app:layout_constraintStart_toStartOf="@+id/buttonObservaciones"
-            app:layout_constraintTop_toBottomOf="@+id/buttonObservaciones" />
+            app:layout_constraintEnd_toEndOf="@+id/buttonAddComment"
+            app:layout_constraintStart_toStartOf="@+id/buttonAddComment"
+            app:layout_constraintTop_toBottomOf="@+id/buttonAddComment" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

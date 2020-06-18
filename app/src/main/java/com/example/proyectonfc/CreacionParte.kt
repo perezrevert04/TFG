@@ -1,5 +1,6 @@
 package com.example.proyectonfc
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.os.StrictMode.VmPolicy
 import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.example.proyectonfc.clases.AddComment
 import com.example.proyectonfc.clases.RegistroAlumnos
 import com.lowagie.text.*
 import com.lowagie.text.pdf.PdfPTable
@@ -36,11 +38,19 @@ class CreacionParte : AppCompatActivity() {
     lateinit var horaInicio: String
     lateinit var aula: String
     lateinit var dniprofesor: String
+    var comments = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         recibirDatos()
         setContentView(R.layout.activity_creacion_parte)
+
+        val buttonAddComment = findViewById<Button>(R.id.buttonAddComment)
+        buttonAddComment.setOnClickListener {
+            val intent = Intent(this, AddComment::class.java)
+            intent.putExtra("comments", comments)
+            startActivityForResult(intent, 1234)
+        }
 
         val buttonCrearPdf = findViewById<Button>(R.id.buttonCrearPdf)
         buttonCrearPdf.setOnClickListener {
@@ -69,6 +79,12 @@ class CreacionParte : AppCompatActivity() {
             } catch (e: Exception) {
                 toast("No se ha podido crear el archivo pdf")
             }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 1234 && resultCode == Activity.RESULT_OK) {
+            Log.d("AppLog", "Recibiendo resultados: " +(data?.extras?.getString("comments") ?: "Sin resultados" ))
         }
     }
 
