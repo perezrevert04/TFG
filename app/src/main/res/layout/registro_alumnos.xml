@@ -41,7 +41,7 @@
 
     <Button
         android:id="@+id/buttonMenu"
-        style="@style/AppTheme.RoundedCornerMaterialButton"
+        style="@style/AppTheme.PrimaryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"

@@ -72,26 +72,22 @@
             app:layout_constraintTop_toBottomOf="@+id/textView38" />
 
         <Button
+            style="@style/AppTheme.SecondaryButton"
             android:id="@+id/buttonAddComment"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:background="@drawable/boton_redondo"
             android:text="AÑADIR OBSERVACIÓN"
-            android:textColor="#31588B"
-            android:textSize="21sp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewComments" />
 
         <Button
-            style="@style/AppTheme.RoundedCornerMaterialButton"
             android:id="@+id/buttonCrearPdf"
+            style="@style/AppTheme.PrimaryButton"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="Crear PDF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/buttonAddComment"
