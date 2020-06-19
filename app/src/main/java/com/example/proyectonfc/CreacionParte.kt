@@ -7,13 +7,17 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.clases.AddComment
+import com.example.proyectonfc.data.DatabaseDAO
+import com.example.proyectonfc.db.DataBase
 import com.lowagie.text.*
 import com.lowagie.text.pdf.PdfPTable
 import com.lowagie.text.pdf.PdfWriter
 import harmony.java.awt.Color
 import kotlinx.android.synthetic.main.activity_creacion_parte.*
+import kotlinx.android.synthetic.main.asignaturas.*
 import org.jetbrains.anko.toast
 import java.io.File
 import java.io.FileOutputStream
@@ -162,7 +166,7 @@ class CreacionParte : AppCompatActivity() {
             val tablaB = PdfPTable(2)
             tablaB.widthPercentage = 100.00f
             tablaB.addCell("\nAsignatura: $asignatura-$nombre \nTitulación: $titulacion\nGrupo: $grupo\n\n")
-            tablaB.addCell("\nNombre Profesor: $nombreprofesor\nDNI: $dniprofesor\n\n")
+            tablaB.addCell("\nProfesor: $nombreprofesor\nDNI: $dniprofesor\n\n")
             val tablaC = PdfPTable(3)
             tablaC.widthPercentage = 100.00f
             tablaC.addCell("\nCurso/Sem.: $curso\nER Gestora: $gestoria\nIdioma: $idioma\n\n")
@@ -190,9 +194,13 @@ class CreacionParte : AppCompatActivity() {
             val tabla2 = PdfPTable(3)
             tabla2.widthPercentage = 100.00f
 
-            listaIdentificadores.forEach { tabla2.addCell(it) }
-            listaIdentificadores.forEach { tabla2.addCell(it) }
-            listaIdentificadores.forEach { tabla2.addCell(it) }
+            val database = DataBase(applicationContext)
+            listaIdentificadores.forEach {
+                database.consultarAlumno(asignatura, it)
+                tabla2.addCell(it)
+                tabla2.addCell(database.listDni)
+                tabla2.addCell(database.listNombre)
+            }
 
             documento.add(tabla1)
             documento.add(tabla2)
