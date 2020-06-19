@@ -201,6 +201,7 @@ class CreacionParte : AppCompatActivity() {
                 tabla2.addCell(database.listDni)
                 tabla2.addCell(database.listNombre)
             }
+            database.close()
 
             documento.add(tabla1)
             documento.add(tabla2)
