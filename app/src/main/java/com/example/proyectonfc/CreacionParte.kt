@@ -7,17 +7,15 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
-import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.clases.AddComment
-import com.example.proyectonfc.data.DatabaseDAO
 import com.example.proyectonfc.db.DataBase
 import com.lowagie.text.*
 import com.lowagie.text.pdf.PdfPTable
 import com.lowagie.text.pdf.PdfWriter
 import harmony.java.awt.Color
 import kotlinx.android.synthetic.main.activity_creacion_parte.*
-import kotlinx.android.synthetic.main.asignaturas.*
 import org.jetbrains.anko.toast
 import java.io.File
 import java.io.FileOutputStream
@@ -87,6 +85,7 @@ class CreacionParte : AppCompatActivity() {
         if (requestCode == 1234 && resultCode == Activity.RESULT_OK) {
             comments = data?.extras?.getString("comments") ?: ""
             textViewComments.text = comments
+            textViewEmptyComments.visibility = if (comments.isEmpty()) View.VISIBLE else View.INVISIBLE
         }
     }
 
