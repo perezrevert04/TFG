@@ -189,7 +189,7 @@ public class RegistroAlumnos extends AppCompatActivity {
         final DataBase dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
         StringBuilder sb = new StringBuilder();
         byte[] id = tag.getId();
-        sb.append("Alumno con dentificador: ").append(toDec(id)).append('\n');
+        sb.append(toDec(id)).append('\n');
 
         SQLiteDatabase db=dataBase.getReadableDatabase();
 

@@ -87,17 +87,12 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewComments" />
 
         <Button
+            style="@style/AppTheme.RoundedCornerMaterialButton"
             android:id="@+id/buttonCrearPdf"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/boton_redondo"
             android:text="Crear PDF"
-            android:textColor="#31588B"
-            android:textSize="21sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/buttonAddComment"
             app:layout_constraintStart_toStartOf="@+id/buttonAddComment"
