@@ -4,18 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.TextView;
-
-import java.sql.Time;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
 
 public class DataBase extends SQLiteOpenHelper {
 
-    private static final String CAMPO_ID= "id";
-    private static final String CAMPO_DNI= "dni";
-    private static final String CAMPO_NOMBRE= "nombre";
     private static final String NOMBRE_DB = "DB6.db";
     private static final int VERSION_DB = 1;
     private static final String TABLA_ALUMNO = "CREATE TABLE ALUMNO(ID TEXT PRIMARY KEY, DNI TEXT, NOMBRE TEXT)";
@@ -23,20 +14,16 @@ public class DataBase extends SQLiteOpenHelper {
     private static final String TABLA_ASIGNATURA = "CREATE TABLE ASIGNATURA(ID TEXT PRIMARY KEY, NOMBRE TEXT, TITULACION TEXT, CURSO TEXT, ER_GESTORA TEXT, IDIOMA TEXT, DURACION TEXT)";
     private static final String TABLA_GRUPO = "CREATE TABLE GRUPO(ID TEXT PRIMARY KEY, GRUPO TEXT, H_ENTRADA NUMERIC, H_SALIDA NUMERIC, AULA TEXT)";
     private static final String TABLA_ALUMNO_TEMPORAL = "CREATE TABLE ALUMNOTEMPORAL(ID TEXT PRIMARY KEY)";
-    int count = 0;
-    //private String[] listIdentificador = new String[1000];
-    //private String[] listDni = new String[1000];
-    //private String[] listNombre = new String[1000];
     private String listIdentificador = null;
     private String listDni = null;
     private String listNombre = null;
-    //private List<String> listaAsignaturas;
     private String listaAsignaturas = null;
 
 
 
-
-
+    public DataBase(Context context) {
+        super(context, NOMBRE_DB, null, VERSION_DB);
+    }
 
     public DataBase(Context context, String nombreDB, Object o, int version) {
         super(context, NOMBRE_DB, null, VERSION_DB);

@@ -1,0 +1,218 @@
+package com.example.proyectonfc
+
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import android.os.Environment
+import android.os.StrictMode
+import android.os.StrictMode.VmPolicy
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import com.example.proyectonfc.clases.AddComment
+import com.example.proyectonfc.db.DataBase
+import com.lowagie.text.*
+import com.lowagie.text.pdf.PdfPTable
+import com.lowagie.text.pdf.PdfWriter
+import harmony.java.awt.Color
+import kotlinx.android.synthetic.main.activity_creacion_parte.*
+import org.jetbrains.anko.toast
+import java.io.File
+import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
+
+class CreacionParte : AppCompatActivity() {
+
+    lateinit var listaIdentificadores: MutableList<String>
+
+    lateinit var nombreprofesor: String
+    lateinit var asignatura: String
+    lateinit var nombre: String
+    lateinit var titulacion: String
+    lateinit var grupo: String
+    lateinit var curso: String
+    lateinit var gestoria: String
+    lateinit var idioma: String
+    lateinit var duracion: String
+    lateinit var horaInicio: String
+    lateinit var aula: String
+    lateinit var dniprofesor: String
+    var comments = ""
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_creacion_parte)
+        recibirDatos()
+
+        buttonAddComment.setOnClickListener {
+            val intent = Intent(this, AddComment::class.java)
+            intent.putExtra("comments", comments)
+            startActivityForResult(intent, 1234)
+        }
+
+        buttonCrearPdf.setOnClickListener {
+            try {
+                val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+                val fecha = sdf.format(Date())
+
+                val nombre_documento = "ParteFirmas-" + asignatura + "-" + grupo + "-" + fecha.replace('/', '-') + ".pdf"
+
+                generarPdf(nombre_documento, fecha)
+
+                toast("Se creo tu archivo pdf")
+
+                val file = "/storage/emulated/0/Download/ParteFirmasUPV/$nombre_documento"
+
+                val builder = VmPolicy.Builder()
+                StrictMode.setVmPolicy(builder.build())
+
+
+                val fileIn = File(file)
+                val u = Uri.fromFile(fileIn)
+                val pdfOpenintent = Intent(Intent.ACTION_VIEW)
+                pdfOpenintent.setDataAndType(u, "application/pdf")
+                pdfOpenintent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(pdfOpenintent)
+            } catch (e: Exception) {
+                toast("No se ha podido crear el archivo pdf")
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1234 && resultCode == Activity.RESULT_OK) {
+            comments = data?.extras?.getString("comments") ?: ""
+            textViewComments.text = comments
+            textViewEmptyComments.visibility = if (comments.isEmpty()) View.VISIBLE else View.INVISIBLE
+        }
+    }
+
+    fun recibirDatos() {
+        val sdf = SimpleDateFormat("dd/M/yyyy")
+        textViewFecha.text = sdf.format( Date() )
+
+        listaIdentificadores = intent.getStringArrayListExtra("listaIdentificadores")
+        textViewCount.text = listaIdentificadores.size.toString()
+
+        asignatura = intent.getStringExtra("asignatura")
+        nombre = intent.getStringExtra("nombre")
+        textViewSubject.text = "$asignatura: $nombre"
+
+        nombreprofesor = intent.getStringExtra("nombreprofesor")
+        dniprofesor = intent.getStringExtra("dniprofesor")
+        textViewTeacher.text = "$nombreprofesor ($dniprofesor)"
+
+        grupo = intent.getStringExtra("grupo")
+        textViewGroup.text = grupo
+
+        aula = intent.getStringExtra("aula")
+        textViewClassroom.text = aula
+
+        horaInicio = intent.getStringExtra("horaInicio")
+        textViewHour.text = horaInicio
+
+        duracion = intent.getStringExtra("duracion")
+        textViewDuration.text = duracion
+
+        titulacion = intent.getStringExtra("titulacion")
+        curso = intent.getStringExtra("curso")
+        gestoria = intent.getStringExtra("gestoria")
+        idioma = intent.getStringExtra("idioma")
+    }
+
+    fun generarPdf(nombre_documento: String, fecha: String) {
+        val documento = Document()
+
+
+        try {
+
+            //Creación archivo pdf
+            val f = crearFichero(nombre_documento)
+            val ficheroPdf = FileOutputStream(f.absolutePath)
+            PdfWriter.getInstance(documento, ficheroPdf)
+
+            // Incluimos el pie de pagina y una cabecera
+
+            // Incluimos el pie de pagina y una cabecera
+            val cabecera = HeaderFooter(Phrase("Parte de firmas Universidad Politécnica de Valencia"), false)
+            cabecera.setAlignment(Element.ALIGN_CENTER)
+            val pie = HeaderFooter(Phrase("Parte de firmas Universidad Politécnica de Valencia"), false)
+            pie.setAlignment(Element.ALIGN_CENTER)
+
+            documento.setHeader(cabecera)
+            documento.setFooter(pie)
+
+            // Abrimos el documento.
+            documento.open()
+
+
+            val font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20f,
+                    Font.BOLD, Color.BLACK)
+            documento.add(Paragraph("     SEGUIMIENTO DE LAS ACTIVIDADES DOCENTES\n\n\n", font))
+
+            // Añadimos un titulo con la fuente por defecto.
+            documento.add(Paragraph(""))
+
+
+            val tablaA = PdfPTable(1)
+            tablaA.widthPercentage = 100.00f
+            tablaA.addCell("\nEspacio: $aula\n\n")
+            documento.add(tablaA)
+
+
+            val tablaB = PdfPTable(2)
+            tablaB.widthPercentage = 100.00f
+            tablaB.addCell("\nAsignatura: $asignatura-$nombre \nTitulación: $titulacion\nGrupo: $grupo\n\n")
+            tablaB.addCell("\nProfesor: $nombreprofesor\nDNI: $dniprofesor\n\n")
+            val tablaC = PdfPTable(3)
+            tablaC.widthPercentage = 100.00f
+            tablaC.addCell("\nCurso/Sem.: $curso\nER Gestora: $gestoria\nIdioma: $idioma\n\n")
+            tablaC.addCell("\nFecha: $fecha\nHora: $horaInicio\nDuración: $duracion\n\n")
+            tablaC.addCell("Firma: \n\n\n")
+            val tablaD = PdfPTable(1)
+            tablaD.widthPercentage = 100.00f
+            tablaD.addCell("\nObservaciones: $comments\n\n\n")
+
+            documento.add(tablaB)
+            documento.add(tablaC)
+            documento.add(tablaD)
+
+            documento.add(Paragraph("\n\n\n"))
+
+
+            // Insertamos una tabla.
+            val tabla1 = PdfPTable(3)
+            tabla1.widthPercentage = 100.00f
+            tabla1.addCell("IDENTIFICADOR ")
+            tabla1.addCell("DNI")
+            tabla1.addCell("NOMBRE")
+
+
+            val tabla2 = PdfPTable(3)
+            tabla2.widthPercentage = 100.00f
+
+            val database = DataBase(applicationContext)
+            listaIdentificadores.forEach {
+                database.consultarAlumno(asignatura, it)
+                tabla2.addCell(it)
+                tabla2.addCell(database.listDni)
+                tabla2.addCell(database.listNombre)
+            }
+            database.close()
+
+            documento.add(tabla1)
+            documento.add(tabla2)
+        } catch (e: Exception) {
+            toast("No se ha podido crear el archivo pdf")
+        } finally {
+            documento.close();
+        }
+    }
+
+    fun crearFichero(filename: String): File {
+        val path = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "ParteFirmasUPV").path
+        return File(path, filename)
+    }
+}
