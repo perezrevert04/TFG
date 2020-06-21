@@ -1,11 +1,12 @@
 package com.example.proyectonfc.util;
 
-import org.jetbrains.annotations.NotNull;
+import java.io.Serializable;
 
-public class CardInfo {
+public class CardInfo implements Serializable {
 
     final public static String css_query = "td";
 
+    final public static String CARD_INFO = "CARD_INFO";
     final public static String DNI_TAG = "DNI:";
     final public static String NAME_TAG = "Nombre:";
     final public static String STATE_TAG = "Estado:";
@@ -63,7 +64,7 @@ public class CardInfo {
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("\nNombre: ").append(nombre).append("\n");
+        sb.append("Nombre: ").append(nombre).append("\n");
         sb.append("DNI: ").append(dni).append("\n");
         sb.append("Tipo de usuario: ").append(funcion).append("\n");
         sb.append("Num. tarjeta: ").append(tarjeta).append("\n");
@@ -83,7 +84,11 @@ public class CardInfo {
 
     public String getFuncion() { return this.funcion;}
 
+    public String getTarjeta() { return tarjeta; }
 
+    public String getEstado() { return estado; }
+
+    public String getVigencia() { return vigencia; }
 
 }
 
