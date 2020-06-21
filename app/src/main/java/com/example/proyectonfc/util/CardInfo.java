@@ -1,14 +1,16 @@
 package com.example.proyectonfc.util;
 
+import org.jetbrains.annotations.NotNull;
+
 public class CardInfo {
 
     final public static String css_query = "td";
 
-    final private static String DNI_TAG = "DNI:";
-    final private static String Nombre_TAG = "Nombre:";
-    final private static String Estado_TAG = "Estado:";
-    final private static String Tarjeta_TAG = "Tarjeta:";
-    final private static String Vigencia_TAG = "Vigencia:";
+    final public static String DNI_TAG = "DNI:";
+    final public static String NAME_TAG = "Nombre:";
+    final public static String STATE_TAG = "Estado:";
+    final public static String CARD_TAG = "Tarjeta:";
+    final public static String VALIDITY_TAG = "Vigencia:";
 
     public String dni ;
     public String nombre = null;
@@ -27,19 +29,19 @@ public class CardInfo {
     }
 
     public boolean isNombre(String in){
-        return sonIguales(in, Nombre_TAG);
+        return sonIguales(in, NAME_TAG);
     }
 
     public boolean isEstado(String in){
-        return sonIguales(in, Estado_TAG);
+        return sonIguales(in, STATE_TAG);
     }
 
     public boolean isTarjeta(String in){
-        return sonIguales(in, Tarjeta_TAG);
+        return sonIguales(in, CARD_TAG);
     }
 
     public boolean isVigencia(String in){
-        return sonIguales(in, Vigencia_TAG);
+        return sonIguales(in, VALIDITY_TAG);
     }
 
     public void setDNI(String dni){
@@ -50,29 +52,18 @@ public class CardInfo {
         this.nombre = nombre;
     }
 
-    public void setTarjeta(String in){
-        tarjeta = in;
+    public void setTarjeta(String in){ tarjeta = in; }
 
-    }
+    public void setVigencia(String vigencia){ this.vigencia = vigencia; }
 
-    public void setVigencia(String in){
-        vigencia = in;
+    public void setEstado(String estado){ this.estado = estado; }
 
-    }
+    public void setFuncion(String in){ funcion = in; }
 
-    public void setEstado(String in){
-        estado = in;
-
-    }
-
-    public void setFuncion(String in){
-        funcion = in;
-
-    }
-
+    @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Nombre: ").append(nombre).append("\n");
+        sb.append("\nNombre: ").append(nombre).append("\n");
         sb.append("DNI: ").append(dni).append("\n");
         sb.append("Tipo de usuario: ").append(funcion).append("\n");
         sb.append("Num. tarjeta: ").append(tarjeta).append("\n");
@@ -90,7 +81,7 @@ public class CardInfo {
         return this.nombre;
     }
 
-    public String getFuncion() { return  this.funcion;}
+    public String getFuncion() { return this.funcion;}
 
 
 

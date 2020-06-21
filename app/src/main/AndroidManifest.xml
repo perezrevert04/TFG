@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.proyectonfc">
+    package="com.example.proyectonfc" >
 
     <uses-permission android:name="android.permission.NFC" />
 
@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -16,21 +17,19 @@
         android:label="Parte Firmas UPV"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".LinkCardActivity"
             android:label="Vincular carnet"
-            android:parentActivityName=".clases.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-        </activity>
+            android:parentActivityName=".clases.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".clases.AddComment"
             android:label="Observaciones"
             android:launchMode="singleTask"
             android:parentActivityName=".CreacionParte"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".CreacionParte"
             android:launchMode="singleTask" />
@@ -163,9 +162,9 @@
         <activity
             android:name=".clases.MainActivity"
             android:label="Parte Firmas UPV"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
