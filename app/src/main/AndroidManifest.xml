@@ -18,15 +18,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".LinkCardActivity"
+            android:label="Vincular carnet"
+            android:parentActivityName=".clases.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name=".clases.AddComment"
             android:label="Observaciones"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
-            android:parentActivityName=".CreacionParte">
+            android:parentActivityName=".CreacionParte"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".CreacionParte"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask" />
         <activity
             android:name=".util.CaptureActivityPortrait"
             android:screenOrientation="portrait"
@@ -40,8 +47,8 @@
         <activity
             android:name=".clases.DatosXml"
             android:label="Buscar Parte de Firmas"
-            android:parentActivityName=".clases.MainActivity"
             android:launchMode="singleTask"
+            android:parentActivityName=".clases.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.EditarGrupo"
@@ -156,10 +163,12 @@
         <activity
             android:name=".clases.MainActivity"
             android:label="Parte Firmas UPV"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
