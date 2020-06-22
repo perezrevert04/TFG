@@ -1,9 +1,12 @@
 package com.example.proyectonfc.data
 
+import com.example.proyectonfc.logic.Person
+
 interface DatabaseDAO {
 
-    fun getAllStudents() // Devuelve todos los alumnos
-    fun getStudentById(id: String) // Devuelve el alumno con el identificador id
-    fun getAllTeachers() // Devuelve todos los profesores
-    fun getTeachertById(id: String) // Devuelve el alumno con el identificador id
+    fun addLinkedPerson(person: Person): Boolean      // Vincula a una persona con el dispositivo
+    fun deviceIsLinked(): Boolean                     // Devuelve si el dispositivo tiene alguna tarjeta vinculada
+    fun getLinkedPerson(): Person                     // Obtiene los datos de la persona vinculada con el dispositivo
+    fun removeLinkedPerson(): Boolean                 // Elimina a la persona vinculada con el dispositivo
+
 }
