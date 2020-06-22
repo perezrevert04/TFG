@@ -8,6 +8,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
+import com.example.proyectonfc.SplashScreenActivity
 import com.example.proyectonfc.db.DataBase
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         db = DataBase(applicationContext, "DB6.db", null, 1)
 
         if (!database.deviceIsLinked()) {
-            val intent = Intent(this, RequirementsToLinkActivity::class.java)
+            val intent = Intent(this, SplashScreenActivity::class.java)
             startActivity(intent)
             finish()
         }
