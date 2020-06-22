@@ -56,17 +56,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewLinkCard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="Pulse aquí para vincular su carnet a este dispositivo."
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/buttonStart"
-        app:layout_constraintEnd_toEndOf="@+id/buttonStart"
-        app:layout_constraintStart_toStartOf="@+id/buttonStart" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

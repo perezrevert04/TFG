@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import com.example.proyectonfc.clases.MainActivity
@@ -56,6 +57,12 @@ class LinkBiometricPromptActivity : AppCompatActivity() {
     }
 
     private fun prepareBiometricPrompt() {
+
+        if (BiometricManager.from(this).canAuthenticate() == BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE) {
+            toast("Se ha producido un error en el hardware de huellas biométricas. Inténtelo de nuevo más tarde.")
+            finish()
+        }
+
         executor = ContextCompat.getMainExecutor(this)
 
         biometricPrompt = BiometricPrompt(this, executor,

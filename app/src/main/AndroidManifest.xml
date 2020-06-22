@@ -20,17 +20,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LinkBiometricPromptActivity"
+            android:name=".clases.RequirementsToLinkActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".LinkCardActivity"
+            android:launchMode="singleTask"
+            android:label="Vincular carnet">
+        </activity>
+        <activity
+            android:name=".LinkBiometricPromptActivity"
             android:label="Vincular carnet"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:parentActivityName=".LinkCardActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".LinkCardActivity"
             android:label="Vincular carnet"
             android:launchMode="singleTask"
-            android:parentActivityName=".clases.MainActivity"
+            android:parentActivityName=".clases.RequirementsToLinkActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.AddComment"

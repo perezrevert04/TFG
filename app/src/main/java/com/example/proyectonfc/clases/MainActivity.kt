@@ -7,7 +7,6 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
-import com.example.proyectonfc.LinkCardActivity
 import com.example.proyectonfc.R
 import com.example.proyectonfc.db.DataBase
 import kotlinx.android.synthetic.main.activity_main.*
@@ -15,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     lateinit var db: DataBase
-//    private val database by lazy { (application as Global).database }
+    private val database by lazy { (application as Global).database }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,8 +24,11 @@ class MainActivity : AppCompatActivity() {
 
         db = DataBase(applicationContext, "DB6.db", null, 1)
 
-//        if (database.deviceIsLinked()) toast("Hay una tarjeta asociada a este dispositivo")
-//        else toast("No hay tarjeta vinculada a este dispositivo")
+        if (!database.deviceIsLinked()) {
+            val intent = Intent(this, RequirementsToLinkActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         buttonStart.setOnClickListener { v: View ->
             val intent = Intent(v.context, IdentificacionProfesor::class.java)
@@ -40,11 +42,6 @@ class MainActivity : AppCompatActivity() {
 
         buttonConsultParts.setOnClickListener { v: View ->
             val intent = Intent(v.context, DatosXml::class.java)
-            startActivityForResult(intent, 0)
-        }
-
-        textViewLinkCard.setOnClickListener { v: View ->
-            val intent = Intent(v.context, LinkCardActivity::class.java)
             startActivityForResult(intent, 0)
         }
     }
