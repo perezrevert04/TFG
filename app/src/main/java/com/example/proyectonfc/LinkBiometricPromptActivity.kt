@@ -2,12 +2,13 @@ package com.example.proyectonfc
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import com.example.proyectonfc.clases.MainActivity
-import com.example.proyectonfc.util.CardInfo
+import com.example.proyectonfc.logic.Person
 import kotlinx.android.synthetic.main.activity_link_biometric_prompt.*
 import org.jetbrains.anko.toast
 import java.util.concurrent.Executor
@@ -18,6 +19,9 @@ class LinkBiometricPromptActivity : AppCompatActivity() {
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
+    private val database by lazy { (application as Global).database }
+    private lateinit var person: Person
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_link_biometric_prompt)
@@ -27,18 +31,28 @@ class LinkBiometricPromptActivity : AppCompatActivity() {
         getData()
         prepareBiometricPrompt()
 
-        buttonLink.setOnClickListener { startActivity(Intent(this, MainActivity::class.java)) }
+        buttonLink.setOnClickListener {
+            Log.d("AppLog", person.toString())
+            Log.d("AppLog", "Añadiendo a la base de datos...")
+            if (database.addLinkedPerson(person)) {
+                toast("Vinculado con éxito")
+                startActivity(Intent(this, MainActivity::class.java))
+            }
+            else {
+                toast("Se ha producido un error: inténtalo de nuevo más tarde")
+            }
+        }
     }
 
     private fun getData() {
-        val card = intent.getSerializableExtra(CardInfo.CARD_INFO) as? CardInfo
+        person = intent.getSerializableExtra(Person.CARD_INFO) as Person
 
-        textViewRole.text = card?.funcion
-        textViewName.text = card?.nombre
-        textViewDNI.text = card?.dni
-        textViewCard.text = card?.tarjeta
-        textViewValidity.text = card?.vigencia
-        textViewStatus.text = card?.estado
+        textViewRole.text = person.role
+        textViewName.text = person.name
+        textViewDNI.text = person.dni
+        textViewCard.text = person.card
+        textViewValidity.text = person.validity
+        textViewStatus.text = person.status
     }
 
     private fun prepareBiometricPrompt() {
@@ -49,7 +63,7 @@ class LinkBiometricPromptActivity : AppCompatActivity() {
                     override fun onAuthenticationError(errorCode: Int,
                                                        errString: CharSequence) {
                         super.onAuthenticationError(errorCode, errString)
-                        toast("Authentication error: $errString")
+                        toast("Error en la autenticación: $errString")
                     }
 
                     override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
@@ -57,12 +71,12 @@ class LinkBiometricPromptActivity : AppCompatActivity() {
                         textViewAuthenticate.visibility = View.INVISIBLE
                         buttonAuthenticate.visibility = View.INVISIBLE
                         buttonLink.visibility = View.VISIBLE
-                        toast("Authentication succeeded!")
+                        toast("Autenticación realizada con éxito")
                     }
 
                     override fun onAuthenticationFailed() {
                         super.onAuthenticationFailed()
-                        toast("Authentication failed")
+                        toast("Autenticación fallida")
                     }
                 })
 

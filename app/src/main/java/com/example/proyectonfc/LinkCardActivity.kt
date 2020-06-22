@@ -10,8 +10,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
+import com.example.proyectonfc.logic.Person
 import com.example.proyectonfc.util.CaptureActivityPortrait
-import com.example.proyectonfc.util.CardInfo
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_link_card.*
 import org.jetbrains.anko.toast
@@ -80,27 +80,29 @@ class LinkCardActivity : AppCompatActivity() {
         toast("Cargando datos...")
 
         Thread( Runnable {
-            val card = CardInfo()
+            val person = Person()
 
             try {
                 val doc = Jsoup.connect(url).get()
-                val links = doc.select(CardInfo.css_query)
+                val links = doc.select(Person.CSS_QUERY)
 
                 links.forEachIndexed { index, it ->
                     when (it.text()) {
-                        CardInfo.CARD_TAG -> card.tarjeta = it.nextElementSibling().text()
-                        CardInfo.STATE_TAG -> card.estado = it.nextElementSibling().text()
-                        CardInfo.VALIDITY_TAG -> card.vigencia = it.nextElementSibling().text()
-                        CardInfo.DNI_TAG -> card.setDNI(it.nextElementSibling().text());
-                        CardInfo.NAME_TAG -> {
-                            card.nombre = it.nextElementSibling().text()
-                            card.funcion = links[index + 2].text()
+                        Person.CARD_TAG -> person.card = links[index + 1].text()
+                        Person.STATE_TAG -> person.status = links[index + 1].text()
+                        Person.VALIDITY_TAG -> person.validity = links[index + 1].text()
+                        Person.DNI_TAG -> person.dni = links[index + 1].text()
+                        Person.NAME_TAG -> {
+                            person.name = links[index + 1].text()
+                            person.role = links[index + 2].text()
                         }
                     }
                 }
 
+                Log.d("AppLog", person.toString())
+
                 val intent = Intent(this, LinkBiometricPromptActivity::class.java)
-                intent.putExtra(CardInfo.CARD_INFO, card)
+                intent.putExtra(Person.CARD_INFO, person)
                 startActivity(intent)
 
             } catch (e: Exception) {
