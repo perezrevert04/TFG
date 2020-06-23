@@ -37,7 +37,6 @@ public class RegistroAlumnos extends AppCompatActivity {
     private PendingIntent pendingIntent;
     private TextView text;
     private static byte[] identificador;
-    private String nombreprofesor;
     private String asignatura;
     private String nombre;
     private String titulacion;
@@ -48,7 +47,6 @@ public class RegistroAlumnos extends AppCompatActivity {
     private String duracion;
     private String horaInicio;
     private String aula;
-    private String dniprofesor;
     private String identificadorTemporal;
 
     @Override
@@ -57,7 +55,6 @@ public class RegistroAlumnos extends AppCompatActivity {
         setContentView(R.layout.registro_alumnos);
         text = (TextView) findViewById(R.id.text);
 
-        nombreprofesor = getIntent().getStringExtra( "NOMBREPROFESOR");
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
         nombre = getIntent().getStringExtra( "NOMBRE");
         titulacion = getIntent().getStringExtra( "TITULACION");
@@ -68,7 +65,6 @@ public class RegistroAlumnos extends AppCompatActivity {
         duracion = getIntent().getStringExtra( "DURACION");
         horaInicio = getIntent().getStringExtra( "HORAINICIO");
         aula = getIntent().getStringExtra( "AULA");
-        dniprofesor = getIntent().getStringExtra( "DNIPROFESOR");
 
 
 
@@ -79,7 +75,6 @@ public class RegistroAlumnos extends AppCompatActivity {
 
             intent.putExtra("listaIdentificadores", listaIdentificadores);
 
-            intent.putExtra("nombreprofesor", nombreprofesor);
             intent.putExtra("asignatura", asignatura);
             intent.putExtra("nombre", nombre);
             intent.putExtra("titulacion", titulacion);
@@ -90,7 +85,6 @@ public class RegistroAlumnos extends AppCompatActivity {
             intent.putExtra("duracion", duracion);
             intent.putExtra("horaInicio", horaInicio);
             intent.putExtra("aula", aula);
-            intent.putExtra("dniprofesor", dniprofesor);
 
             startActivity(intent);
         });

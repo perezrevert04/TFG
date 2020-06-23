@@ -11,6 +11,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.clases.AddComment
 import com.example.proyectonfc.db.DataBase
+import com.example.proyectonfc.logic.Person
 import com.lowagie.text.*
 import com.lowagie.text.pdf.PdfPTable
 import com.lowagie.text.pdf.PdfWriter
@@ -24,9 +25,11 @@ import java.util.*
 
 class CreacionParte : AppCompatActivity() {
 
+    private val database by lazy { (application as Global).database }
+    private lateinit var person: Person
+
     lateinit var listaIdentificadores: MutableList<String>
 
-    lateinit var nombreprofesor: String
     lateinit var asignatura: String
     lateinit var nombre: String
     lateinit var titulacion: String
@@ -37,13 +40,13 @@ class CreacionParte : AppCompatActivity() {
     lateinit var duracion: String
     lateinit var horaInicio: String
     lateinit var aula: String
-    lateinit var dniprofesor: String
     var comments = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_creacion_parte)
-        recibirDatos()
+
+        getData()
 
         buttonAddComment.setOnClickListener {
             val intent = Intent(this, AddComment::class.java)
@@ -89,7 +92,9 @@ class CreacionParte : AppCompatActivity() {
         }
     }
 
-    fun recibirDatos() {
+    fun getData() {
+        person = database.getLinkedPerson()
+
         val sdf = SimpleDateFormat("dd/M/yyyy")
         textViewFecha.text = sdf.format( Date() )
 
@@ -100,9 +105,7 @@ class CreacionParte : AppCompatActivity() {
         nombre = intent.getStringExtra("nombre")
         textViewSubject.text = "$asignatura: $nombre"
 
-        nombreprofesor = intent.getStringExtra("nombreprofesor")
-        dniprofesor = intent.getStringExtra("dniprofesor")
-        textViewTeacher.text = "$nombreprofesor ($dniprofesor)"
+        textViewTeacher.text = "${person.name} (${person.dni})"
 
         grupo = intent.getStringExtra("grupo")
         textViewGroup.text = grupo
@@ -165,7 +168,7 @@ class CreacionParte : AppCompatActivity() {
             val tablaB = PdfPTable(2)
             tablaB.widthPercentage = 100.00f
             tablaB.addCell("\nAsignatura: $asignatura-$nombre \nTitulación: $titulacion\nGrupo: $grupo\n\n")
-            tablaB.addCell("\nProfesor: $nombreprofesor\nDNI: $dniprofesor\n\n")
+            tablaB.addCell("\nProfesor: ${person.name}\nDNI: ${person.dni}\n\n")
             val tablaC = PdfPTable(3)
             tablaC.widthPercentage = 100.00f
             tablaC.addCell("\nCurso/Sem.: $curso\nER Gestora: $gestoria\nIdioma: $idioma\n\n")

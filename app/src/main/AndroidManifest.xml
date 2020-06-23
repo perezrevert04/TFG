@@ -23,23 +23,18 @@
             android:name=".SplashScreenActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".clases.RequirementsToLinkActivity"
             android:label="Vincular carnet"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".LinkBiometricPromptActivity"
             android:label="Vincular carnet"
             android:launchMode="singleTask"
             android:parentActivityName=".LinkCardActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".LinkCardActivity"
             android:label="Vincular carnet"
@@ -109,11 +104,7 @@
         <activity
             android:name=".clases.AsignaturasProfesor"
             android:label="Asignaturas Profesor"
-            android:parentActivityName=".clases.IdentificacionProfesor"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".clases.IdentificacionProfesor"
-            android:label="Identificación Profesor"
+            android:launchMode="singleTask"
             android:parentActivityName=".clases.MainActivity"
             android:screenOrientation="portrait" />
         <activity
