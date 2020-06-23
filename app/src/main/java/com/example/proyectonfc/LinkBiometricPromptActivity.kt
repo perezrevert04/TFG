@@ -2,7 +2,6 @@ package com.example.proyectonfc
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
@@ -33,8 +32,6 @@ class LinkBiometricPromptActivity : AppCompatActivity() {
         prepareBiometricPrompt()
 
         buttonLink.setOnClickListener {
-            Log.d("AppLog", person.toString())
-            Log.d("AppLog", "Añadiendo a la base de datos...")
             if (database.addLinkedPerson(person)) {
                 toast("Vinculado con éxito")
                 startActivity(Intent(this, MainActivity::class.java))

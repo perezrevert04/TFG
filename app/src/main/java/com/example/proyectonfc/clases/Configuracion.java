@@ -43,20 +43,13 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Configuracion extends AppCompatActivity {
 
     DataBase dataBase;
-    private ListView Asignaturas;
-    private Button buttonBorrar;
-    private Button buttonVer;
     private TextView asignaturaSeleccionada;
     private  String asignatura;
     ArrayList<String> listaAsignaturas;
     ArrayList<Asignatura> asignaturasList;
-    private int position;
 
 
     private String[] listaAsignaturas2 = new String[1000];
-    private TextView textAsignatura;
-    private Button btnCargarAsignatura;
-    private String nombreAsignatura;
 
     private String identificadorAsignatura;
     private String nombre;
@@ -104,17 +97,15 @@ public class Configuracion extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configuracion);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
 
         dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
-        Asignaturas = (ListView) findViewById(R.id.listaAsignaturas);
+        ListView asignaturas = (ListView) findViewById(R.id.listaAsignaturas);
 
 
         consultarListaAsignaturas();
         ArrayAdapter<CharSequence> adaptador=new ArrayAdapter
                 (this,android.R.layout.simple_list_item_1, (List) listaAsignaturas);
-        Asignaturas.setAdapter(adaptador);
+        asignaturas.setAdapter(adaptador);
 
         if (asignaturasList.size() == 0) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -155,11 +146,7 @@ public class Configuracion extends AppCompatActivity {
         }
 
 
-
-
-
-
-        buttonBorrar = (Button) findViewById(R.id.buttonBorrar);
+        Button buttonBorrar = (Button) findViewById(R.id.buttonBorrar);
         buttonBorrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,34 +175,27 @@ public class Configuracion extends AppCompatActivity {
 
         });
 
-        buttonVer = (Button) findViewById(R.id.buttonVer);
-        buttonVer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        Button buttonVer = (Button) findViewById(R.id.buttonVer);
+        buttonVer.setOnClickListener(v -> {
 
-                Intent intent = new Intent(v.getContext(), Asignaturas.class);
-                intent.putExtra("ASIGNATURA", asignatura);
-                if (asignaturaSeleccionada == null) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Configuracion.this);
-                    builder.setTitle("No ha seleccionado ninguna Asignatura");
-                    builder.setMessage("¡Debe de seleccionar alguna Asignatura!");
-                    builder.setNeutralButton("¡Entendido!", null);
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }else {
-                    startActivityForResult(intent, 0);
-                }
+            Intent intent = new Intent(v.getContext(), Asignaturas.class);
+            intent.putExtra("ASIGNATURA", asignatura);
+            if (asignaturaSeleccionada == null) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(Configuracion.this);
+                builder.setTitle("No ha seleccionado ninguna Asignatura");
+                builder.setMessage("¡Debe de seleccionar alguna Asignatura!");
+                builder.setNeutralButton("¡Entendido!", null);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }else {
+                startActivityForResult(intent, 0);
             }
-
         });
 
-        Asignaturas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                asignatura = listaAsignaturas.get(position);
-                asignaturaSeleccionada = (TextView) findViewById(R.id.asignaturaSeleccionada);
-                asignaturaSeleccionada.setText(asignatura);
-            }
+        asignaturas.setOnItemClickListener((AdapterView.OnItemClickListener) (adapterView, view, position, id) -> {
+            asignatura = listaAsignaturas.get(position);
+            asignaturaSeleccionada = (TextView) findViewById(R.id.asignaturaSeleccionada);
+            asignaturaSeleccionada.setText(asignatura);
         });
     }
 
@@ -264,10 +244,6 @@ public class Configuracion extends AppCompatActivity {
         while (cursor.moveToNext()){
             asignatura=new Asignatura();
             asignatura.setNombre(cursor.getString(0));
-
-
-            //Log.i("id",persona.getId().toString());
-
 
             asignaturasList.add(asignatura);
 

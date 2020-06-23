@@ -168,6 +168,7 @@
             android:name=".clases.Configuracion"
             android:label="Configuración Asignaturas"
             android:parentActivityName=".clases.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Uso"
