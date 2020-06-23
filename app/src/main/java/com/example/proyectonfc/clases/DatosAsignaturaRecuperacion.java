@@ -88,7 +88,6 @@ public class DatosAsignaturaRecuperacion extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datos_asignatura_recuperacion);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
 
 

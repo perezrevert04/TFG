@@ -99,7 +99,6 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datos_asignatura_normal);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         dataBase = new DataBase(getApplicationContext(), "DB5.db", null, 1);
 

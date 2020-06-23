@@ -94,11 +94,13 @@
         <activity
             android:name=".clases.DatosAsignaturaNormal"
             android:label="Datos Clase Normal"
+            android:launchMode="singleTask"
             android:parentActivityName=".clases.AsignaturasProfesor"
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.DatosAsignaturaRecuperacion"
             android:label="Datos Clase Recuperación"
+            android:launchMode="singleTask"
             android:parentActivityName=".clases.AsignaturasProfesor"
             android:screenOrientation="portrait" />
         <activity

@@ -33,7 +33,6 @@ public class AsignaturasProfesor extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.asignaturas_profesor);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
 
         dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
         ListView asignaturas = (ListView) findViewById(R.id.listaAsignaturas);
