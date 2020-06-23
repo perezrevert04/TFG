@@ -1,7 +1,5 @@
 package com.example.proyectonfc.clases;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,17 +8,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
-import com.example.proyectonfc.util.Asignatura;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -32,14 +28,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 public class Configuracion extends AppCompatActivity {
 
@@ -47,7 +39,6 @@ public class Configuracion extends AppCompatActivity {
 
     private  String asignatura;
     ArrayList<String> listaAsignaturas;
-    ArrayList<Asignatura> asignaturasList;
 
     private String[] listaAsignaturas2 = new String[1000];
 
@@ -103,33 +94,28 @@ public class Configuracion extends AppCompatActivity {
 
 
         consultarListaAsignaturas();
-        ArrayAdapter<CharSequence> adaptador=new ArrayAdapter
-                (this,android.R.layout.simple_list_item_1, (List) listaAsignaturas);
+        ArrayAdapter adaptador = new ArrayAdapter(this,android.R.layout.simple_list_item_1, listaAsignaturas);
         asignaturas.setAdapter(adaptador);
 
-        if (asignaturasList.size() == 0) {
+        if (listaAsignaturas.isEmpty()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("No existe ninguna Asignatura");
             builder.setMessage("¿Desea añadir asignaturas?");
-            builder.setPositiveButton("Cargar Asignaturas propias", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    try {
-                       while (count < numfinal+1) {
-                            leerXML1();
-                            dataBase.agregarAsignatura(identificadorAsignatura, nombre, titulacion, curso, gestora, idioma, duracion);
-                            count++;
-                        }
-                        Toast.makeText(getApplicationContext(), "ASIGNATURAS CARGADA CORRECTAMENTE", Toast.LENGTH_SHORT).show();
-                        //}
-
-                    } catch (Exception e) {
-
-                        Toast.makeText(getApplicationContext(), "ASIGNATURAS ACTUALIZADAS", Toast.LENGTH_SHORT).show();
+            builder.setPositiveButton("Cargar Asignaturas propias", (dialog, which) -> {
+                try {
+                   while (count < numfinal+1) {
+                        leerXML1();
+                        dataBase.agregarAsignatura(identificadorAsignatura, nombre, titulacion, curso, gestora, idioma, duracion);
+                        count++;
                     }
-                    finish();
-                    startActivity(getIntent());
+                    Toast.makeText(getApplicationContext(), "ASIGNATURAS CARGADA CORRECTAMENTE", Toast.LENGTH_SHORT).show();
+
+                } catch (Exception e) {
+
+                    Toast.makeText(getApplicationContext(), "ASIGNATURAS ACTUALIZADAS", Toast.LENGTH_SHORT).show();
                 }
+                finish();
+                startActivity(getIntent());
             });
 
 
@@ -143,7 +129,10 @@ public class Configuracion extends AppCompatActivity {
         }
 
         asignaturas.setOnItemClickListener( (adapterView, view, position, id) -> {
-            Log.d("AppLog", "Click -> Asignatura: " + asignatura);
+            asignatura = listaAsignaturas.get(position);
+            Intent intent = new Intent(view.getContext(), Asignaturas.class);
+            intent.putExtra("ASIGNATURA", asignatura);
+            startActivity(intent);
         });
 
         asignaturas.setOnItemLongClickListener( (adapterView, view, position, id) -> {
@@ -207,29 +196,11 @@ public class Configuracion extends AppCompatActivity {
 
     private void consultarListaAsignaturas() {
         SQLiteDatabase db=dataBase.getReadableDatabase();
-
-        Asignatura asignatura=null;
-        asignaturasList =new ArrayList<Asignatura>();
-        //select * from usuarios
         Cursor cursor=db.rawQuery("SELECT id FROM ASIGNATURA ORDER BY id", null);
 
-        while (cursor.moveToNext()){
-            asignatura=new Asignatura();
-            asignatura.setNombre(cursor.getString(0));
-
-            asignaturasList.add(asignatura);
-
-        }
-        obtenerLista();
+        listaAsignaturas=new ArrayList<>();
+        while (cursor.moveToNext()) listaAsignaturas.add(cursor.getString(0));
     }
 
-    private void obtenerLista() {
-        listaAsignaturas=new ArrayList<String>();
-
-        for(int i=0;i<asignaturasList.size();i++){
-            listaAsignaturas.add(asignaturasList.get(i).getNombre());
-        }
-
-    }
 }
 

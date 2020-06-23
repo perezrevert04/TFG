@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.proyectonfc">
-
-    <uses-permission android:name="android.permission.NFC" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.proyectonfc">
 
     <uses-feature android:name="android.hardware.nfc" />
 
+    <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -166,14 +164,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.Configuracion"
-            android:label="Configuración Asignaturas"
+            android:label="Asignaturas"
             android:parentActivityName=".clases.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Uso"
-            android:label="Identificación Profesor"
-            android:parentActivityName=".clases.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.MainActivity"
