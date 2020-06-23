@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -43,11 +44,10 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Configuracion extends AppCompatActivity {
 
     DataBase dataBase;
-    private TextView asignaturaSeleccionada;
+
     private  String asignatura;
     ArrayList<String> listaAsignaturas;
     ArrayList<Asignatura> asignaturasList;
-
 
     private String[] listaAsignaturas2 = new String[1000];
 
@@ -133,69 +133,42 @@ public class Configuracion extends AppCompatActivity {
             });
 
 
-            builder.setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = new Intent(Configuracion.this,MainActivity.class);
-                    finish();
-                    startActivity(intent);
-                }
+            builder.setNeutralButton("Cancelar", (dialog, which) -> {
+                Intent intent = new Intent(Configuracion.this,MainActivity.class);
+                finish();
+                startActivity(intent);
             });
             AlertDialog dialog = builder.create();
             dialog.show();
         }
 
+        asignaturas.setOnItemClickListener( (adapterView, view, position, id) -> {
+            Log.d("AppLog", "Click -> Asignatura: " + asignatura);
+        });
 
-        Button buttonBorrar = (Button) findViewById(R.id.buttonBorrar);
-        buttonBorrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        asignaturas.setOnItemLongClickListener( (adapterView, view, position, id) -> {
+            asignatura = listaAsignaturas.get(position);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(asignatura).setMessage("¿Desea eliminar esta asignatura?");
+            builder.setNegativeButton("Cancelar", (dialog, id1) -> {});
+            builder.setPositiveButton("Eliminar", (dialog, id1) -> {
+
                 try{
-                    Intent intent = new Intent(v.getContext(), Configuracion.class);
-                    intent.putExtra("ASIGNATURA", asignatura);
-                    if (asignaturaSeleccionada != null) {
-                        dataBase.borrarAsignatura(asignatura);
-                        dataBase.borrarTodoProfesores(asignatura);
-                        dataBase.borrarTodoAlumnos(asignatura);
-                        dataBase.borrarTodoGrupos(asignatura);
-                        finish();
-                        startActivity(getIntent());
-                    }else{
-                        AlertDialog.Builder builder = new AlertDialog.Builder(Configuracion.this);
-                        builder.setTitle("No ha seleccionado ninguna Asignatura");
-                        builder.setMessage("¡Debe de seleccionar alguna Asignatura!");
-                        builder.setNeutralButton("¡Entendido!", null);
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                    }
+                    dataBase.borrarAsignatura(asignatura);
+                    dataBase.borrarTodoProfesores(asignatura);
+                    dataBase.borrarTodoAlumnos(asignatura);
+                    dataBase.borrarTodoGrupos(asignatura);
+                    finish();
+                    startActivity(getIntent());
                 }catch(Exception e){
                     Toast.makeText(getApplicationContext(), "LA ASIGNATURA NO HA PODIDO SER BORRADA", Toast.LENGTH_SHORT).show();
                 }
-            }
+            });
 
-        });
+            AlertDialog dialog = builder.create();
+            dialog.show();
 
-        Button buttonVer = (Button) findViewById(R.id.buttonVer);
-        buttonVer.setOnClickListener(v -> {
-
-            Intent intent = new Intent(v.getContext(), Asignaturas.class);
-            intent.putExtra("ASIGNATURA", asignatura);
-            if (asignaturaSeleccionada == null) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Configuracion.this);
-                builder.setTitle("No ha seleccionado ninguna Asignatura");
-                builder.setMessage("¡Debe de seleccionar alguna Asignatura!");
-                builder.setNeutralButton("¡Entendido!", null);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }else {
-                startActivityForResult(intent, 0);
-            }
-        });
-
-        asignaturas.setOnItemClickListener((AdapterView.OnItemClickListener) (adapterView, view, position, id) -> {
-            asignatura = listaAsignaturas.get(position);
-            asignaturaSeleccionada = (TextView) findViewById(R.id.asignaturaSeleccionada);
-            asignaturaSeleccionada.setText(asignatura);
+            return true;
         });
     }
 
@@ -204,7 +177,6 @@ public class Configuracion extends AppCompatActivity {
         DocumentBuilder dobu;
         try {
             dobu = dbf.newDocumentBuilder();
-            Context context = getApplicationContext();
             String filePath = "/storage/emulated/0/Download/Asignaturas.xml";
             InputStream in = new BufferedInputStream(new FileInputStream(filePath));
             Document doc = dobu.parse(in);
