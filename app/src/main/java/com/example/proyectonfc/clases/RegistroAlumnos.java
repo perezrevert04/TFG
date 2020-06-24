@@ -69,8 +69,8 @@ public class RegistroAlumnos extends AppCompatActivity {
         horaInicio = getIntent().getStringExtra( "HORAINICIO");
         aula = getIntent().getStringExtra( "AULA");
 
-        Button btnSiguiente = (Button) findViewById(R.id.buttonMenu);
-        btnSiguiente.setOnClickListener((View.OnClickListener) v -> {
+        Button btnNext = (Button) findViewById(R.id.buttonNext);
+        btnNext.setOnClickListener( view -> {
 
             Intent intent = new Intent(this, CreacionParte.class);
 
@@ -252,7 +252,9 @@ public class RegistroAlumnos extends AppCompatActivity {
         }
         return result;
     }
+    /*****************************************************FIN LECTOR NFC*****************************************************************/
 
-/*****************************************************FIN LECTOR NFC*****************************************************************/
+    private void prepareBiometricPrompt() {
 
+    }
 }
