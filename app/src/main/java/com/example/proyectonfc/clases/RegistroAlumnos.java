@@ -90,8 +90,7 @@ public class RegistroAlumnos extends AppCompatActivity {
 
         if (nfcAdapter == null) {
             Toast.makeText(this, "No NFC", Toast.LENGTH_SHORT).show();
-            /* TODO: GESTIONAR VUELTA ATRÁS */
-//            finish();
+            finish();
             return;
         }
 
@@ -139,7 +138,8 @@ public class RegistroAlumnos extends AppCompatActivity {
         builder.setNegativeButton("Cancelar", (dialog, which) -> {});
         builder.setPositiveButton("Atrás", (dialog, which) -> {
             prepareBiometricPrompt( () -> {
-                finish();
+                /* TODO: GESTIONAR VUELTA ATRÁS */
+//                onBackPressed();
                 return null;
             });
             biometricPrompt.authenticate(promptInfo);
