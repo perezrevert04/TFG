@@ -14,15 +14,16 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricPrompt;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.proyectonfc.CreacionParte;
 import com.example.proyectonfc.R;
@@ -32,6 +33,8 @@ import com.example.proyectonfc.record.ParsedNdefRecord;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executor;
 
 public class RegistroAlumnos extends AppCompatActivity {
 
@@ -52,6 +55,10 @@ public class RegistroAlumnos extends AppCompatActivity {
     private String aula;
     private String identificadorTemporal;
 
+    private Executor executor;
+    private BiometricPrompt biometricPrompt;
+    private BiometricPrompt.PromptInfo promptInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,32 +76,22 @@ public class RegistroAlumnos extends AppCompatActivity {
         horaInicio = getIntent().getStringExtra( "HORAINICIO");
         aula = getIntent().getStringExtra( "AULA");
 
+
         Button btnNext = (Button) findViewById(R.id.buttonNext);
         btnNext.setOnClickListener( view -> {
-
-            Intent intent = new Intent(this, CreacionParte.class);
-
-            intent.putExtra("listaIdentificadores", listaIdentificadores);
-
-            intent.putExtra("asignatura", asignatura);
-            intent.putExtra("nombre", nombre);
-            intent.putExtra("titulacion", titulacion);
-            intent.putExtra("grupo", grupo);
-            intent.putExtra("curso", curso);
-            intent.putExtra("gestoria", gestoria);
-            intent.putExtra("idioma", idioma);
-            intent.putExtra("duracion", duracion);
-            intent.putExtra("horaInicio", horaInicio);
-            intent.putExtra("aula", aula);
-
-            startActivity(intent);
+            prepareBiometricPrompt( () -> {
+                nextActivity();
+                return null;
+            });
+            biometricPrompt.authenticate(promptInfo);
         });
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         if (nfcAdapter == null) {
             Toast.makeText(this, "No NFC", Toast.LENGTH_SHORT).show();
-            finish();
+            /* TODO: GESTIONAR VUELTA ATRÁS */
+//            finish();
             return;
         }
 
@@ -109,6 +106,25 @@ public class RegistroAlumnos extends AppCompatActivity {
 
     }
 
+    private void nextActivity() {
+        Intent intent = new Intent(this, CreacionParte.class);
+
+        intent.putExtra("listaIdentificadores", listaIdentificadores);
+
+        intent.putExtra("asignatura", asignatura);
+        intent.putExtra("nombre", nombre);
+        intent.putExtra("titulacion", titulacion);
+        intent.putExtra("grupo", grupo);
+        intent.putExtra("curso", curso);
+        intent.putExtra("gestoria", gestoria);
+        intent.putExtra("idioma", idioma);
+        intent.putExtra("duracion", duracion);
+        intent.putExtra("horaInicio", horaInicio);
+        intent.putExtra("aula", aula);
+
+        startActivity(intent);
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         backAlert();
@@ -121,7 +137,13 @@ public class RegistroAlumnos extends AppCompatActivity {
         builder.setMessage("Si vuelves atrás perderás los datos de los alumnos que se hayan identificado. ¿Estás seguro?");
 
         builder.setNegativeButton("Cancelar", (dialog, which) -> {});
-        builder.setPositiveButton("Atrás", (dialog, which) -> finish());
+        builder.setPositiveButton("Atrás", (dialog, which) -> {
+            prepareBiometricPrompt( () -> {
+                finish();
+                return null;
+            });
+            biometricPrompt.authenticate(promptInfo);
+        });
         AlertDialog dialog = builder.create();
         dialog.show();
     }
@@ -254,7 +276,36 @@ public class RegistroAlumnos extends AppCompatActivity {
     }
     /*****************************************************FIN LECTOR NFC*****************************************************************/
 
-    private void prepareBiometricPrompt() {
+    private void prepareBiometricPrompt(Callable<Void> method) {
+        executor = ContextCompat.getMainExecutor(this);
+        biometricPrompt = new BiometricPrompt(this, executor, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+                Toast.makeText(getApplicationContext(), "Authentication error: " + errString, Toast.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                try {
+                    method.call();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+                Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Biometric login for my app")
+                .setSubtitle("Log in using your biometric credential")
+                .setDeviceCredentialAllowed(true)
+                .build();
     }
 }
