@@ -18,21 +18,18 @@ import com.example.proyectonfc.db.DataBase;
 public class DatosAsignaturaRecuperacion extends AppCompatActivity {
 
     DataBase dataBase;
-    private String identificador;
-    private String nombreAsignatura;
     private String nombre;
-    private String titulacion;
-    private String grupo;
-    private String curso;
-    private String gestora;
-    private String idioma;
-    private String duracion;
-    private String aula;
-    private String hEntrada;
     private String asignatura;
-    private EditText textGrupo;
-    private EditText textEspacio;
-    private EditText textHEntrada;
+
+    TextView textViewDegree;
+    TextView textViewSubject;
+    TextView textViewDepartment;
+    TextView textViewSchoolYear;
+    EditText editTextLanguage;
+    EditText editTextGroup;
+    EditText editTextClassroom;
+    EditText editTextHour;
+    EditText editTextDuration;
 
     public boolean onOptionsItemSelected(MenuItem menu) {
         if (menu.getItemId() == R.id.MenuActualizar) {
@@ -53,31 +50,33 @@ public class DatosAsignaturaRecuperacion extends AppCompatActivity {
 
         dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
 
+        textViewDegree = (TextView) findViewById(R.id.textViewDegree);
+        textViewSubject = (TextView) findViewById(R.id.textViewSubject);
+        textViewDepartment = (TextView) findViewById(R.id.textViewDepartment);
+        textViewSchoolYear = (TextView) findViewById(R.id.textViewSchoolYear);
+        editTextLanguage = (EditText) findViewById(R.id.editTextLanguage);
+        editTextGroup = (EditText) findViewById(R.id.editTextGroup);
+        editTextClassroom = (EditText) findViewById(R.id.editTextClassroom);
+        editTextHour = (EditText) findViewById(R.id.editTextHour);
+        editTextDuration = (EditText) findViewById(R.id.editTextDuration);
+
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
 
         consultarListaAsignaturas();
 
-        Button buttonAsistencia = (Button) findViewById(R.id.buttonStart);
-        buttonAsistencia.setOnClickListener((View.OnClickListener) v -> {
-
-//            textGrupo = (EditText) findViewById(R.id.textGrupo);
-//            grupo = textGrupo.getText().toString();
-//            textEspacio = (EditText) findViewById(R.id.textEspacio);
-//            aula = textEspacio.getText().toString();
-//            textHEntrada = (EditText) findViewById(R.id.textHoraEntrada);
-//            hEntrada = textHEntrada.getText().toString();
-
+        Button buttonStart = (Button) findViewById(R.id.buttonStart);
+        buttonStart.setOnClickListener((View.OnClickListener) v -> {
             Intent intent = new Intent(v.getContext(), RegistroAlumnos.class);
             intent.putExtra("ASIGNATURA", asignatura );
             intent.putExtra("NOMBRE", nombre );
-            intent.putExtra("TITULACION", titulacion );
-            intent.putExtra("GRUPO", grupo );
-            intent.putExtra("CURSO", curso );
-            intent.putExtra("GESTORA", gestora );
-            intent.putExtra("IDIOMA", idioma );
-            intent.putExtra("DURACION", duracion );
-            intent.putExtra("HORAINICIO", hEntrada );
-            intent.putExtra("AULA", aula );
+            intent.putExtra("TITULACION", textViewDegree.getText().toString() );
+            intent.putExtra("GRUPO", editTextGroup.getText().toString() );
+            intent.putExtra("CURSO", textViewSchoolYear.getText().toString() );
+            intent.putExtra("GESTORA", textViewDepartment.getText().toString() );
+            intent.putExtra("IDIOMA", editTextLanguage.getText().toString() );
+            intent.putExtra("DURACION", editTextDuration.getText().toString() );
+            intent.putExtra("HORAINICIO", editTextHour.getText().toString() );
+            intent.putExtra("AULA", editTextClassroom.getText().toString() );
             startActivity(intent);
         });
 
@@ -89,42 +88,18 @@ public class DatosAsignaturaRecuperacion extends AppCompatActivity {
         Cursor cursor=db.rawQuery("SELECT * FROM ASIGNATURA WHERE id="+"'"+asignatura+"'", null);
 
         while (cursor.moveToNext()){
-            identificador = cursor.getString(0);
-            nombreAsignatura = cursor.getString(1);
             nombre = cursor.getString(1);
-            titulacion = cursor.getString(2);
-            curso = cursor.getString(3);
-            gestora = cursor.getString(4);
-            idioma = cursor.getString(5);
-            duracion = cursor.getString(6);
-
+            textViewDegree.setText(cursor.getString(2));
+            textViewSchoolYear.setText(cursor.getString(3));
+            textViewDepartment.setText(cursor.getString(4));
+            editTextLanguage.setText(cursor.getString(5));
         }
 
-        TextView textViewDegree = (TextView) findViewById(R.id.textViewDegree);
-        textViewDegree.setText(titulacion);
+        textViewSubject.setText(asignatura + ": " + nombre);
 
-        TextView textViewSubject = (TextView) findViewById(R.id.textViewSubject);
-        textViewSubject.setText(identificador + ": " + nombreAsignatura);
-
-        TextView textViewDepartment = (TextView) findViewById(R.id.textViewDepartment);
-        textViewDepartment.setText(gestora);
-
-        TextView textViewSchoolYear = (TextView) findViewById(R.id.textViewSchoolYear);
-        textViewSchoolYear.setText(curso);
-
-        EditText editTextLanguage = (EditText) findViewById(R.id.editTextLanguage);
-        editTextLanguage.setText(idioma);
-
-        EditText editTextGroup = (EditText) findViewById(R.id.editTextGroup);
         editTextGroup.setText("");
-
-        EditText editTextClassroom = (EditText) findViewById(R.id.editTextClassroom);
         editTextClassroom.setText("");
-
-        EditText editTextHour = (EditText) findViewById(R.id.editTextHour);
         editTextHour.setText("");
-
-        EditText editTextDuration = (EditText) findViewById(R.id.editTextDuration);
         editTextDuration.setText("");
 
     }

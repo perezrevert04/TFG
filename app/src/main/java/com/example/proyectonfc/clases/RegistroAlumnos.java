@@ -66,8 +66,6 @@ public class RegistroAlumnos extends AppCompatActivity {
         horaInicio = getIntent().getStringExtra( "HORAINICIO");
         aula = getIntent().getStringExtra( "AULA");
 
-
-
         Button btnSiguiente = (Button) findViewById(R.id.buttonMenu);
         btnSiguiente.setOnClickListener((View.OnClickListener) v -> {
 
