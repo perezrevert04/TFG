@@ -21,9 +21,11 @@
 
     <style name="Label">
         <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:textSize">14sp</item>
     </style>
     <style name="Value">
         <item name="android:textColor">@color/colorTextSecondary</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="PrimaryButton">

@@ -2,6 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="clases.DatosAsignaturaRecuperacion" >
@@ -217,14 +219,13 @@
                 style="@style/Value"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:ems="10"
                 android:hint="Insertar hora"
                 android:inputType="textPersonName"
                 android:textAlignment="textEnd"
                 android:textColorHint="@color/colorSecondaryAccent"
                 app:layout_constraintEnd_toEndOf="@+id/view6"
-                app:layout_constraintStart_toEndOf="@+id/textView35"
+                app:layout_constraintStart_toStartOf="@+id/editTextDuration"
                 app:layout_constraintTop_toBottomOf="@+id/view6" />
 
             <EditText
@@ -232,14 +233,13 @@
                 style="@style/Value"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:ems="10"
                 android:hint="Insertar aula"
                 android:inputType="textPersonName"
                 android:textAlignment="textEnd"
                 android:textColorHint="@color/colorSecondaryAccent"
                 app:layout_constraintEnd_toEndOf="@+id/view5"
-                app:layout_constraintStart_toEndOf="@+id/textView31"
+                app:layout_constraintStart_toStartOf="@+id/editTextHour"
                 app:layout_constraintTop_toBottomOf="@+id/view5" />
 
             <EditText
@@ -247,14 +247,13 @@
                 style="@style/Value"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:ems="10"
                 android:hint="Insertar grupo"
                 android:inputType="textPersonName"
                 android:textAlignment="textEnd"
                 android:textColorHint="@color/colorSecondaryAccent"
                 app:layout_constraintEnd_toEndOf="@+id/view4"
-                app:layout_constraintStart_toEndOf="@+id/textView28"
+                app:layout_constraintStart_toStartOf="@+id/editTextClassroom"
                 app:layout_constraintTop_toBottomOf="@+id/view4" />
 
             <EditText
@@ -262,14 +261,13 @@
                 style="@style/Value"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:ems="10"
                 android:hint="Insertar idioma"
                 android:inputType="textPersonName"
                 android:textAlignment="textEnd"
                 android:textColorHint="@color/colorSecondaryAccent"
                 app:layout_constraintEnd_toEndOf="@+id/view3"
-                app:layout_constraintStart_toEndOf="@+id/textView25"
+                app:layout_constraintStart_toStartOf="@+id/editTextGroup"
                 app:layout_constraintTop_toBottomOf="@+id/view3" />
 
 
