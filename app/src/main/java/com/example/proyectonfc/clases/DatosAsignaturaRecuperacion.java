@@ -112,11 +112,11 @@ public class DatosAsignaturaRecuperacion extends AppCompatActivity {
         TextView textViewSchoolYear = (TextView) findViewById(R.id.textViewSchoolYear);
         textViewSchoolYear.setText(curso);
 
-        TextView textViewLanguage = (TextView) findViewById(R.id.textViewLanguage);
-        textViewLanguage.setText(idioma);
+        EditText editTextLanguage = (EditText) findViewById(R.id.editTextLanguage);
+        editTextLanguage.setText(idioma);
 
-        TextView textViewGroup = (TextView) findViewById(R.id.textViewGroup);
-        textViewGroup.setText("");
+        EditText editTextGroup = (EditText) findViewById(R.id.editTextGroup);
+        editTextGroup.setText("");
 
         EditText editTextClassroom = (EditText) findViewById(R.id.editTextClassroom);
         editTextClassroom.setText("");

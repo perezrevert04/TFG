@@ -34,21 +34,19 @@
                 android:id="@+id/view4"
                 style="@style/Divider"
                 android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="@+id/textViewDepartment"
                 app:layout_constraintStart_toStartOf="@+id/textView19"
-                app:layout_constraintTop_toBottomOf="@+id/textViewLanguage" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextLanguage" />
 
             <View
                 android:id="@+id/view5"
                 style="@style/Divider"
                 android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="@+id/textViewDepartment"
                 app:layout_constraintStart_toStartOf="@+id/textView19"
-                app:layout_constraintTop_toBottomOf="@+id/textViewGroup" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextGroup" />
 
             <View
                 android:id="@+id/view6"
@@ -150,18 +148,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/view3" />
 
             <TextView
-                android:id="@+id/textViewLanguage"
-                style="@style/Value"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="textViewLanguage"
-                android:textAlignment="textEnd"
-                app:layout_constraintEnd_toEndOf="@+id/view3"
-                app:layout_constraintStart_toEndOf="@+id/textView25"
-                app:layout_constraintTop_toTopOf="@+id/textView25" />
-
-            <TextView
                 android:id="@+id/textView28"
                 style="@style/Label"
                 android:layout_width="wrap_content"
@@ -172,18 +158,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/view4" />
 
             <TextView
-                android:id="@+id/textViewGroup"
-                style="@style/Value"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="textViewGroup"
-                android:textAlignment="textEnd"
-                app:layout_constraintEnd_toEndOf="@+id/view4"
-                app:layout_constraintStart_toEndOf="@+id/textView28"
-                app:layout_constraintTop_toTopOf="@+id/textView28" />
-
-            <TextView
                 android:id="@+id/textView31"
                 style="@style/Label"
                 android:layout_width="wrap_content"
@@ -192,20 +166,6 @@
                 android:text="Aula:"
                 app:layout_constraintStart_toStartOf="@+id/textView28"
                 app:layout_constraintTop_toBottomOf="@+id/view5" />
-
-            <TextView
-                android:id="@+id/textViewClassroom"
-                style="@style/Value"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="108dp"
-                android:text="textViewClassroom"
-                android:textAlignment="textEnd"
-                app:layout_constraintEnd_toEndOf="@+id/view5"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/textView31"
-                app:layout_constraintTop_toTopOf="@+id/textView31" />
 
             <TextView
                 android:id="@+id/textView35"
@@ -278,6 +238,34 @@
                 app:layout_constraintEnd_toEndOf="@+id/view5"
                 app:layout_constraintStart_toEndOf="@+id/textView31"
                 app:layout_constraintTop_toBottomOf="@+id/view5" />
+
+            <EditText
+                android:id="@+id/editTextGroup"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="@+id/view4"
+                app:layout_constraintStart_toEndOf="@+id/textView28"
+                app:layout_constraintTop_toBottomOf="@+id/view4" />
+
+            <EditText
+                android:id="@+id/editTextLanguage"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="@+id/view3"
+                app:layout_constraintStart_toEndOf="@+id/textView25"
+                app:layout_constraintTop_toBottomOf="@+id/view3" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
