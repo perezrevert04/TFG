@@ -4,13 +4,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -28,36 +31,17 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
     private String asignatura;
     private String grupoGrupo;
     private String horaInicioGrupo;
-    private String horaFinGrupo;
     private String aulaGrupo;
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        //Alternativa 1
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_actualizar,menu);
-//        return true;
-//
-//    }
-
-
-    public boolean onOptionsItemSelected(MenuItem menu)
-    {
-        // gracias a la id, sabemos que item es el que se oprime, en este caso usamos un switch
-        switch (menu.getItemId())
-        {
-            case R.id.MenuActualizar:
-                Intent intent = new Intent(DatosAsignaturaNormal.this, DatosAsignaturaNormal.class);
-                asignatura = getIntent().getStringExtra( "ASIGNATURA");
-                intent.putExtra("ASIGNATURA", asignatura );
-                startActivity(intent);
-                this.finish();
-                return true;
-
-            default:
-        }
-        return super.onOptionsItemSelected(menu);
-    }
+    TextView textViewDegree;
+    TextView textViewSubject;
+    TextView textViewDepartment;
+    TextView textViewSchoolYear;
+    EditText editTextLanguage;
+    EditText editTextGroup;
+    EditText editTextClassroom;
+    EditText editTextHour;
+    EditText editTextDuration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,34 +50,36 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
 
         dataBase = new DataBase(getApplicationContext(), "DB5.db", null, 1);
 
+        textViewDegree = (TextView) findViewById(R.id.textViewDegree);
+        textViewSubject = (TextView) findViewById(R.id.textViewSubject);
+        textViewDepartment = (TextView) findViewById(R.id.textViewDepartment);
+        textViewSchoolYear = (TextView) findViewById(R.id.textViewSchoolYear);
+        editTextLanguage = (EditText) findViewById(R.id.editTextLanguage);
+        editTextGroup = (EditText) findViewById(R.id.editTextGroup);
+        editTextClassroom = (EditText) findViewById(R.id.editTextClassroom);
+        editTextHour = (EditText) findViewById(R.id.editTextHour);
+        editTextDuration = (EditText) findViewById(R.id.editTextDuration);
+
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
 
         consultarListaAsignaturas();
         consultarHoraMenos();
 
-        Button buttonAsistencia = (Button) findViewById(R.id.buttonAsistencia);
-        buttonAsistencia.setOnClickListener(v -> {
+        Button buttonStart = (Button) findViewById(R.id.buttonStart);
+        buttonStart.setOnClickListener(v -> {
 
             Intent intent = new Intent(v.getContext(), RegistroAlumnos.class);
-
             intent.putExtra("ASIGNATURA", asignatura );
             intent.putExtra("NOMBRE", nombre );
-            intent.putExtra("TITULACION", titulacion );
-            intent.putExtra("GRUPO", grupoGrupo );
-            intent.putExtra("CURSO", curso );
-            intent.putExtra("GESTORA", gestora );
-            intent.putExtra("IDIOMA", idioma );
-            intent.putExtra("DURACION", duracion );
-            intent.putExtra("HORAINICIO", horaInicioGrupo );
-            intent.putExtra("HORAFIN", horaFinGrupo );
-            intent.putExtra("AULA", aulaGrupo );
-
-            try{
-                startActivityForResult(intent, 0);
-            }catch(Exception e){
-                Toast.makeText(getApplicationContext(), "LA ASIGNATURA SELECCIONADA ANTERIORMENTE NO TIENE UN GRUPO CON ESTE HORARIO", Toast.LENGTH_SHORT).show();
-            }
-
+            intent.putExtra("TITULACION", textViewDegree.getText().toString() );
+            intent.putExtra("GRUPO", editTextGroup.getText().toString() );
+            intent.putExtra("CURSO", textViewSchoolYear.getText().toString() );
+            intent.putExtra("GESTORA", textViewDepartment.getText().toString() );
+            intent.putExtra("IDIOMA", editTextLanguage.getText().toString() );
+            intent.putExtra("DURACION", editTextDuration.getText().toString() );
+            intent.putExtra("HORAINICIO", editTextHour.getText().toString() );
+            intent.putExtra("AULA", editTextClassroom.getText().toString() );
+            startActivity(intent);
         });
 
     }
@@ -104,40 +90,20 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
         Cursor cursor=db.rawQuery("SELECT * FROM ASIGNATURA WHERE id="+"'"+asignatura+"'", null);
 
         while (cursor.moveToNext()){
-            identificador = cursor.getString(0);
-            nombreAsignatura = cursor.getString(1);
             nombre = cursor.getString(1);
-            titulacion = cursor.getString(2);
-            curso = cursor.getString(3);
-            gestora = cursor.getString(4);
-            idioma = cursor.getString(5);
-            duracion = cursor.getString(6);
-
+            textViewDegree.setText(cursor.getString(2));
+            textViewSchoolYear.setText(cursor.getString(3));
+            textViewDepartment.setText(cursor.getString(4));
+            editTextLanguage.setText(cursor.getString(5));
+            editTextDuration.setText(cursor.getString(6));
         }
 
-        TextView textAsignatura = (TextView) findViewById(R.id.textAsignatura);
-        textAsignatura.setText(nombreAsignatura);
-        TextView textIdentificador = (TextView) findViewById(R.id.textIdentificador);
-        textIdentificador.setText(identificador);
-        TextView textNombre = (TextView) findViewById(R.id.textNombre);
-        textNombre.setText(nombre);
-        TextView textTitulacion = (TextView) findViewById(R.id.textTitulacion);
-        textTitulacion.setText(titulacion);
-        TextView textCurso = (TextView) findViewById(R.id.textCurso);
-        textCurso.setText(curso);
-        TextView textGestora = (TextView) findViewById(R.id.textGestora);
-        textGestora.setText(gestora);
-        TextView textIdioma = (TextView) findViewById(R.id.textIdioma);
-        textIdioma.setText(idioma);
-        TextView textDuracion = (TextView) findViewById(R.id.textDuracion);
-        textDuracion.setText(duracion);
+        textViewSubject.setText(asignatura + ": " + nombre);
     }
 
 
     private void consultarHoraMenos() {
         SQLiteDatabase db=dataBase.getReadableDatabase();
-
-
 
         Calendar calendarioIgual = Calendar.getInstance();
         calendarioIgual.add(Calendar.MINUTE, 0);
@@ -149,31 +115,23 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
 
         String horaMas =  new SimpleDateFormat("HH").format(calendarioMas.getTime());
 
-
-
-
-
-
         //select * from asignatura
         Cursor cursor=db.rawQuery("SELECT * FROM GRUPO WHERE h_entrada BETWEEN "+"'"+horaMas+":00' AND "+"'"+horaIgual+"'", null);
 
         while (cursor.moveToNext()){
-//            identificadorGrupo = cursor.getString(0);
-            grupoGrupo = cursor.getString(1);
+            editTextGroup.setText(cursor.getString(1));
             horaInicioGrupo = cursor.getString(2);
-            horaFinGrupo = cursor.getString(3);
+            editTextHour.setText(cursor.getString(2));
             aulaGrupo = cursor.getString(4);
+            editTextClassroom.setText(cursor.getString(4));
+        }
+
+        if (cursor.getCount() == 0) {
+            Toast.makeText(getApplicationContext(), "La asignatura no tiene un grupo con este horario", Toast.LENGTH_SHORT).show();
+            finish();
         }
 
 
-        TextView textGrupo = (TextView) findViewById(R.id.textGrupo);
-        textGrupo.setText(grupoGrupo);
-        TextView textHoraEntradaGrupo = (TextView) findViewById(R.id.textHoraEntradaGrupo);
-        textHoraEntradaGrupo.setText(horaInicioGrupo);
-        TextView textHoraSalidaGrupo = (TextView) findViewById(R.id.textHoraSalidaGrupo);
-        textHoraSalidaGrupo.setText(horaFinGrupo);
-        TextView textAulaGrupo = (TextView) findViewById(R.id.textAulaGrupo);
-        textAulaGrupo.setText(aulaGrupo);
     }
 
 }

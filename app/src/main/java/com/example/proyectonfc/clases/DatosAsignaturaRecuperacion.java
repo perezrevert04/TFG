@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,22 +30,10 @@ public class DatosAsignaturaRecuperacion extends AppCompatActivity {
     EditText editTextHour;
     EditText editTextDuration;
 
-    public boolean onOptionsItemSelected(MenuItem menu) {
-        if (menu.getItemId() == R.id.MenuActualizar) {
-            Intent intent = new Intent(DatosAsignaturaRecuperacion.this, DatosAsignaturaRecuperacion.class);
-            asignatura = getIntent().getStringExtra("ASIGNATURA");
-            intent.putExtra("ASIGNATURA", asignatura);
-            startActivity(intent);
-            this.finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(menu);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.datos_asignatura_recuperacion);
+        setContentView(R.layout.datos_asignatura_normal);
 
         dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
 
