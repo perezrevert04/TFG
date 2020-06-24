@@ -48,7 +48,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".CreacionParte"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:label="Datos del parte"
+            android:parentActivityName=".clases.RegistroAlumnos"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".util.CaptureActivityPortrait"
             android:screenOrientation="portrait"
@@ -88,7 +91,7 @@
         <activity
             android:name=".clases.RegistroAlumnos"
             android:label="Registro Alumnos"
-            android:parentActivityName=".clases.DatosAsignaturaNormal"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.DatosAsignaturaNormal"

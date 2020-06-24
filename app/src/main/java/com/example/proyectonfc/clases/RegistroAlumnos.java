@@ -13,11 +13,14 @@ import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -104,6 +107,23 @@ public class RegistroAlumnos extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,}, 1000);
         }
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        backAlert();
+        return false;
+    }
+
+    private void backAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Perderás el progreso");
+        builder.setMessage("Si vuelves atrás perderás los datos de los alumnos que se hayan identificado. ¿Estás seguro?");
+
+        builder.setNegativeButton("Cancelar", (dialog, which) -> {});
+        builder.setPositiveButton("Atrás", (dialog, which) -> finish());
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     /******************************************************LECTOR NFC********************************************************************/
