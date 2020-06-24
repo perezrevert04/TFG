@@ -57,11 +57,12 @@ class CreacionParte : AppCompatActivity() {
         buttonCrearPdf.setOnClickListener {
             try {
                 val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+                val docDate = SimpleDateFormat("dd/M/yyyy")
                 val fecha = sdf.format(Date())
 
                 val nombre_documento = "ParteFirmas-" + asignatura + "-" + grupo + "-" + fecha.replace('/', '-') + ".pdf"
 
-                generarPdf(nombre_documento, fecha)
+                generarPdf(nombre_documento, docDate.format(Date()))
 
                 toast("Se creo tu archivo pdf")
 

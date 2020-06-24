@@ -20,18 +20,8 @@ import java.util.Calendar;
 public class DatosAsignaturaNormal extends AppCompatActivity {
 
     DataBase dataBase;
-    private String identificador;
-    private String nombreAsignatura;
     private String nombre;
-    private String titulacion;
-    private String curso;
-    private String gestora;
-    private String idioma;
-    private String duracion;
     private String asignatura;
-    private String grupoGrupo;
-    private String horaInicioGrupo;
-    private String aulaGrupo;
 
     TextView textViewDegree;
     TextView textViewSubject;
@@ -120,9 +110,7 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
 
         while (cursor.moveToNext()){
             editTextGroup.setText(cursor.getString(1));
-            horaInicioGrupo = cursor.getString(2);
             editTextHour.setText(cursor.getString(2));
-            aulaGrupo = cursor.getString(4);
             editTextClassroom.setText(cursor.getString(4));
         }
 
