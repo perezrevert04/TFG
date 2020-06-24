@@ -303,8 +303,8 @@ public class RegistroAlumnos extends AppCompatActivity {
         });
 
         promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Biometric login for my app")
-                .setSubtitle("Log in using your biometric credential")
+                .setTitle("Autenticación")
+                .setSubtitle("Identifíquese para realizar esta acción.")
                 .setDeviceCredentialAllowed(true)
                 .build();
     }
