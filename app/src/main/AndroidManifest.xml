@@ -103,7 +103,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.AsignaturasProfesor"
-            android:label="Asignaturas Profesor"
+            android:label="Seleccionar asignatura"
             android:launchMode="singleTask"
             android:parentActivityName=".clases.MainActivity"
             android:screenOrientation="portrait" />
