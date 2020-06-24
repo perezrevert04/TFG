@@ -1,80 +1,44 @@
 package com.example.proyectonfc.clases;
 
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.appcompat.app.AppCompatActivity;
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
-import com.example.proyectonfc.util.Asignatura;
-
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class DatosAsignaturaNormal extends AppCompatActivity {
 
-    private Button buttonAsistencia;
     DataBase dataBase;
-    ArrayList<String> listaAsignaturas;
-    ArrayList<Asignatura> asignaturasList;
     private String identificador;
     private String nombreAsignatura;
-    private String identificadorGrupo;
     private String nombre;
     private String titulacion;
-    private String grupo;
     private String curso;
     private String gestora;
     private String idioma;
     private String duracion;
-    private String espacio;
-    private TextView text;
-    private TextView textIdentificadorGrupo;
-    private TextView textIdentificador;
-    private TextView textNombre;
-    private TextView textTitulacion;
-    private TextView textGrupo;
-    private TextView textCurso;
-    private TextView textGestora;
-    private TextView textIdioma;
-    private TextView textDuracion;
-    private TextView textAulaGrupo;
-    private TextView textHoraEntradaGrupo;
-    private TextView textHoraSalidaGrupo;
-    private TextView textAsignatura;
-    private TextView textAsigcnatura;
     private String asignatura;
-    private Calendar horaActualMenos;
-    private Calendar horaActualMas;
-    private Calendar horaActual;
-    private String grupoGrupo;;
+    private String grupoGrupo;
     private String horaInicioGrupo;
     private String horaFinGrupo;
     private String aulaGrupo;
-    private String nombreprofesor;
-    private String dniprofesor;
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //Alternativa 1
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_actualizar,menu);
-        return true;
-
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        //Alternativa 1
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu_actualizar,menu);
+//        return true;
+//
+//    }
 
 
     public boolean onOptionsItemSelected(MenuItem menu)
@@ -102,50 +66,32 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
 
         dataBase = new DataBase(getApplicationContext(), "DB5.db", null, 1);
 
-
-
-        //Intent intent = new Intent(DatosAsignatura.this.getApplicationContext(), DatosAsignatura.class);
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
-        nombreprofesor = getIntent().getStringExtra( "NOMBREPROFESOR");
-        dniprofesor = getIntent().getStringExtra( "DNIPROFESOR");
-
 
         consultarListaAsignaturas();
         consultarHoraMenos();
 
+        Button buttonAsistencia = (Button) findViewById(R.id.buttonAsistencia);
+        buttonAsistencia.setOnClickListener(v -> {
 
+            Intent intent = new Intent(v.getContext(), RegistroAlumnos.class);
 
+            intent.putExtra("ASIGNATURA", asignatura );
+            intent.putExtra("NOMBRE", nombre );
+            intent.putExtra("TITULACION", titulacion );
+            intent.putExtra("GRUPO", grupoGrupo );
+            intent.putExtra("CURSO", curso );
+            intent.putExtra("GESTORA", gestora );
+            intent.putExtra("IDIOMA", idioma );
+            intent.putExtra("DURACION", duracion );
+            intent.putExtra("HORAINICIO", horaInicioGrupo );
+            intent.putExtra("HORAFIN", horaFinGrupo );
+            intent.putExtra("AULA", aulaGrupo );
 
-
-
-        buttonAsistencia = (Button) findViewById(R.id.buttonAsistencia);
-        buttonAsistencia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(v.getContext(), RegistroAlumnos.class);
-
-                intent.putExtra("ASIGNATURA", asignatura );
-                intent.putExtra("NOMBRE", nombre );
-                intent.putExtra("TITULACION", titulacion );
-                intent.putExtra("GRUPO", grupoGrupo );
-                intent.putExtra("CURSO", curso );
-                intent.putExtra("GESTORA", gestora );
-                intent.putExtra("IDIOMA", idioma );
-                intent.putExtra("DURACION", duracion );
-                intent.putExtra("HORAINICIO", horaInicioGrupo );
-                intent.putExtra("HORAFIN", horaFinGrupo );
-                intent.putExtra("AULA", aulaGrupo );
-                intent.putExtra("NOMBREPROFESOR", nombreprofesor );
-                intent.putExtra("DNIPROFESOR", dniprofesor );
-
-                try{
-                    startActivityForResult(intent, 0);
-                }catch(Exception e){
-                    Toast.makeText(getApplicationContext(), "LA ASIGNATURA SELECCIONADA ANTERIORMENTE NO TIENE UN GRUPO CON ESTE HORARIO", Toast.LENGTH_SHORT).show();
-                }
-
-
+            try{
+                startActivityForResult(intent, 0);
+            }catch(Exception e){
+                Toast.makeText(getApplicationContext(), "LA ASIGNATURA SELECCIONADA ANTERIORMENTE NO TIENE UN GRUPO CON ESTE HORARIO", Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -169,42 +115,23 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
 
         }
 
-        textAsignatura = (TextView) findViewById(R.id.textAsignatura);
+        TextView textAsignatura = (TextView) findViewById(R.id.textAsignatura);
         textAsignatura.setText(nombreAsignatura);
-        textIdentificador = (TextView) findViewById(R.id.textIdentificador);
+        TextView textIdentificador = (TextView) findViewById(R.id.textIdentificador);
         textIdentificador.setText(identificador);
-        textNombre = (TextView) findViewById(R.id.textNombre);
+        TextView textNombre = (TextView) findViewById(R.id.textNombre);
         textNombre.setText(nombre);
-        textTitulacion = (TextView) findViewById(R.id.textTitulacion);
+        TextView textTitulacion = (TextView) findViewById(R.id.textTitulacion);
         textTitulacion.setText(titulacion);
-        textCurso = (TextView) findViewById(R.id.textCurso);
+        TextView textCurso = (TextView) findViewById(R.id.textCurso);
         textCurso.setText(curso);
-        textGestora = (TextView) findViewById(R.id.textGestora);
+        TextView textGestora = (TextView) findViewById(R.id.textGestora);
         textGestora.setText(gestora);
-        textIdioma = (TextView) findViewById(R.id.textIdioma);
+        TextView textIdioma = (TextView) findViewById(R.id.textIdioma);
         textIdioma.setText(idioma);
-        textDuracion = (TextView) findViewById(R.id.textDuracion);
+        TextView textDuracion = (TextView) findViewById(R.id.textDuracion);
         textDuracion.setText(duracion);
     }
-
-    public Date RestarHoras(Date fecha, int minutos){
-
-        horaActualMenos = Calendar.getInstance();
-        horaActualMenos.setTime(fecha); // Configuramos la fecha que se recibe
-        horaActualMenos.add(Calendar.MINUTE, minutos);  // numero de horas a añadir, o restar en caso de horas<0
-        return horaActualMenos.getTime(); // Devuelve el objeto Date con las nuevas horas añadidas
-
-    }
-
-    public Date SumarHoras(Date fecha, int minutos){
-
-
-         // Configuramos la fecha que se recibe
-        horaActualMas.add(Calendar.MINUTE, minutos);  // numero de horas a añadir, o restar en caso de horas<0
-        return horaActualMas.getTime(); // Devuelve el objeto Date con las nuevas horas añadidas
-
-    }
-
 
 
     private void consultarHoraMenos() {
@@ -231,7 +158,7 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
         Cursor cursor=db.rawQuery("SELECT * FROM GRUPO WHERE h_entrada BETWEEN "+"'"+horaMas+":00' AND "+"'"+horaIgual+"'", null);
 
         while (cursor.moveToNext()){
-            identificadorGrupo = cursor.getString(0);
+//            identificadorGrupo = cursor.getString(0);
             grupoGrupo = cursor.getString(1);
             horaInicioGrupo = cursor.getString(2);
             horaFinGrupo = cursor.getString(3);
@@ -239,13 +166,13 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
         }
 
 
-        textGrupo = (TextView) findViewById(R.id.textGrupo);
+        TextView textGrupo = (TextView) findViewById(R.id.textGrupo);
         textGrupo.setText(grupoGrupo);
-        textHoraEntradaGrupo = (TextView) findViewById(R.id.textHoraEntradaGrupo);
+        TextView textHoraEntradaGrupo = (TextView) findViewById(R.id.textHoraEntradaGrupo);
         textHoraEntradaGrupo.setText(horaInicioGrupo);
-        textHoraSalidaGrupo = (TextView) findViewById(R.id.textHoraSalidaGrupo);
+        TextView textHoraSalidaGrupo = (TextView) findViewById(R.id.textHoraSalidaGrupo);
         textHoraSalidaGrupo.setText(horaFinGrupo);
-        textAulaGrupo = (TextView) findViewById(R.id.textAulaGrupo);
+        TextView textAulaGrupo = (TextView) findViewById(R.id.textAulaGrupo);
         textAulaGrupo.setText(aulaGrupo);
     }
 
