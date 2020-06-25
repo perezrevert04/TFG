@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.proyectonfc">
-
-    <uses-permission android:name="android.permission.NFC" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.proyectonfc">
 
     <uses-feature android:name="android.hardware.nfc" />
 
+    <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:resizeableActivity="false"
         android:name=".Global"
         android:allowBackup="true"
         android:icon="@drawable/logo"
@@ -23,23 +22,18 @@
             android:name=".SplashScreenActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".clases.RequirementsToLinkActivity"
             android:label="Vincular carnet"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".LinkBiometricPromptActivity"
             android:label="Vincular carnet"
             android:launchMode="singleTask"
             android:parentActivityName=".LinkCardActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".LinkCardActivity"
             android:label="Vincular carnet"
@@ -54,7 +48,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".CreacionParte"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:label="Datos del parte"
+            android:parentActivityName=".clases.RegistroAlumnos"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".util.CaptureActivityPortrait"
             android:screenOrientation="portrait"
@@ -94,26 +91,18 @@
         <activity
             android:name=".clases.RegistroAlumnos"
             android:label="Registro Alumnos"
-            android:parentActivityName=".clases.DatosAsignaturaNormal"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.DatosAsignaturaNormal"
-            android:label="Datos Clase Normal"
-            android:parentActivityName=".clases.AsignaturasProfesor"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".clases.DatosAsignaturaRecuperacion"
-            android:label="Datos Clase Recuperación"
+            android:label="Datos de la clase"
+            android:launchMode="singleTask"
             android:parentActivityName=".clases.AsignaturasProfesor"
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.AsignaturasProfesor"
-            android:label="Asignaturas Profesor"
-            android:parentActivityName=".clases.IdentificacionProfesor"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".clases.IdentificacionProfesor"
-            android:label="Identificación Profesor"
+            android:label="Seleccionar asignatura"
+            android:launchMode="singleTask"
             android:parentActivityName=".clases.MainActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -173,13 +162,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.Configuracion"
-            android:label="Configuración Asignaturas"
+            android:label="Asignaturas"
             android:parentActivityName=".clases.MainActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Uso"
-            android:label="Identificación Profesor"
-            android:parentActivityName=".clases.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.MainActivity"
@@ -189,7 +174,6 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

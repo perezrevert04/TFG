@@ -11,6 +11,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.clases.AddComment
 import com.example.proyectonfc.db.DataBase
+import com.example.proyectonfc.logic.Person
 import com.lowagie.text.*
 import com.lowagie.text.pdf.PdfPTable
 import com.lowagie.text.pdf.PdfWriter
@@ -24,9 +25,11 @@ import java.util.*
 
 class CreacionParte : AppCompatActivity() {
 
+    private val database by lazy { (application as Global).database }
+    private lateinit var person: Person
+
     lateinit var listaIdentificadores: MutableList<String>
 
-    lateinit var nombreprofesor: String
     lateinit var asignatura: String
     lateinit var nombre: String
     lateinit var titulacion: String
@@ -37,13 +40,13 @@ class CreacionParte : AppCompatActivity() {
     lateinit var duracion: String
     lateinit var horaInicio: String
     lateinit var aula: String
-    lateinit var dniprofesor: String
     var comments = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_creacion_parte)
-        recibirDatos()
+
+        getData()
 
         buttonAddComment.setOnClickListener {
             val intent = Intent(this, AddComment::class.java)
@@ -53,14 +56,12 @@ class CreacionParte : AppCompatActivity() {
 
         buttonCrearPdf.setOnClickListener {
             try {
-                val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-                val fecha = sdf.format(Date())
+                val sdf = SimpleDateFormat("dd/M/yyyy")
+                val date = sdf.format(Date())
 
-                val nombre_documento = "ParteFirmas-" + asignatura + "-" + grupo + "-" + fecha.replace('/', '-') + ".pdf"
+                val nombre_documento = "ParteFirmas_" + asignatura + "_" + aula + "_" + grupo + "-" + date.replace('/', '-') + "_" + horaInicio + ".pdf"
 
-                generarPdf(nombre_documento, fecha)
-
-                toast("Se creo tu archivo pdf")
+                generarPdf(nombre_documento, sdf.format(Date()))
 
                 val file = "/storage/emulated/0/Download/ParteFirmasUPV/$nombre_documento"
 
@@ -89,7 +90,9 @@ class CreacionParte : AppCompatActivity() {
         }
     }
 
-    fun recibirDatos() {
+    private fun getData() {
+        person = database.getLinkedPerson()
+
         val sdf = SimpleDateFormat("dd/M/yyyy")
         textViewFecha.text = sdf.format( Date() )
 
@@ -100,9 +103,7 @@ class CreacionParte : AppCompatActivity() {
         nombre = intent.getStringExtra("nombre")
         textViewSubject.text = "$asignatura: $nombre"
 
-        nombreprofesor = intent.getStringExtra("nombreprofesor")
-        dniprofesor = intent.getStringExtra("dniprofesor")
-        textViewTeacher.text = "$nombreprofesor ($dniprofesor)"
+        textViewTeacher.text = "${person.name} (${person.dni})"
 
         grupo = intent.getStringExtra("grupo")
         textViewGroup.text = grupo
@@ -122,7 +123,7 @@ class CreacionParte : AppCompatActivity() {
         idioma = intent.getStringExtra("idioma")
     }
 
-    fun generarPdf(nombre_documento: String, fecha: String) {
+    fun generarPdf(nombre_documento: String, date: String) {
         val documento = Document()
 
 
@@ -132,8 +133,6 @@ class CreacionParte : AppCompatActivity() {
             val f = crearFichero(nombre_documento)
             val ficheroPdf = FileOutputStream(f.absolutePath)
             PdfWriter.getInstance(documento, ficheroPdf)
-
-            // Incluimos el pie de pagina y una cabecera
 
             // Incluimos el pie de pagina y una cabecera
             val cabecera = HeaderFooter(Phrase("Parte de firmas Universidad Politécnica de Valencia"), false)
@@ -165,11 +164,11 @@ class CreacionParte : AppCompatActivity() {
             val tablaB = PdfPTable(2)
             tablaB.widthPercentage = 100.00f
             tablaB.addCell("\nAsignatura: $asignatura-$nombre \nTitulación: $titulacion\nGrupo: $grupo\n\n")
-            tablaB.addCell("\nProfesor: $nombreprofesor\nDNI: $dniprofesor\n\n")
+            tablaB.addCell("\nProfesor: ${person.name}\nDNI: ${person.dni}\n\n")
             val tablaC = PdfPTable(3)
             tablaC.widthPercentage = 100.00f
             tablaC.addCell("\nCurso/Sem.: $curso\nER Gestora: $gestoria\nIdioma: $idioma\n\n")
-            tablaC.addCell("\nFecha: $fecha\nHora: $horaInicio\nDuración: $duracion\n\n")
+            tablaC.addCell("\nFecha: $date\nHora: $horaInicio\nDuración: $duracion\n\n")
             tablaC.addCell("Firma: \n\n\n")
             val tablaD = PdfPTable(1)
             tablaD.widthPercentage = 100.00f

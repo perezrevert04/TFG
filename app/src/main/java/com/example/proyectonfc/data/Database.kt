@@ -5,7 +5,6 @@ import android.content.Context
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 import com.example.proyectonfc.logic.Person
 
 const val LINKED_PERSON_TABLE = "linked_person_table"
@@ -18,7 +17,6 @@ class Database(context: Context) : SQLiteOpenHelper(context, "shopping_notes", n
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) { }
 
     override fun addLinkedPerson(person: Person): Boolean {
-        Log.d("AppLog", "add linked person")
         if (deviceIsLinked()) return false;
 
         val values = ContentValues().apply {
@@ -47,12 +45,12 @@ class Database(context: Context) : SQLiteOpenHelper(context, "shopping_notes", n
         cursor.moveToFirst()
 
         val person = Person()
-        person.name = cursor.getString(0)
-        person.dni = cursor.getString(1)
-        person.card = cursor.getString(2)
-        person.validity = cursor.getString(3)
-        person.role = cursor.getString(4)
-        person.status = cursor.getString(5)
+        person.name = cursor.getString(1)
+        person.dni = cursor.getString(2)
+        person.card = cursor.getString(3)
+        person.validity = cursor.getString(4)
+        person.role = cursor.getString(5)
+        person.status = cursor.getString(6)
 
         cursor.close()
 

@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         buttonStart.setOnClickListener { v: View ->
-            val intent = Intent(v.context, IdentificacionProfesor::class.java)
+            val intent = Intent(v.context, AsignaturasProfesor::class.java)
             startActivityForResult(intent, 0)
         }
 

@@ -13,13 +13,17 @@ import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
-import android.view.View;
+import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricPrompt;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.proyectonfc.CreacionParte;
 import com.example.proyectonfc.R;
@@ -29,6 +33,8 @@ import com.example.proyectonfc.record.ParsedNdefRecord;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executor;
 
 public class RegistroAlumnos extends AppCompatActivity {
 
@@ -37,7 +43,6 @@ public class RegistroAlumnos extends AppCompatActivity {
     private PendingIntent pendingIntent;
     private TextView text;
     private static byte[] identificador;
-    private String nombreprofesor;
     private String asignatura;
     private String nombre;
     private String titulacion;
@@ -48,8 +53,11 @@ public class RegistroAlumnos extends AppCompatActivity {
     private String duracion;
     private String horaInicio;
     private String aula;
-    private String dniprofesor;
     private String identificadorTemporal;
+
+    private Executor executor;
+    private BiometricPrompt biometricPrompt;
+    private BiometricPrompt.PromptInfo promptInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +65,6 @@ public class RegistroAlumnos extends AppCompatActivity {
         setContentView(R.layout.registro_alumnos);
         text = (TextView) findViewById(R.id.text);
 
-        nombreprofesor = getIntent().getStringExtra( "NOMBREPROFESOR");
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
         nombre = getIntent().getStringExtra( "NOMBRE");
         titulacion = getIntent().getStringExtra( "TITULACION");
@@ -68,31 +75,15 @@ public class RegistroAlumnos extends AppCompatActivity {
         duracion = getIntent().getStringExtra( "DURACION");
         horaInicio = getIntent().getStringExtra( "HORAINICIO");
         aula = getIntent().getStringExtra( "AULA");
-        dniprofesor = getIntent().getStringExtra( "DNIPROFESOR");
 
 
-
-        Button btnSiguiente = (Button) findViewById(R.id.buttonMenu);
-        btnSiguiente.setOnClickListener((View.OnClickListener) v -> {
-
-            Intent intent = new Intent(this, CreacionParte.class);
-
-            intent.putExtra("listaIdentificadores", listaIdentificadores);
-
-            intent.putExtra("nombreprofesor", nombreprofesor);
-            intent.putExtra("asignatura", asignatura);
-            intent.putExtra("nombre", nombre);
-            intent.putExtra("titulacion", titulacion);
-            intent.putExtra("grupo", grupo);
-            intent.putExtra("curso", curso);
-            intent.putExtra("gestoria", gestoria);
-            intent.putExtra("idioma", idioma);
-            intent.putExtra("duracion", duracion);
-            intent.putExtra("horaInicio", horaInicio);
-            intent.putExtra("aula", aula);
-            intent.putExtra("dniprofesor", dniprofesor);
-
-            startActivity(intent);
+        Button btnNext = (Button) findViewById(R.id.buttonNext);
+        btnNext.setOnClickListener( view -> {
+            prepareBiometricPrompt( () -> {
+                nextActivity();
+                return null;
+            });
+            biometricPrompt.authenticate(promptInfo);
         });
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -112,6 +103,53 @@ public class RegistroAlumnos extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,}, 1000);
         }
 
+    }
+
+    private void nextActivity() {
+        Intent intent = new Intent(this, CreacionParte.class);
+
+        intent.putExtra("listaIdentificadores", listaIdentificadores);
+
+        intent.putExtra("asignatura", asignatura);
+        intent.putExtra("nombre", nombre);
+        intent.putExtra("titulacion", titulacion);
+        intent.putExtra("grupo", grupo);
+        intent.putExtra("curso", curso);
+        intent.putExtra("gestoria", gestoria);
+        intent.putExtra("idioma", idioma);
+        intent.putExtra("duracion", duracion);
+        intent.putExtra("horaInicio", horaInicio);
+        intent.putExtra("aula", aula);
+
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            backAlert();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void backAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Cancelar parte");
+        builder.setMessage("Si vuelves atrás perderás los datos de los alumnos que se hayan identificado. ¿Estás seguro?");
+
+        builder.setNegativeButton("No", (dialog, which) -> {});
+        builder.setPositiveButton("Sí", (dialog, which) -> {
+            prepareBiometricPrompt( () -> {
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
+                return null;
+            });
+            biometricPrompt.authenticate(promptInfo);
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     /******************************************************LECTOR NFC********************************************************************/
@@ -240,7 +278,38 @@ public class RegistroAlumnos extends AppCompatActivity {
         }
         return result;
     }
+    /*****************************************************FIN LECTOR NFC*****************************************************************/
 
-/*****************************************************FIN LECTOR NFC*****************************************************************/
+    private void prepareBiometricPrompt(Callable<Void> method) {
+        executor = ContextCompat.getMainExecutor(this);
+        biometricPrompt = new BiometricPrompt(this, executor, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+                Toast.makeText(getApplicationContext(), "Authentication error: " + errString, Toast.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                try {
+                    method.call();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+                Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Autenticación")
+                .setSubtitle("Identifíquese para realizar esta acción.")
+                .setDeviceCredentialAllowed(true)
+                .build();
+    }
 }

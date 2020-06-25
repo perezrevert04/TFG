@@ -1,107 +1,293 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:id="@+id/relativeLayout5"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondo"
-    tools:context=".DatosAsignaturaNormal">
-
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/corners2"
-        android:backgroundTint="#70FFFFFF"
-        android:minHeight="?attr/actionBarSize"
-        android:layout_marginTop="5dp"
-        android:theme="?attr/actionBarTheme"
-        android:layout_centerHorizontal="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:text="DATOS CLASE: "
-        android:textStyle="bold"
-        android:textColor="#31588B"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"/>
-
-    <TextView
-        android:id="@+id/textAsignatura"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginTop="20dp"
-        android:textColor="#31588B"
-        android:layout_marginLeft="120dp"/>
-
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="470dp"
-        android:background="@drawable/corners4"
-        android:backgroundTint="#70FFFFFF"
-        android:minHeight="?attr/actionBarSize"
-        android:layout_marginTop="60dp"
-        android:theme="?attr/actionBarTheme"
-        android:layout_centerHorizontal="true"/>
+    tools:context="clases.DatosAsignaturaNormal" >
 
     <Button
-        android:id="@+id/buttonAsistencia"
-        android:layout_width="250dp"
+        android:id="@+id/buttonStart"
+        style="@style/AppTheme.PrimaryButton"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="540dp"
-        android:textSize="21sp"
-        android:textStyle="bold"
-        android:textColor="#31588B"
-        android:background="@drawable/boton_redondo"
-        android:text="Iniciar Asistencia" />
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="16dp"
+        android:text="Iniciar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView android:textColor="#31588B" android:textStyle="bold" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Identificador:" android:layout_marginTop="80dp" android:layout_marginLeft="15dp" android:id="@+id/textView4"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView android:textColor="#31588B" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content"  android:layout_marginTop="80dp" android:layout_marginLeft="140dp" android:id="@+id/textIdentificador"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView android:textColor="#31588B" android:textStyle="bold" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Nombre:" android:layout_marginTop="120dp" android:layout_marginLeft="15dp" android:id="@+id/textView5"/>
+            <View
+                android:id="@+id/view3"
+                style="@style/Divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/textViewDepartment"
+                app:layout_constraintStart_toStartOf="@+id/textView19"
+                app:layout_constraintTop_toBottomOf="@+id/textViewSchoolYear" />
 
-    <TextView android:textColor="#31588B" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content"  android:layout_marginTop="120dp" android:layout_marginLeft="100dp" android:id="@+id/textNombre"/>
+            <View
+                android:id="@+id/view4"
+                style="@style/Divider"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@+id/textViewDepartment"
+                app:layout_constraintStart_toStartOf="@+id/textView19"
+                app:layout_constraintTop_toBottomOf="@+id/editTextLanguage" />
 
-    <TextView android:textColor="#31588B" android:textStyle="bold" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Titulacion:" android:layout_marginTop="160dp" android:layout_marginLeft="15dp" android:id="@+id/textView6"/>
+            <View
+                android:id="@+id/view5"
+                style="@style/Divider"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@+id/textViewDepartment"
+                app:layout_constraintStart_toStartOf="@+id/textView19"
+                app:layout_constraintTop_toBottomOf="@+id/editTextGroup" />
 
-    <TextView android:textColor="#31588B" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content"  android:layout_marginTop="160dp" android:layout_marginLeft="120dp" android:id="@+id/textTitulacion"/>
+            <View
+                android:id="@+id/view6"
+                style="@style/Divider"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@+id/textViewDepartment"
+                app:layout_constraintStart_toStartOf="@+id/textView19"
+                app:layout_constraintTop_toBottomOf="@+id/editTextClassroom" />
 
-    <TextView android:textColor="#31588B" android:textStyle="bold" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Grupo:" android:layout_marginTop="200dp" android:layout_marginLeft="15dp" android:id="@+id/textView7"/>
+            <View
+                android:id="@+id/view7"
+                style="@style/Divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                app:layout_constraintEnd_toEndOf="@+id/textViewDepartment"
+                app:layout_constraintStart_toStartOf="@+id/textView19"
+                app:layout_constraintTop_toBottomOf="@+id/editTextHour" />
 
-    <TextView android:textColor="#31588B" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content"  android:layout_marginTop="200dp" android:layout_marginLeft="90dp" android:id="@+id/textGrupo"/>
+            <TextView
+                android:id="@+id/textViewDegree"
+                style="@style/Title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:text="GRADO EN INGENIERÍA INFORMÁTICA"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView android:textColor="#31588B" android:textStyle="bold" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Curso:" android:layout_marginTop="240dp" android:layout_marginLeft="15dp" android:id="@+id/textView8"/>
+            <TextView
+                android:id="@+id/textViewSubject"
+                style="@style/Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="INGENIERÍA DEL SOFTWARE"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDegree" />
 
-    <TextView android:textColor="#31588B" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content"  android:layout_marginTop="240dp" android:layout_marginLeft="80dp" android:id="@+id/textCurso"/>
+            <TextView
+                android:id="@+id/textView19"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:text="Gestora:"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewSubject" />
 
-    <TextView android:textColor="#31588B" android:textStyle="bold" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Gestora:" android:layout_marginTop="280dp" android:layout_marginLeft="15dp" android:id="@+id/textView9"/>
+            <TextView
+                android:id="@+id/textViewDepartment"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="10dp"
+                android:text="DEPARTAMENTO DE FÍSICA APLICADA "
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView19"
+                app:layout_constraintTop_toTopOf="@+id/textView19" />
 
-    <TextView android:textColor="#31588B" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content"  android:layout_marginTop="280dp" android:layout_marginLeft="100dp" android:id="@+id/textGestora"/>
+            <TextView
+                android:id="@+id/textView22"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Curso:"
+                app:layout_constraintStart_toStartOf="@+id/textView19"
+                app:layout_constraintTop_toBottomOf="@+id/view2" />
 
-    <TextView android:textColor="#31588B" android:textStyle="bold" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Idioma:" android:layout_marginTop="320dp" android:layout_marginLeft="15dp" android:id="@+id/textView10"/>
+            <TextView
+                android:id="@+id/textViewSchoolYear"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="textViewSchoolYear"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="@+id/view2"
+                app:layout_constraintStart_toEndOf="@+id/textView22"
+                app:layout_constraintTop_toTopOf="@+id/textView22" />
 
-    <TextView android:textColor="#31588B" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content"  android:layout_marginTop="320dp" android:layout_marginLeft="90dp" android:id="@+id/textIdioma"/>
+            <TextView
+                android:id="@+id/textView25"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Idioma:"
+                app:layout_constraintStart_toStartOf="@+id/textView22"
+                app:layout_constraintTop_toBottomOf="@+id/view3" />
 
-    <TextView android:textColor="#31588B" android:textStyle="bold" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Duración:" android:layout_marginTop="360dp" android:layout_marginLeft="15dp" android:id="@+id/textView11"/>
+            <TextView
+                android:id="@+id/textView28"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Grupo:"
+                app:layout_constraintStart_toStartOf="@+id/textView25"
+                app:layout_constraintTop_toBottomOf="@+id/view4" />
 
-    <TextView android:textColor="#31588B" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_marginTop="360dp" android:layout_marginLeft="110dp" android:id="@+id/textDuracion"/>
+            <TextView
+                android:id="@+id/textView31"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Aula:"
+                app:layout_constraintStart_toStartOf="@+id/textView28"
+                app:layout_constraintTop_toBottomOf="@+id/view5" />
 
-    <TextView android:textColor="#31588B" android:textStyle="bold" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Aula:" android:layout_marginTop="400dp" android:layout_marginLeft="15dp" android:id="@+id/textView12"/>
+            <TextView
+                android:id="@+id/textView35"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Hora:"
+                app:layout_constraintStart_toStartOf="@+id/textView31"
+                app:layout_constraintTop_toBottomOf="@+id/view6" />
 
-    <TextView android:textColor="#31588B" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_marginTop="400dp" android:layout_marginLeft="70dp" android:id="@+id/textAulaGrupo"/>
+            <TextView
+                android:id="@+id/textView38"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Duración:"
+                app:layout_constraintStart_toStartOf="@+id/textView35"
+                app:layout_constraintTop_toBottomOf="@+id/view7" />
 
-    <TextView android:textColor="#31588B" android:textStyle="bold" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Hora Entrada:" android:layout_marginTop="440dp" android:layout_marginLeft="15dp" android:id="@+id/textView13"/>
+            <View
+                android:id="@+id/view2"
+                style="@style/Divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/textViewDepartment"
+                app:layout_constraintStart_toStartOf="@+id/textView19"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDepartment" />
 
-    <TextView android:textColor="#31588B" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_marginTop="440dp" android:layout_marginLeft="140dp" android:id="@+id/textHoraEntradaGrupo"/>
+            <EditText
+                android:id="@+id/editTextDuration"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:hint="Insertar duración"
+                android:inputType="textPersonName"
+                android:textAlignment="textEnd"
+                android:textColorHint="@color/colorSecondaryAccent"
+                app:layout_constraintEnd_toEndOf="@+id/view7"
+                app:layout_constraintStart_toEndOf="@+id/textView38"
+                app:layout_constraintTop_toBottomOf="@+id/view7" />
 
-    <TextView android:textColor="#31588B" android:textStyle="bold" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Hora Salida:" android:layout_marginTop="480dp" android:layout_marginLeft="15dp" android:id="@+id/textView14"/>
+            <EditText
+                android:id="@+id/editTextHour"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Insertar hora"
+                android:inputType="textPersonName"
+                android:textAlignment="textEnd"
+                android:textColorHint="@color/colorSecondaryAccent"
+                app:layout_constraintEnd_toEndOf="@+id/view6"
+                app:layout_constraintStart_toStartOf="@+id/editTextDuration"
+                app:layout_constraintTop_toBottomOf="@+id/view6" />
 
-    <TextView android:textColor="#31588B" android:textSize="20sp" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_marginTop="480dp" android:layout_marginLeft="130dp" android:id="@+id/textHoraSalidaGrupo"/>
+            <EditText
+                android:id="@+id/editTextClassroom"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Insertar aula"
+                android:inputType="textPersonName"
+                android:textAlignment="textEnd"
+                android:textColorHint="@color/colorSecondaryAccent"
+                app:layout_constraintEnd_toEndOf="@+id/view5"
+                app:layout_constraintStart_toStartOf="@+id/editTextHour"
+                app:layout_constraintTop_toBottomOf="@+id/view5" />
+
+            <EditText
+                android:id="@+id/editTextGroup"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Insertar grupo"
+                android:inputType="textPersonName"
+                android:textAlignment="textEnd"
+                android:textColorHint="@color/colorSecondaryAccent"
+                app:layout_constraintEnd_toEndOf="@+id/view4"
+                app:layout_constraintStart_toStartOf="@+id/editTextClassroom"
+                app:layout_constraintTop_toBottomOf="@+id/view4" />
+
+            <EditText
+                android:id="@+id/editTextLanguage"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Insertar idioma"
+                android:inputType="textPersonName"
+                android:textAlignment="textEnd"
+                android:textColorHint="@color/colorSecondaryAccent"
+                app:layout_constraintEnd_toEndOf="@+id/view3"
+                app:layout_constraintStart_toStartOf="@+id/editTextGroup"
+                app:layout_constraintTop_toBottomOf="@+id/view3" />
 
 
-
-
-
-</RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
