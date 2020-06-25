@@ -95,13 +95,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.DatosAsignaturaNormal"
-            android:label="Datos Clase Normal"
-            android:launchMode="singleTask"
-            android:parentActivityName=".clases.AsignaturasProfesor"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".clases.DatosAsignaturaRecuperacion"
-            android:label="Datos Clase Recuperación"
+            android:label="Datos de la clase"
             android:launchMode="singleTask"
             android:parentActivityName=".clases.AsignaturasProfesor"
             android:screenOrientation="portrait" />
@@ -180,7 +174,6 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

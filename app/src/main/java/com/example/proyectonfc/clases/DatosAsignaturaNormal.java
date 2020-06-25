@@ -116,7 +116,11 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
 
         if (cursor.getCount() == 0) {
             Toast.makeText(getApplicationContext(), "La asignatura no tiene un grupo con este horario", Toast.LENGTH_SHORT).show();
-            finish();
+
+            editTextGroup.setText("");
+            editTextHour.setText("");
+            editTextClassroom.setText("");
+            editTextDuration.setText("");
         }
 
 

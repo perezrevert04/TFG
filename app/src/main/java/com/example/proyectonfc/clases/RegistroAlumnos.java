@@ -126,20 +126,24 @@ public class RegistroAlumnos extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        backAlert();
-        return false;
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            backAlert();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void backAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Perderás el progreso");
+        builder.setTitle("Cancelar parte");
         builder.setMessage("Si vuelves atrás perderás los datos de los alumnos que se hayan identificado. ¿Estás seguro?");
 
-        builder.setNegativeButton("Cancelar", (dialog, which) -> {});
-        builder.setPositiveButton("Atrás", (dialog, which) -> {
+        builder.setNegativeButton("No", (dialog, which) -> {});
+        builder.setPositiveButton("Sí", (dialog, which) -> {
             prepareBiometricPrompt( () -> {
-                /* TODO: GESTIONAR VUELTA ATRÁS */
-//                onBackPressed();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
                 return null;
             });
             biometricPrompt.authenticate(promptInfo);
