@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.clases.AddComment
@@ -59,11 +60,11 @@ class CreacionParte : AppCompatActivity() {
                 val sdf = SimpleDateFormat("dd/M/yyyy")
                 val date = sdf.format(Date())
 
-                val nombre_documento = "ParteFirmas_" + asignatura + "_" + aula + "_" + grupo + "-" + date.replace('/', '-') + "_" + horaInicio + ".pdf"
+                val filename = "ParteFirmas_" + asignatura + "_" + aula + "_" + grupo + "-" + date.replace('/', '-') + "_" + horaInicio + ".pdf"
 
-                generarPdf(nombre_documento, sdf.format(Date()))
+                generarPdf(filename, sdf.format(Date()))
 
-                val file = "/storage/emulated/0/Download/ParteFirmasUPV/$nombre_documento"
+                val file = "/storage/emulated/0/Download/ParteFirmasUPV/$filename"
 
                 val builder = VmPolicy.Builder()
                 StrictMode.setVmPolicy(builder.build())
@@ -123,21 +124,21 @@ class CreacionParte : AppCompatActivity() {
         idioma = intent.getStringExtra("idioma")
     }
 
-    fun generarPdf(nombre_documento: String, date: String) {
+    fun generarPdf(filename: String, date: String) {
         val documento = Document()
 
 
         try {
 
             //Creación archivo pdf
-            val f = crearFichero(nombre_documento)
-            val ficheroPdf = FileOutputStream(f.absolutePath)
-            PdfWriter.getInstance(documento, ficheroPdf)
+            val file = File(filesDir, filename)
+            val fos = FileOutputStream(file)
+            PdfWriter.getInstance(documento, fos)
 
             // Incluimos el pie de pagina y una cabecera
-            val cabecera = HeaderFooter(Phrase("Parte de firmas Universidad Politécnica de Valencia"), false)
+            val cabecera = HeaderFooter(Phrase("Parte de firmas Universitat Politècnica de València"), false)
             cabecera.setAlignment(Element.ALIGN_CENTER)
-            val pie = HeaderFooter(Phrase("Parte de firmas Universidad Politécnica de Valencia"), false)
+            val pie = HeaderFooter(Phrase("Parte de firmas Universitat Politècnica de València"), false)
             pie.setAlignment(Element.ALIGN_CENTER)
 
             documento.setHeader(cabecera)
@@ -206,12 +207,9 @@ class CreacionParte : AppCompatActivity() {
         } catch (e: Exception) {
             toast("No se ha podido crear el archivo pdf")
         } finally {
-            documento.close();
+            Log.d("AppLog", "Nº archivos: "+ fileList().size)
+            Log.d("AppLog", "Los archivos se almacenan en: $filesDir")
+            documento.close()
         }
-    }
-
-    fun crearFichero(filename: String): File {
-        val path = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "ParteFirmasUPV").path
-        return File(path, filename)
     }
 }
