@@ -8,6 +8,7 @@ import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.logic.Report
+import kotlinx.android.synthetic.main.activity_show_reports.*
 import org.jetbrains.anko.toast
 
 
@@ -33,9 +34,14 @@ class ShowReportsActivity : AppCompatActivity() {
         reports.setOnItemClickListener { adapter: AdapterView<*>?, view: View, position: Int, long: Long ->
 
         }
+
         reports.setOnItemLongClickListener { _: AdapterView<*>?, _: View, position: Int, _: Long ->
             showAlert(position)
             true
+        }
+
+        fab_search.setOnClickListener {
+
         }
     }
 
