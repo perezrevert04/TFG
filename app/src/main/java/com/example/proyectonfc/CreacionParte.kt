@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +32,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Callable
 import java.util.concurrent.Executor
+import kotlin.collections.ArrayList
 
 class CreacionParte : AppCompatActivity() {
 
@@ -69,6 +72,31 @@ class CreacionParte : AppCompatActivity() {
         buttonCrearPdf.setOnClickListener {
             prepareBiometricPrompt { finalizarParte() }
             biometricPrompt.authenticate(promptInfo)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_attendance, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_attendance -> {
+                val array: ArrayList<String> = arrayListOf()
+                val database = DataBase(applicationContext)
+                listaIdentificadores.forEach {
+                    database.consultarAlumno(asignatura, it)
+                    array.add("\n" + database.listDni + " - " + database.listNombre + "\n")
+                }
+                database.close()
+
+                val intent = Intent(this, AttendanceActivity::class.java)
+                intent.putExtra(AttendanceActivity.ATTENDANCE_LIST, array)
+                startActivity(intent)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

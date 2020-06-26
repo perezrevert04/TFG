@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.proyectonfc">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.proyectonfc">
 
     <uses-feature android:name="android.hardware.nfc" />
 
@@ -20,14 +19,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".AttendanceActivity"
+            android:parentActivityName=".CreacionParte"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
+        <activity
             android:name=".ReportDataActivity"
             android:parentActivityName=".ShowReportsActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
             android:name=".ReportFilterActivity"
             android:label="Filtrar"
-            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
-            android:parentActivityName=".ShowReportsActivity"/>
+            android:parentActivityName=".ShowReportsActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
             android:name=".ShowReportsActivity"
             android:label="Consultar partes"

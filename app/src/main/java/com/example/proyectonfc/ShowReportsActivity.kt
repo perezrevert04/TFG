@@ -31,7 +31,7 @@ class ShowReportsActivity : AppCompatActivity() {
 
         allReports = database.getAllReports()
 
-        allReports.forEach { reportsList.add(it.toString()) }
+        allReports.forEach { reportsList.add("\n" + it.toString() + "\n") }
 
         reports = findViewById<View>(R.id.listView) as ListView
         updateAdapter()
@@ -60,7 +60,7 @@ class ShowReportsActivity : AppCompatActivity() {
             filter = data?.getSerializableExtra(ReportFilterActivity.EXTRA_FILTER) as ReportFilter
             allReports = database.filterReports(filter)
             reportsList = mutableListOf()
-            allReports.forEach { reportsList.add(it.toString()) }
+            allReports.forEach { reportsList.add("\n" + it.toString() + "\n") }
             updateAdapter()
 
             toast("Resultados: " + reportsList.size)
