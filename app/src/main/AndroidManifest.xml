@@ -20,6 +20,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ReportDataActivity"
+            android:parentActivityName=".ShowReportsActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+        <activity
             android:name=".ReportFilterActivity"
             android:label="Filtrar"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"

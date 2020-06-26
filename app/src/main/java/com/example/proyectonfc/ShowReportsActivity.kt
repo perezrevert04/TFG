@@ -36,8 +36,10 @@ class ShowReportsActivity : AppCompatActivity() {
         reports = findViewById<View>(R.id.listView) as ListView
         updateAdapter()
 
-        reports.setOnItemClickListener { adapter: AdapterView<*>?, view: View, position: Int, long: Long ->
-
+        reports.setOnItemClickListener { _: AdapterView<*>?, _: View, position: Int, _: Long ->
+            val intent = Intent(this, ReportDataActivity::class.java)
+            intent.putExtra(ReportDataActivity.EXTRA_REPORT, allReports[position])
+            startActivity(intent)
         }
 
         reports.setOnItemLongClickListener { _: AdapterView<*>?, _: View, position: Int, _: Long ->
