@@ -17,7 +17,7 @@ class Report(
 ) : Serializable {
 
     override fun toString(): String {
-        return "$subjectCode: $subjectName ($group, $classroom). $date - $hour. [$duration]"
+        return "$subjectCode: $subjectName ($group, $classroom).\n$date - $hour [$duration]"
     }
 
 }
