@@ -5,8 +5,10 @@ import android.content.Context
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import com.example.proyectonfc.logic.Person
 import com.example.proyectonfc.logic.Report
+import com.example.proyectonfc.logic.ReportFilter
 
 const val TABLE_LINKED_PERSON = "TABLE_LINKED_PERSON"
 const val TABLE_REPORT = "TABLE_REPORT"
@@ -108,6 +110,41 @@ class Database(context: Context) : SQLiteOpenHelper(context, "shopping_notes", n
         val array: ArrayList<Report> = arrayListOf()
 
         val cursor = readableDatabase.rawQuery("SELECT * FROM $TABLE_REPORT", null)
+
+        var report: Report
+        while (cursor.moveToNext()) {
+            report = Report()
+
+            report.id = cursor.getInt(0)
+            report.teacher = cursor.getString(1)
+            report.subjectCode = cursor.getString(2)
+            report.subjectName = cursor.getString(3)
+            report.group = cursor.getString(4)
+            report.classroom = cursor.getString(5)
+            report.date = cursor.getString(6)
+            report.hour = cursor.getString(7)
+            report.duration = cursor.getString(8)
+            report.attendance = cursor.getInt(9)
+            report.comments = cursor.getString(10)
+
+            array.add(report)
+        }
+
+        cursor.close()
+
+        return array
+    }
+
+    override fun filterReports(filter: ReportFilter): ArrayList<Report> {
+        val array: ArrayList<Report> = arrayListOf()
+
+        val sql = "SELECT * FROM $TABLE_REPORT " +
+                "WHERE (subject_code LiKE '%${filter.subject}%' OR " +
+                "subject_name LiKE '%${filter.subject}%') AND " +
+                "class LiKE '%${filter.group}%' AND " +
+                "date LIKE '%${filter.date}%'"
+
+        val cursor = readableDatabase.rawQuery(sql, null)
 
         var report: Report
         while (cursor.moveToNext()) {

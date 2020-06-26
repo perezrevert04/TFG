@@ -56,6 +56,12 @@ class ShowReportsActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ReportFilterActivity.REQ_CODE && resultCode == Activity.RESULT_OK) {
             filter = data?.getSerializableExtra(ReportFilterActivity.EXTRA_FILTER) as ReportFilter
+            allReports = database.filterReports(filter)
+            reportsList = mutableListOf()
+            allReports.forEach { reportsList.add(it.toString()) }
+            updateAdapter()
+
+            toast("Resultados: " + reportsList.size)
         }
     }
 
@@ -63,8 +69,6 @@ class ShowReportsActivity : AppCompatActivity() {
         val report = allReports[position]
         val builder = AlertDialog.Builder(this)
         builder.setTitle( report.subjectCode ).setMessage( "$report\n\n¿Desea eliminar los datos de este parte?" )
-
-
 
         builder.setNegativeButton("Cancelar") { _, _ -> }
         builder.setPositiveButton("Eliminar") { _, _ ->

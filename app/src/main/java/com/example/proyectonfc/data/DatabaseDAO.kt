@@ -2,6 +2,7 @@ package com.example.proyectonfc.data
 
 import com.example.proyectonfc.logic.Person
 import com.example.proyectonfc.logic.Report
+import com.example.proyectonfc.logic.ReportFilter
 
 interface DatabaseDAO {
 
@@ -13,6 +14,7 @@ interface DatabaseDAO {
     fun addReport(report: Report): Boolean                        // Añade un nuevo parte de firmas
     fun getReportById(id: String): Report                         // Obtiene el parte de firmas con el identificador id
     fun getAllReports(): ArrayList<Report>                        // Obtiene todos los partes de firmas
-    fun removeReport(id: Int): Boolean                         // Elimina el parte de firmas con el identificador id
+    fun filterReports(filter: ReportFilter): ArrayList<Report>    // Filtra los partes de firmas
+    fun removeReport(id: Int): Boolean                            // Elimina el parte de firmas con el identificador id
 
 }
