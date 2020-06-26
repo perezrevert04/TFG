@@ -57,7 +57,7 @@ class CreacionParte : AppCompatActivity() {
 
         buttonCrearPdf.setOnClickListener {
             try {
-                val sdf = SimpleDateFormat("dd/M/yyyy")
+                val sdf = SimpleDateFormat("dd/MM/yyyy")
                 val date = sdf.format(Date())
 
                 val filename = asignatura + "_" + grupo + "_" + date.replace('/', '-') + "_" + horaInicio + "_" + aula + ".pdf"
@@ -94,7 +94,7 @@ class CreacionParte : AppCompatActivity() {
     private fun getData() {
         person = database.getLinkedPerson()
 
-        val sdf = SimpleDateFormat("dd/M/yyyy")
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
         textViewFecha.text = sdf.format( Date() )
 
         listaIdentificadores = intent.getStringArrayListExtra("listaIdentificadores")

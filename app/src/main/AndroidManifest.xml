@@ -19,13 +19,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity
+            android:name=".ReportFilterActivity"
+            android:label="Filtrar"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"
+            android:parentActivityName=".ShowReportsActivity"/>
         <activity
             android:name=".ShowReportsActivity"
-            android:launchMode="singleTask"
             android:label="Consultar partes"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".clases.MainActivity"/>
+            android:launchMode="singleTask"
+            android:parentActivityName=".clases.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SplashScreenActivity"
             android:launchMode="singleTask"

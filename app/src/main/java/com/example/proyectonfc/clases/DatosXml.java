@@ -116,7 +116,7 @@ public class DatosXml extends AppCompatActivity {
     };
 
     private void actualizarInput() {
-        String formatoDeFecha = "dd-MM-yyyy"; //In which you need put here
+        String formatoDeFecha = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(formatoDeFecha, Locale.US);
 
         textFecha.setText(sdf.format(calendario.getTime()));
