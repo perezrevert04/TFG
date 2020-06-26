@@ -42,4 +42,11 @@
         <item name="android:textColor">@color/colorSecondary</item>
         <item name="android:background">@drawable/rounded_shape</item>
     </style>
+
+    <style name="AppTheme.MinimalistSecondaryButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/colorSecondaryAccent</item>
+        <item name="android:background">@drawable/rounded_shape</item>
+    </style>
 </resources>

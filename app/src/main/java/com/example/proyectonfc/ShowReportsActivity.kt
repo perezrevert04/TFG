@@ -10,7 +10,7 @@ import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.logic.Report
-import kotlinx.android.synthetic.main.activity_creacion_parte.*
+import com.example.proyectonfc.logic.ReportFilter
 import kotlinx.android.synthetic.main.activity_show_reports.*
 import org.jetbrains.anko.toast
 
@@ -22,6 +22,8 @@ class ShowReportsActivity : AppCompatActivity() {
     private var reportsList: MutableList<String> = mutableListOf()
     private lateinit var reports: ListView
     private lateinit var allReports: ArrayList<Report>
+
+    private var filter = ReportFilter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,17 +47,15 @@ class ShowReportsActivity : AppCompatActivity() {
 
         fab_search.setOnClickListener {
             val intent = Intent(this, ReportFilterActivity::class.java)
-            // put extra
+            intent.putExtra(ReportFilterActivity.EXTRA_FILTER, filter)
             startActivityForResult(intent, ReportFilterActivity.REQ_CODE)
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1234 && resultCode == Activity.RESULT_OK) {
-//            comments = data?.extras?.getString("comments") ?: ""
-//            textViewComments.text = comments
-//            textViewEmptyComments.visibility = if (comments.isEmpty()) View.VISIBLE else View.INVISIBLE
+        if (requestCode == ReportFilterActivity.REQ_CODE && resultCode == Activity.RESULT_OK) {
+            filter = data?.getSerializableExtra(ReportFilterActivity.EXTRA_FILTER) as ReportFilter
         }
     }
 
