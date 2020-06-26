@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.proyectonfc">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.proyectonfc">
 
     <uses-feature android:name="android.hardware.nfc" />
 
@@ -10,30 +11,37 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:resizeableActivity="false"
         android:name=".Global"
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="Parte Firmas UPV"
+        android:resizeableActivity="false"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".ShowReportsActivity"
+            android:launchMode="singleTask"
+            android:label="Consultar partes"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".clases.MainActivity"/>
         <activity
             android:name=".SplashScreenActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".clases.RequirementsToLinkActivity"
             android:label="Vincular carnet"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".LinkBiometricPromptActivity"
             android:label="Vincular carnet"
             android:launchMode="singleTask"
             android:parentActivityName=".LinkCardActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".LinkCardActivity"
             android:label="Vincular carnet"
@@ -48,8 +56,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".CreacionParte"
-            android:launchMode="singleTask"
             android:label="Datos del parte"
+            android:launchMode="singleTask"
             android:parentActivityName=".clases.RegistroAlumnos"
             android:screenOrientation="portrait" />
         <activity
@@ -163,8 +171,8 @@
         <activity
             android:name=".clases.Configuracion"
             android:label="Asignaturas"
-            android:parentActivityName=".clases.MainActivity"
             android:launchMode="singleTask"
+            android:parentActivityName=".clases.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.MainActivity"
@@ -174,6 +182,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

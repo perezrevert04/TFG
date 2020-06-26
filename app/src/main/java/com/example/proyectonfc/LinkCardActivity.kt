@@ -119,14 +119,4 @@ class LinkCardActivity : AppCompatActivity() {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 
-    private fun showAlert(message: String) {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Aviso").setMessage(message)
-
-        builder.setPositiveButton("Entendido!") { _, _ -> finish() }
-
-        val alertDialog: AlertDialog = builder.create()
-        alertDialog.show()
-    }
-
 }

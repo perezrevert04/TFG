@@ -2,12 +2,14 @@ package com.example.proyectonfc.clases
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
+import com.example.proyectonfc.ShowReportsActivity
 import com.example.proyectonfc.SplashScreenActivity
 import com.example.proyectonfc.db.DataBase
 import kotlinx.android.synthetic.main.activity_main.*
@@ -33,17 +35,25 @@ class MainActivity : AppCompatActivity() {
 
         buttonStart.setOnClickListener { v: View ->
             val intent = Intent(v.context, AsignaturasProfesor::class.java)
-            startActivityForResult(intent, 0)
+            startActivity(intent)
         }
 
         buttonManageSubjects.setOnClickListener { v: View ->
             val intent = Intent(v.context, Configuracion::class.java)
-            startActivityForResult(intent, 0)
+            startActivity(intent)
         }
 
         buttonConsultParts.setOnClickListener { v: View ->
-            val intent = Intent(v.context, DatosXml::class.java)
-            startActivityForResult(intent, 0)
+            val intent = Intent(v.context, ShowReportsActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        return if (keyCode == KeyEvent.KEYCODE_BACK) {
+            false
+        } else {
+            return super.onKeyDown(keyCode, event)
         }
     }
 }

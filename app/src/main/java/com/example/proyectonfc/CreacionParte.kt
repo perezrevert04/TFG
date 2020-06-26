@@ -7,12 +7,12 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.clases.AddComment
 import com.example.proyectonfc.db.DataBase
 import com.example.proyectonfc.logic.Person
+import com.example.proyectonfc.logic.Report
 import com.lowagie.text.*
 import com.lowagie.text.pdf.PdfPTable
 import com.lowagie.text.pdf.PdfWriter
@@ -60,7 +60,7 @@ class CreacionParte : AppCompatActivity() {
                 val sdf = SimpleDateFormat("dd/M/yyyy")
                 val date = sdf.format(Date())
 
-                val filename = "ParteFirmas_" + asignatura + "_" + aula + "_" + grupo + "-" + date.replace('/', '-') + "_" + horaInicio + ".pdf"
+                val filename = asignatura + "_" + grupo + "_" + date.replace('/', '-') + "_" + horaInicio + "_" + aula + ".pdf"
 
                 generarPdf(filename, sdf.format(Date()))
 
@@ -71,11 +71,11 @@ class CreacionParte : AppCompatActivity() {
 
 
                 val fileIn = File(file)
-                val u = Uri.fromFile(fileIn)
-                val pdfOpenintent = Intent(Intent.ACTION_VIEW)
-                pdfOpenintent.setDataAndType(u, "application/pdf")
-                pdfOpenintent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(pdfOpenintent)
+                val uri = Uri.fromFile(fileIn)
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.setDataAndType(uri, "application/pdf")
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
             } catch (e: Exception) {
                 toast("No se ha podido crear el archivo pdf")
             }
@@ -131,9 +131,9 @@ class CreacionParte : AppCompatActivity() {
         try {
 
             //Creación archivo pdf
-            val file = File(filesDir, filename)
-            val fos = FileOutputStream(file)
-            PdfWriter.getInstance(documento, fos)
+            val f = crearFichero(filename)
+            val ficheroPdf = FileOutputStream(f.absolutePath)
+            PdfWriter.getInstance(documento, ficheroPdf)
 
             // Incluimos el pie de pagina y una cabecera
             val cabecera = HeaderFooter(Phrase("Parte de firmas Universitat Politècnica de València"), false)
@@ -207,9 +207,29 @@ class CreacionParte : AppCompatActivity() {
         } catch (e: Exception) {
             toast("No se ha podido crear el archivo pdf")
         } finally {
-            Log.d("AppLog", "Nº archivos: "+ fileList().size)
-            Log.d("AppLog", "Los archivos se almacenan en: $filesDir")
+            createReport()
             documento.close()
         }
+    }
+
+    private fun crearFichero(filename: String): File {
+        val path = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "ParteFirmasUPV").path
+        return File(path, filename)
+    }
+
+    private fun createReport() {
+        val report = Report()
+        report.teacher = "${person.name} (${person.dni})"
+        report.subjectCode = asignatura
+        report.subjectName = nombre
+        report.group = grupo
+        report.classroom = aula
+        report.date = textViewFecha.text.toString()
+        report.hour = horaInicio
+        report.duration = duracion
+        report.attendance = listaIdentificadores.size
+        report.comments = comments
+
+        database.addReport(report)
     }
 }
