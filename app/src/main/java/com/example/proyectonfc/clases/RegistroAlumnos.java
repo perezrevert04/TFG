@@ -119,7 +119,7 @@ public class RegistroAlumnos extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && listaIdentificadores.size() > 0) {
             backAlert();
             return false;
         }
