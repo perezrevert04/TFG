@@ -76,15 +76,8 @@ public class RegistroAlumnos extends AppCompatActivity {
         horaInicio = getIntent().getStringExtra( "HORAINICIO");
         aula = getIntent().getStringExtra( "AULA");
 
-
         Button btnNext = (Button) findViewById(R.id.buttonNext);
-        btnNext.setOnClickListener( view -> {
-            prepareBiometricPrompt( () -> {
-                nextActivity();
-                return null;
-            });
-            biometricPrompt.authenticate(promptInfo);
-        });
+        btnNext.setOnClickListener( view -> nextActivity() );
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
@@ -308,7 +301,7 @@ public class RegistroAlumnos extends AppCompatActivity {
 
         promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Autenticación")
-                .setSubtitle("Identifíquese para realizar esta acción.")
+                .setSubtitle("Identifíquese para cancelar el parte.")
                 .setDeviceCredentialAllowed(true)
                 .build();
     }

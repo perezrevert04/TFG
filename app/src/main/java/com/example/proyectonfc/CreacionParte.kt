@@ -8,8 +8,13 @@ import android.os.Environment
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricPrompt
+import androidx.biometric.BiometricPrompt.PromptInfo
+import androidx.core.content.ContextCompat
 import com.example.proyectonfc.clases.AddComment
+import com.example.proyectonfc.clases.MainActivity
 import com.example.proyectonfc.db.DataBase
 import com.example.proyectonfc.logic.Person
 import com.example.proyectonfc.logic.Report
@@ -23,6 +28,8 @@ import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.Callable
+import java.util.concurrent.Executor
 
 class CreacionParte : AppCompatActivity() {
 
@@ -43,6 +50,10 @@ class CreacionParte : AppCompatActivity() {
     lateinit var aula: String
     var comments = ""
 
+    private lateinit var executor: Executor
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_creacion_parte)
@@ -56,29 +67,8 @@ class CreacionParte : AppCompatActivity() {
         }
 
         buttonCrearPdf.setOnClickListener {
-            try {
-                val sdf = SimpleDateFormat("dd/MM/yyyy")
-                val date = sdf.format(Date())
-
-                val filename = asignatura + "_" + grupo + "_" + date.replace('/', '-') + "_" + horaInicio + "_" + aula + ".pdf"
-
-                generarPdf(filename, sdf.format(Date()))
-
-                val file = "/storage/emulated/0/Download/ParteFirmasUPV/$filename"
-
-                val builder = VmPolicy.Builder()
-                StrictMode.setVmPolicy(builder.build())
-
-
-                val fileIn = File(file)
-                val uri = Uri.fromFile(fileIn)
-                val intent = Intent(Intent.ACTION_VIEW)
-                intent.setDataAndType(uri, "application/pdf")
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
-            } catch (e: Exception) {
-                toast("No se ha podido crear el archivo pdf")
-            }
+            prepareBiometricPrompt { finalizarParte() }
+            biometricPrompt.authenticate(promptInfo)
         }
     }
 
@@ -122,6 +112,37 @@ class CreacionParte : AppCompatActivity() {
         curso = intent.getStringExtra("curso")
         gestoria = intent.getStringExtra("gestoria")
         idioma = intent.getStringExtra("idioma")
+    }
+
+    private fun finalizarParte() {
+        try {
+            val sdf = SimpleDateFormat("dd/MM/yyyy")
+            val date = sdf.format(Date())
+
+            val filename = asignatura + "_" + grupo + "_" + date.replace('/', '-') + "_" + horaInicio + "_" + aula + ".pdf"
+
+            generarPdf(filename, sdf.format(Date()))
+
+            startActivity(Intent(this, MainActivity::class.java))
+
+            openFile(filename)
+        } catch (e: Exception) {
+            toast("No se ha podido crear el archivo pdf")
+        }
+    }
+
+    private fun openFile(filename: String) {
+        val file = "/storage/emulated/0/Download/ParteFirmasUPV/$filename"
+
+        val builder = VmPolicy.Builder()
+        StrictMode.setVmPolicy(builder.build())
+
+        val fileIn = File(file)
+        val uri = Uri.fromFile(fileIn)
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setDataAndType(uri, "application/pdf")
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
     }
 
     fun generarPdf(filename: String, date: String) {
@@ -231,5 +252,31 @@ class CreacionParte : AppCompatActivity() {
         report.comments = comments
 
         database.addReport(report)
+    }
+
+
+    private fun prepareBiometricPrompt(method: () -> Unit) {
+        executor = ContextCompat.getMainExecutor(this)
+        biometricPrompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
+            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                super.onAuthenticationError(errorCode, errString)
+                Toast.makeText(applicationContext, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                super.onAuthenticationSucceeded(result)
+                method()
+            }
+
+            override fun onAuthenticationFailed() {
+                super.onAuthenticationFailed()
+                Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT).show()
+            }
+        })
+        promptInfo = PromptInfo.Builder()
+                .setTitle("Autenticación")
+                .setSubtitle("Identifíquese para generar el pdf.")
+                .setDeviceCredentialAllowed(true)
+                .build()
     }
 }

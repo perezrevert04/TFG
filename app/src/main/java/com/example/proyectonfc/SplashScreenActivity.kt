@@ -9,7 +9,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.clases.RequirementsToLinkActivity
 
-const val SPLASH_TIME: Long = 4000
+const val SPLASH_TIME: Long = 3000
 
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
