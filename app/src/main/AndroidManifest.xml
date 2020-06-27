@@ -78,17 +78,6 @@
             android:stateNotNeeded="true"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".clases.DatosParte"
-            android:label="Datos Parte de Firmas"
-            android:parentActivityName=".clases.DatosXml"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".clases.DatosXml"
-            android:label="Buscar Parte de Firmas"
-            android:launchMode="singleTask"
-            android:parentActivityName=".clases.MainActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".clases.EditarGrupo"
             android:label="Editar Datos Grupo"
             android:parentActivityName=".clases.DatosGrupo"
