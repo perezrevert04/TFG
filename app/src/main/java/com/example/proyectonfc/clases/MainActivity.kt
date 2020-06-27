@@ -7,10 +7,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.example.proyectonfc.Global
-import com.example.proyectonfc.R
-import com.example.proyectonfc.ShowReportsActivity
-import com.example.proyectonfc.SplashScreenActivity
+import com.example.proyectonfc.*
 import com.example.proyectonfc.db.DataBase
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -29,6 +26,10 @@ class MainActivity : AppCompatActivity() {
 
         if (!database.deviceIsLinked()) {
             val intent = Intent(this, SplashScreenActivity::class.java)
+            startActivity(intent)
+            finish()
+        } else {
+            val intent = Intent(this, NearbyTestActivity::class.java)
             startActivity(intent)
             finish()
         }

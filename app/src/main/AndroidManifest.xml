@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.proyectonfc">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.proyectonfc">
 
     <uses-feature android:name="android.hardware.nfc" />
 
@@ -18,11 +19,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".NearbyTestActivity"></activity>
+
+        <meta-data
+            android:name="com.google.android.nearby.messages.API_KEY"
+            android:value="AIzaSyBdfTVRQUHfb4INou5ZeQ6l6--Cd-ohLi4" />
+
         <activity
             android:name=".AttendanceActivity"
+            android:launchMode="singleTask"
             android:parentActivityName=".CreacionParte"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ReportDataActivity"
             android:parentActivityName=".ShowReportsActivity"
