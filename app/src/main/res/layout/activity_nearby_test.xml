@@ -6,4 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".NearbyTestActivity">
 
+    <Button
+        android:id="@+id/buttonStartDiscovery"
+        style="@style/AppTheme.PrimaryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Start discovery"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonStartAdvertising"
+        style="@style/AppTheme.PrimaryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Start advertising"
+        app:layout_constraintBottom_toTopOf="@+id/buttonStartDiscovery"
+        app:layout_constraintEnd_toEndOf="@+id/buttonStartDiscovery"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/buttonStartDiscovery" />
 </androidx.constraintlayout.widget.ConstraintLayout>

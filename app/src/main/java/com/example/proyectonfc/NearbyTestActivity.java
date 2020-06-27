@@ -1,62 +1,104 @@
 package com.example.proyectonfc;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.nearby.Nearby;
-import com.google.android.gms.nearby.messages.Message;
-import com.google.android.gms.nearby.messages.MessageListener;
-import com.google.android.gms.nearby.messages.MessagesClient;
-import com.google.android.gms.nearby.messages.MessagesOptions;
-import com.google.android.gms.nearby.messages.NearbyPermissions;
+import com.google.android.gms.nearby.connection.AdvertisingOptions;
+import com.google.android.gms.nearby.connection.ConnectionInfo;
+import com.google.android.gms.nearby.connection.ConnectionLifecycleCallback;
+import com.google.android.gms.nearby.connection.ConnectionResolution;
+import com.google.android.gms.nearby.connection.DiscoveredEndpointInfo;
+import com.google.android.gms.nearby.connection.DiscoveryOptions;
+import com.google.android.gms.nearby.connection.EndpointDiscoveryCallback;
+import com.google.android.gms.nearby.connection.Strategy;
 
 public class NearbyTestActivity extends AppCompatActivity {
 
-    MessageListener mMessageListener;
-    Message mMessage;
-    MessagesClient mMessagesClient;
+    private final String TAG = "AppLog";
+    private final String SERVICE_ID = getApplicationContext().getPackageName();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_nearby_test);
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            mMessagesClient = Nearby.getMessagesClient(this, new MessagesOptions.Builder().setPermissions(NearbyPermissions.BLE).build());
-        }
+        Button advertising = findViewById(R.id.buttonStartAdvertising);
+        advertising.setOnClickListener( (elem) -> {
+            startAdvertising();
+        });
 
-        mMessageListener = new MessageListener() {
-            @Override
-            public void onFound(Message message) {
-                Log.d("AppLog", "Found message: " + new String(message.getContent()));
-            }
-
-            @Override
-            public void onLost(Message message) {
-                Log.d("AppLog", "Lost sight of message: " + new String(message.getContent()));
-            }
-        };
-
-        mMessage = new Message("Hello World".getBytes());
+        Button discovery = findViewById(R.id.buttonStartDiscovery);
+        discovery.setOnClickListener( (elem) -> {
+            startDiscovery();
+        });
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+    private void startAdvertising() {
+        AdvertisingOptions advertisingOptions =
+                new AdvertisingOptions.Builder().setStrategy( Strategy.P2P_STAR ).build();
+        Nearby.getConnectionsClient( this )
+                .startAdvertising(
+                        "Carles Pérez Revert",
+                        SERVICE_ID,
+                        new ConnectionLifecycleCallback() {
+                            @Override
+                            public void onConnectionInitiated(@NonNull String s, @NonNull ConnectionInfo connectionInfo) {
+                                Log.d(TAG, "onConnectionInitiated: " + s + " | " + connectionInfo.getEndpointName());
 
-        Nearby.getMessagesClient(this).publish(mMessage);
-        Nearby.getMessagesClient(this).subscribe(mMessageListener);
+                            }
+
+                            @Override
+                            public void onConnectionResult(@NonNull String s, @NonNull ConnectionResolution connectionResolution) {
+                                Log.d(TAG, "onConnectionResult: " + s);
+                            }
+
+                            @Override
+                            public void onDisconnected(@NonNull String s) {
+                                Log.d(TAG, "onDisconnected: " + s);
+                            }
+                        },
+                        advertisingOptions
+                ).addOnSuccessListener(
+                        (Void unused) -> {
+                            Log.d(TAG, "We're advertising!");
+                        })
+                .addOnFailureListener(
+                        (Exception e) -> {
+                            Log.d(TAG, "We were unable to start advertising.");
+                        });
     }
 
-    @Override
-    public void onStop() {
-        Nearby.getMessagesClient(this).unpublish(mMessage);
-        Nearby.getMessagesClient(this).unsubscribe(mMessageListener);
+    private void startDiscovery() {
+        DiscoveryOptions discoveryOptions =
+                new DiscoveryOptions.Builder().setStrategy( Strategy.P2P_STAR ).build();
+        Nearby.getConnectionsClient( this )
+                .startDiscovery(
+                        SERVICE_ID,
 
-        super.onStop();
+                        new EndpointDiscoveryCallback() {
+                            @Override
+                            public void onEndpointFound(@NonNull String s, @NonNull DiscoveredEndpointInfo discoveredEndpointInfo) {
+                                Log.d("AppLog", "onEndpointFound: " + s + " | " + discoveredEndpointInfo.getEndpointName());
+                            }
+
+                            @Override
+                            public void onEndpointLost(@NonNull String s) {
+                                Log.d("AppLog", "onEndpointLost: " + s);
+                            }
+                        },
+                        discoveryOptions
+                ).addOnSuccessListener(
+                        (Void unused) -> {
+                            Log.d(TAG, "We're discovering!");
+                        })
+                .addOnFailureListener(
+                        (Exception e) -> {
+                            Log.d(TAG, "We're unable to start discovering.");
+                        });
     }
 }
