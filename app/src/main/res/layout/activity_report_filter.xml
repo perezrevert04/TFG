@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ReportFilterActivity">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorSecondary"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/editTextGroup"
+        app:layout_constraintTop_toBottomOf="@+id/editTextGroup"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/ic_check" />
+
+    <TextView
+        android:id="@+id/textViewSubject"
+        style="@style/Label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="10dp"
+        android:text="Asignatura:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+
+    <EditText
+        android:id="@+id/editTextSubject"
+        style="@style/Value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Cualquier asignatura"
+        android:inputType="textPersonName"
+        android:textColorHint="@color/colorSecondaryAccent"
+        app:layout_constraintEnd_toEndOf="@+id/textViewSubject"
+        app:layout_constraintStart_toStartOf="@+id/textViewSubject"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSubject" />
+
+    <TextView
+        android:id="@+id/textViewGroup"
+        style="@style/Label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Grupo:"
+        app:layout_constraintEnd_toEndOf="@+id/editTextSubject"
+        app:layout_constraintStart_toStartOf="@+id/editTextSubject"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSubject" />
+
+    <EditText
+        android:id="@+id/editTextGroup"
+        style="@style/Value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Cualquier grupo"
+        android:inputType="textPersonName"
+        android:textColorHint="@color/colorSecondaryAccent"
+        app:layout_constraintEnd_toEndOf="@+id/textViewGroup"
+        app:layout_constraintStart_toStartOf="@+id/textViewGroup"
+        app:layout_constraintTop_toBottomOf="@+id/textViewGroup" />
+
+    <TextView
+        android:id="@+id/textViewDate"
+        style="@style/Label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Fecha:"
+        app:layout_constraintEnd_toEndOf="@+id/editTextGroup"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextDate"
+        style="@style/Value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:focusable="false"
+        android:hint="Cualquier fecha"
+        android:inputType="textPersonName"
+        android:textColorHint="@color/colorSecondaryAccent"
+        app:layout_constraintEnd_toEndOf="@+id/textViewDate"
+        app:layout_constraintStart_toStartOf="@+id/textViewDate"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDate" />
+
+    <Button
+        android:id="@+id/buttonClear"
+        style="@style/AppTheme.MinimalistSecondaryButton"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:text="Limpiar filtros"
+        app:layout_constraintBottom_toBottomOf="@+id/fab_confirm"
+        app:layout_constraintEnd_toStartOf="@+id/fab_confirm"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/editTextGroup"
+        app:layout_constraintTop_toTopOf="@+id/fab_confirm" />
+</androidx.constraintlayout.widget.ConstraintLayout>

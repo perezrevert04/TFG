@@ -1,152 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.proyectonfc">
-
-    <uses-permission android:name="android.permission.NFC" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.proyectonfc">
 
     <uses-feature android:name="android.hardware.nfc" />
 
+    <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".Global"
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="Parte Firmas UPV"
+        android:resizeableActivity="false"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".util.CaptureActivityPortrait"
-            android:windowSoftInputMode="stateAlwaysHidden"
+        <activity
+            android:name=".AttendanceActivity"
+            android:parentActivityName=".CreacionParte"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".ReportDataActivity"
+            android:parentActivityName=".ShowReportsActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+        <activity
+            android:name=".ReportFilterActivity"
+            android:label="Filtrar"
+            android:parentActivityName=".ShowReportsActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+        <activity
+            android:name=".ShowReportsActivity"
+            android:label="Consultar partes"
+            android:launchMode="singleTask"
+            android:parentActivityName=".clases.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SplashScreenActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".clases.RequirementsToLinkActivity"
+            android:label="Vincular carnet"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LinkBiometricPromptActivity"
+            android:label="Vincular carnet"
+            android:launchMode="singleTask"
+            android:parentActivityName=".LinkCardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LinkCardActivity"
+            android:label="Vincular carnet"
+            android:launchMode="singleTask"
+            android:parentActivityName=".clases.RequirementsToLinkActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.AddComment"
+            android:label="Observaciones"
+            android:launchMode="singleTask"
+            android:parentActivityName=".CreacionParte"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CreacionParte"
+            android:label="Datos del parte"
+            android:launchMode="singleTask"
+            android:parentActivityName=".clases.RegistroAlumnos"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".util.CaptureActivityPortrait"
+            android:screenOrientation="portrait"
             android:stateNotNeeded="true"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name="com.example.proyectonfc.clases.DatosParte"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".clases.DatosParte"
+            android:label="Datos Parte de Firmas"
+            android:parentActivityName=".clases.DatosXml"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.DatosXml"
+            android:label="Buscar Parte de Firmas"
+            android:launchMode="singleTask"
+            android:parentActivityName=".clases.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.EditarGrupo"
+            android:label="Editar Datos Grupo"
+            android:parentActivityName=".clases.DatosGrupo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.DatosGrupo"
+            android:label="Datos Grupo"
+            android:parentActivityName=".clases.Grupos"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.Grupos"
+            android:label="Grupos Asignatura"
+            android:parentActivityName=".clases.Asignaturas"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.EnviarCorreo"
+            android:label="Enviar Correo"
+            android:parentActivityName=".clases.RegistroAlumnos"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.RegistroAlumnos"
+            android:label="Registro Alumnos"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.DatosAsignaturaNormal"
+            android:label="Datos de la clase"
+            android:launchMode="singleTask"
+            android:parentActivityName=".clases.AsignaturasProfesor"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.AsignaturasProfesor"
+            android:label="Seleccionar asignatura"
+            android:launchMode="singleTask"
+            android:parentActivityName=".clases.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.NuevoAlumno"
+            android:label="Nuevo Alumno"
+            android:parentActivityName=".clases.Alumnos"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.EditarAlumno"
+            android:label="Editar Alumno"
+            android:parentActivityName=".clases.DatosAlumno"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.DatosAlumno"
+            android:label="Datos Alumno"
+            android:parentActivityName=".clases.Alumnos"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.Alumnos"
+            android:label="Alumnos Asignatura"
+            android:parentActivityName=".clases.Alumnos"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.NuevoProfesor"
+            android:label="Nuevo Profesor"
+            android:parentActivityName=".clases.Profesores"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.EditarProfesor"
+            android:label="Editar Profesor"
+            android:parentActivityName=".clases.DatosProfesor"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.DatosProfesor"
+            android:label="Datos Profesor"
+            android:parentActivityName=".clases.Profesores"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.Profesores"
+            android:label="Profesores Asignatura"
+            android:parentActivityName=".clases.Asignaturas"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.EditarAsignatura"
+            android:label="Editar Asignatura"
+            android:parentActivityName=".clases.DatosAsignatura"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.DatosAsignatura"
+            android:label="Datos Asignatura"
+            android:parentActivityName=".clases.Asignaturas"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.Asignaturas"
+            android:label="Menú Asignaturas"
+            android:parentActivityName=".clases.Configuracion"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.Configuracion"
+            android:label="Asignaturas"
+            android:launchMode="singleTask"
+            android:parentActivityName=".clases.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clases.MainActivity"
+            android:label="Parte Firmas UPV"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.DatosXml"
-            android:label="Datos Parte de Firmas"/>
-
-        <activity android:name="com.example.proyectonfc.clases.DatosXml"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.MainActivity"
-            android:label="Buscar Parte de Firmas"/>
-
-        <activity android:name="com.example.proyectonfc.clases.EditarGrupo"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.DatosGrupo"
-            android:label="Editar Datos Grupo"/>
-
-        <activity android:name="com.example.proyectonfc.clases.DatosGrupo"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.Grupos"
-            android:label="Datos Grupo"/>
-
-        <activity android:name="com.example.proyectonfc.clases.Grupos"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.Asignaturas"
-            android:label="Grupos Asignatura"/>
-
-        <activity android:name="com.example.proyectonfc.clases.EnviarCorreo"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.RegistroAlumnos"
-            android:label="Enviar Correo"/>
-
-        <activity android:name="com.example.proyectonfc.clases.RegistroAlumnos"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.DatosAsignaturaNormal"
-            android:label="Registro Alumnos"/>
-
-        <activity android:name="com.example.proyectonfc.clases.DatosAsignaturaNormal"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.AsignaturasProfesor"
-            android:label="Datos Clase Normal"/>
-
-        <activity android:name="com.example.proyectonfc.clases.DatosAsignaturaRecuperacion"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.AsignaturasProfesor"
-            android:label="Datos Clase Recuperación"/>
-
-        <activity android:name="com.example.proyectonfc.clases.AsignaturasProfesor"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.IdentificacionProfesor"
-            android:label="Asignaturas Profesor"/>
-
-        <activity android:name="com.example.proyectonfc.clases.IdentificacionProfesor"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.MainActivity"
-            android:label="Identificación Profesor"/>
-
-        <activity android:name="com.example.proyectonfc.clases.NuevoAlumno"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.Alumnos"
-            android:label="Nuevo Alumno"/>
-
-        <activity android:name="com.example.proyectonfc.clases.EditarAlumno"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.DatosAlumno"
-            android:label="Editar Alumno"/>
-
-        <activity android:name="com.example.proyectonfc.clases.DatosAlumno"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.Alumnos"
-            android:label="Datos Alumno"/>
-
-        <activity android:name="com.example.proyectonfc.clases.Alumnos"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.Alumnos"
-            android:label="Alumnos Asignatura"/>
-
-        <activity android:name="com.example.proyectonfc.clases.NuevoProfesor"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.Profesores"
-            android:label="Nuevo Profesor"/>
-
-        <activity android:name="com.example.proyectonfc.clases.EditarProfesor"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.DatosProfesor"
-            android:label="Editar Profesor"/>
-
-        <activity android:name="com.example.proyectonfc.clases.DatosProfesor"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.Profesores"
-            android:label="Datos Profesor"/>
-
-        <activity android:name="com.example.proyectonfc.clases.Profesores"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.Asignaturas"
-            android:label="Profesores Asignatura"/>
-
-        <activity android:name="com.example.proyectonfc.clases.EditarAsignatura"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.DatosAsignatura"
-            android:label="Editar Asignatura"/>
-
-        <activity android:name="com.example.proyectonfc.clases.DatosAsignatura"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.Asignaturas"
-            android:label="Datos Asignatura"/>
-
-        <activity android:name="com.example.proyectonfc.clases.Asignaturas"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.Configuracion"
-            android:label="Menú Asignaturas"/>
-
-        <activity android:name="com.example.proyectonfc.clases.Configuracion"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.MainActivity"
-            android:label="Configuración Asignaturas"/>
-
-        <activity android:name="com.example.proyectonfc.Uso"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.example.proyectonfc.clases.MainActivity"
-            android:label="Identificación Profesor"/>
-
-
-
-        <activity android:name="com.example.proyectonfc.clases.MainActivity"
-            android:screenOrientation="portrait"
-            android:label="HOME - Parte Firmas UPV">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

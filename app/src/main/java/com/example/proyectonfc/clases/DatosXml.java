@@ -32,10 +32,7 @@ public class DatosXml extends AppCompatActivity {
 
     Button btnConsultar;
 
-    private ArrayList<String> listaAsignaturas2 = new ArrayList<>();
     DataBase dataBase;
-    private String[] datos = new String[1000];
-    private int count = 0;
     private Spinner spinner;
     private Spinner spinner2;
     ArrayList<String> listaAsignaturas;
@@ -48,29 +45,20 @@ public class DatosXml extends AppCompatActivity {
     private EditText textFecha;
     Calendar calendario = Calendar.getInstance();
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datos_xml);
 
         textFecha = findViewById(R.id.textFecha);
-        textFecha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new DatePickerDialog(DatosXml.this, date, calendario
-                        .get(Calendar.YEAR), calendario.get(Calendar.MONTH),
-                        calendario.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
+        textFecha.setOnClickListener(view -> new DatePickerDialog(DatosXml.this, date, calendario
+                .get(Calendar.YEAR), calendario.get(Calendar.MONTH),
+                calendario.get(Calendar.DAY_OF_MONTH)).show());
 
         dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
         spinner= (Spinner) findViewById(R.id.spinner);
         consultarListaAsignaturas();
-        ArrayAdapter<CharSequence> adaptador=new ArrayAdapter
-                (DatosXml.this,android.R.layout.simple_spinner_item,listaAsignaturas);
+        ArrayAdapter<CharSequence> adaptador=new ArrayAdapter(DatosXml.this,android.R.layout.simple_spinner_item,listaAsignaturas);
         spinner.setAdapter(adaptador);
         spinner.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
@@ -90,37 +78,26 @@ public class DatosXml extends AppCompatActivity {
                     }
                 });
 
-
-
-
-
         btnConsultar = (Button) findViewById(R.id.btnConsultar);
-        btnConsultar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), DatosParte.class);
-                asignaturaSeleccionada = String.valueOf(spinner.getSelectedItem());
-                grupoSeleccionado = String.valueOf(spinner2.getSelectedItem());
-                String fecha = textFecha.getText().toString();
-                if (asignaturaSeleccionada == "" || grupoSeleccionado == "" || fecha == ""){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(DatosXml.this);
-                    builder.setTitle("No ha rellenado todos los criterios de búsqueda");
-                    builder.setMessage("¡Debe de rellenar todos los datos!");
-                    builder.setNeutralButton("¡Entendido!", null);
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }else {
-                    intent.putExtra("ASIGNATURASELECCIONADA", asignaturaSeleccionada);
-                    intent.putExtra("GRUPOSELECCIONADO", grupoSeleccionado);
-                    intent.putExtra("FECHA", fecha);
-                    startActivityForResult(intent, 0);
-                }
+        btnConsultar.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), DatosParte.class);
+            asignaturaSeleccionada = String.valueOf(spinner.getSelectedItem());
+            grupoSeleccionado = String.valueOf(spinner2.getSelectedItem());
+            String fecha = textFecha.getText().toString();
+            if (asignaturaSeleccionada == "" || grupoSeleccionado == "" || fecha == ""){
+                AlertDialog.Builder builder = new AlertDialog.Builder(DatosXml.this);
+                builder.setTitle("No ha rellenado todos los criterios de búsqueda");
+                builder.setMessage("¡Debe de rellenar todos los datos!");
+                builder.setNeutralButton("¡Entendido!", null);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }else {
+                intent.putExtra("ASIGNATURASELECCIONADA", asignaturaSeleccionada);
+                intent.putExtra("GRUPOSELECCIONADO", grupoSeleccionado);
+                intent.putExtra("FECHA", fecha);
+                startActivityForResult(intent, 0);
             }
         });
-
-
-
-
 
     }
 
@@ -139,7 +116,7 @@ public class DatosXml extends AppCompatActivity {
     };
 
     private void actualizarInput() {
-        String formatoDeFecha = "dd-MM-yyyy"; //In which you need put here
+        String formatoDeFecha = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(formatoDeFecha, Locale.US);
 
         textFecha.setText(sdf.format(calendario.getTime()));
@@ -148,27 +125,21 @@ public class DatosXml extends AppCompatActivity {
     private void consultarListaAsignaturas() {
         SQLiteDatabase db=dataBase.getReadableDatabase();
 
-        Asignatura asignatura =null;
-        asignaturasList =new ArrayList<Asignatura>();
+        Asignatura asignatura;
+        asignaturasList =new ArrayList<>();
         //select * from usuarios
         Cursor cursor=db.rawQuery("SELECT id FROM ASIGNATURA ORDER BY id", null);
 
         while (cursor.moveToNext()){
             asignatura =new Asignatura();
             asignatura.setNombre(cursor.getString(0));
-
-
-            //Log.i("id",persona.getId().toString());
-
-
             asignaturasList.add(asignatura);
-
         }
         obtenerLista();
     }
 
     private void obtenerLista() {
-        listaAsignaturas=new ArrayList<String>();
+        listaAsignaturas=new ArrayList<>();
         listaAsignaturas.add("");
 
         for(int i=0;i<asignaturasList.size();i++){
@@ -190,19 +161,13 @@ public class DatosXml extends AppCompatActivity {
         while (cursor.moveToNext()){
             grupo =new Grupo();
             grupo.setGrupo(cursor.getString(1));
-
-
-            //Log.i("id",persona.getId().toString());
-
-
             gruposList.add(grupo);
-
         }
         obtenerLista2();
     }
 
     private void obtenerLista2() {
-        listaGrupos=new ArrayList<String>();
+        listaGrupos=new ArrayList<>();
         listaGrupos.add("");
 
         for(int i=0;i<gruposList.size();i++){
