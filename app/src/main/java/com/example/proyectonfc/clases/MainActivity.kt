@@ -24,15 +24,15 @@ class MainActivity : AppCompatActivity() {
 
         db = DataBase(applicationContext, "DB6.db", null, 1)
 
-        if (!database.deviceIsLinked()) {
-            val intent = Intent(this, SplashScreenActivity::class.java)
-            startActivity(intent)
-            finish()
-        } else {
+//        if (!database.deviceIsLinked()) {
+//            val intent = Intent(this, SplashScreenActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        } else {
             val intent = Intent(this, NearbyTestActivity::class.java)
             startActivity(intent)
             finish()
-        }
+//        }
 
         buttonStart.setOnClickListener { v: View ->
             val intent = Intent(v.context, AsignaturasProfesor::class.java)

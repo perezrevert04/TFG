@@ -2,6 +2,8 @@ package com.example.proyectonfc;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,10 +28,14 @@ public class AdvertisingActivity extends AppCompatActivity {
     private String SERVICE_ID;
     private String DEVICE_NAME;
 
+    TextView ring;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advertising);
+
+        ring = findViewById(R.id.textViewRing);
 
         SERVICE_ID = getApplicationContext().getPackageName();
         DEVICE_NAME = android.os.Build.MODEL;
@@ -43,14 +49,15 @@ public class AdvertisingActivity extends AppCompatActivity {
 
         Nearby.getConnectionsClient( this )
                 .startAdvertising(DEVICE_NAME, SERVICE_ID, connectionLifecycleCallback, advertisingOptions)
-                .addOnSuccessListener( (Void unused) -> Log.d(TAG, "Anunciante iniciado...") )
-                .addOnFailureListener( (Exception e) -> Log.d(TAG, "Se ha producido un error...") );
+                .addOnSuccessListener( (Void unused) -> ring.setText("Anunciante iniciado...") )
+                .addOnFailureListener( (Exception e) -> ring.setText("Se ha producido un error...") );
     }
 
     private final ConnectionLifecycleCallback connectionLifecycleCallback = new ConnectionLifecycleCallback() {
         @Override
         public void onConnectionInitiated(@NonNull String endpointId, @NonNull ConnectionInfo connectionInfo) {
             // Automatically accept the connection on both sides.
+            ring.setText(ring.getText().toString() + "\nAceptando conexión con el cliente...");
             Nearby.getConnectionsClient( getApplicationContext() ).acceptConnection(endpointId, payloadCallback);
         }
 
@@ -58,23 +65,23 @@ public class AdvertisingActivity extends AppCompatActivity {
         public void onConnectionResult(@NonNull String s, @NonNull ConnectionResolution result) {
             switch (result.getStatus().getStatusCode()) {
                 case ConnectionsStatusCodes.STATUS_OK:
-                    Log.d(TAG, "We're connected! Can now start sending and receiving data.");
+                    ring.setText(ring.getText().toString() + "\n¡SE HA CONECTADO!");
+                    ring.setVisibility(View.VISIBLE);
                     break;
                 case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
-                    Log.d(TAG, "The connection was rejected by one or both sides.");
+                    ring.setText(ring.getText().toString() + "\nThe connection was rejected by one or both sides.");
                     break;
                 case ConnectionsStatusCodes.STATUS_ERROR:
-                    Log.d(TAG, "The connection broke before it was able to be accepted.");
+                    ring.setText(ring.getText().toString() + "\nThe connection broke before it was able to be accepted.");
                     break;
                 default:
-                    Log.d(TAG, "Unknown status code");
+                    ring.setText(ring.getText().toString() + "\nUnknown status code");
             }
         }
 
         @Override
         public void onDisconnected(@NonNull String s) {
-            // We've been disconnected from this endpoint. No more data can be
-            // sent or received.
+            ring.setText(ring.getText().toString() + "\nDesconectado...");
         }
     };
 
@@ -82,11 +89,13 @@ public class AdvertisingActivity extends AppCompatActivity {
         @Override
         public void onPayloadReceived(@NonNull String s, @NonNull Payload payload) {
 
+            ring.setText(ring.getText().toString() + "\nRecibiendo información...");
         }
 
         @Override
         public void onPayloadTransferUpdate(@NonNull String s, @NonNull PayloadTransferUpdate payloadTransferUpdate) {
 
+            ring.setText(ring.getText().toString() + "\nRecibiendo información...");
         }
     };
 }

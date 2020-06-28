@@ -26,10 +26,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DiscoveryActivity"></activity>
-        <activity android:name=".AdvertisingActivity" />
-        <activity android:name=".NearbyTestActivity" />
-
+        <activity
+            android:name=".DiscoveryActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AdvertisingActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".NearbyTestActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
         <meta-data
             android:name="com.google.android.nearby.messages.API_KEY"
             android:value="AIzaSyBdfTVRQUHfb4INou5ZeQ6l6--Cd-ohLi4" />

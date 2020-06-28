@@ -2,6 +2,8 @@ package com.example.proyectonfc;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,10 +31,16 @@ public class DiscoveryActivity extends AppCompatActivity {
     private String SERVICE_ID;
     private String DEVICE_NAME;
 
+    TextView ring;
+
+    String myEndpoint;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discovery);
+
+        ring = findViewById(R.id.textViewDiscovery);
 
         SERVICE_ID = getApplicationContext().getPackageName();
         DEVICE_NAME = android.os.Build.MODEL;
@@ -45,24 +53,30 @@ public class DiscoveryActivity extends AppCompatActivity {
         DiscoveryOptions discoveryOptions = new DiscoveryOptions.Builder().setStrategy( Strategy.P2P_STAR ).build();
         Nearby.getConnectionsClient( this )
                 .startDiscovery(SERVICE_ID, endpointDiscoveryCallback, discoveryOptions)
-                .addOnSuccessListener( (Void unused) -> Log.d(TAG, "Buscador iniciado...") )
-                .addOnFailureListener( (Exception e) -> Log.d(TAG, "Se ha producido un error...") );
+                .addOnSuccessListener( (Void unused) -> ring.setText("Buscador iniciado...") )
+                .addOnFailureListener( (Exception e) -> ring.setText("Se ha producido un error...") );
     }
 
     private final EndpointDiscoveryCallback endpointDiscoveryCallback = new EndpointDiscoveryCallback() {
         @Override
         public void onEndpointFound(@NonNull String endpointId, @NonNull DiscoveredEndpointInfo discoveredEndpointInfo) {
-            Log.d(TAG, "Se ha encontrado un endpoint: " + endpointId);
+            ring.setText(ring.getText().toString() + "\nSe ha encontrado un endpoint: " + endpointId);
             // An endpoint was found. We request a connection to it.
+            myEndpoint = endpointId;
             Nearby.getConnectionsClient( getApplicationContext() )
                     .requestConnection(DEVICE_NAME, endpointId, connectionLifecycleCallback)
                     .addOnSuccessListener(
                             (Void unused) -> {
                                 // We successfully requested a connection. Now both sides
                                 // must accept before the connection is established.
+                                ring.setText(ring.getText().toString() + "\nSe ha enviado una petición de conexión...");
                             })
                     .addOnFailureListener(
                             (Exception e) -> {
+                                ring.setText(ring.getText().toString() + "\nSe ha producido un error...\n" + e.getMessage());
+
+                                Payload bytesPayload = Payload.fromBytes(new byte[] {0xa, 0xb, 0xc, 0xd});
+                                Nearby.getConnectionsClient( getApplicationContext() ).sendPayload(myEndpoint, bytesPayload);
                                 // Nearby Connections failed to request the connection.
                             });
         }
@@ -70,7 +84,7 @@ public class DiscoveryActivity extends AppCompatActivity {
         @Override
         public void onEndpointLost(@NonNull String endpointId) {
             // A previously discovered endpoint has gone away.
-            Log.d(TAG, "Se ha perdido la conexión con: " + endpointId);
+            ring.setText(ring.getText().toString() + "\nSe ha perdido la conexión con: " + endpointId);
         }
     };
 
@@ -79,6 +93,7 @@ public class DiscoveryActivity extends AppCompatActivity {
                 @Override
                 public void onConnectionInitiated(String endpointId, ConnectionInfo connectionInfo) {
                     // Automatically accept the connection on both sides.
+                    ring.setText(ring.getText().toString() + "\nAceptando conexión con el servidor...");
                     Nearby.getConnectionsClient( getApplicationContext() ).acceptConnection(endpointId, payloadCallback);
                 }
 
@@ -86,23 +101,22 @@ public class DiscoveryActivity extends AppCompatActivity {
                 public void onConnectionResult(String endpointId, ConnectionResolution result) {
                     switch (result.getStatus().getStatusCode()) {
                         case ConnectionsStatusCodes.STATUS_OK:
-                            Log.d(TAG, "We're connected! Can now start sending and receiving data.");
+                            ring.setText(ring.getText().toString() + "\n¡SE HA CONECTADO!");
                             break;
                         case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
-                            Log.d(TAG, "The connection was rejected by one or both sides.");
+                            ring.setText(ring.getText().toString() + "\nThe connection was rejected by one or both sides.");
                             break;
                         case ConnectionsStatusCodes.STATUS_ERROR:
-                            Log.d(TAG, "The connection broke before it was able to be accepted.");
+                            ring.setText(ring.getText().toString() + "\nThe connection broke before it was able to be accepted.");
                             break;
                         default:
-                            Log.d(TAG, "Unknown status code");
+                            ring.setText(ring.getText().toString() + "\nUnknown status code");
                     }
                 }
 
                 @Override
                 public void onDisconnected(String endpointId) {
-                    // We've been disconnected from this endpoint. No more data can be
-                    // sent or received.
+                    ring.setText(ring.getText().toString() + "\nDesconectado...");
                 }
             };
 
@@ -122,7 +136,7 @@ public class DiscoveryActivity extends AppCompatActivity {
 
 
 //                String student = "20458644 - Carles Pérez Revert";
-//                Log.d(TAG, "Enviando datos..." + " (" + student + ")");
+//                ring.setText(ring.getText().toString() + "\nEnviando datos..." + " (" + student + ")");
 //                InputStream stream = new ByteArrayInputStream(student.getBytes(StandardCharsets.UTF_8));
 //                Payload data = Payload.fromStream(stream);
 //                Nearby.getConnectionsClient(getApplicationContext()).sendPayload(endpointId, data);
