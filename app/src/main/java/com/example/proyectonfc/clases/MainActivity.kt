@@ -29,11 +29,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-//        else {
-//            val intent = Intent(this, NearbyTestActivity::class.java)
-//            startActivity(intent)
-//            finish()
-//        }
+//        val intent = Intent(this, NearbyTestActivity::class.java)
+//        startActivity(intent)
+//        finish()
 
         buttonStart.setOnClickListener { v: View ->
             val intent = Intent(v.context, AsignaturasProfesor::class.java)

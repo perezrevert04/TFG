@@ -34,7 +34,7 @@ public class Discover {
 
     public void setLog(String log) { this.log = log; }
 
-    public void startDiscovery() {
+    public void start() {
         DiscoveryOptions discoveryOptions = new DiscoveryOptions.Builder().setStrategy( Strategy.P2P_STAR ).build();
         Nearby.getConnectionsClient( context )
                 .startDiscovery(serviceId, endpointDiscoveryCallback, discoveryOptions)

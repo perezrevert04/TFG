@@ -30,9 +30,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.Callable
 import java.util.concurrent.Executor
-import kotlin.collections.ArrayList
 
 class CreacionParte : AppCompatActivity() {
 

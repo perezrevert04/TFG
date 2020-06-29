@@ -27,7 +27,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".DiscoveryLogActivity"
+            android:name=".DiscoverLogActivity"
             android:label="Nearby Discovery Log"
             android:parentActivityName=".clases.RegistroAlumnos"
             android:launchMode="singleTask"/>

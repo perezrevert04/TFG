@@ -14,6 +14,9 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,17 +29,25 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.proyectonfc.CreacionParte;
+import com.example.proyectonfc.DiscoverLogActivity;
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
+import com.example.proyectonfc.logic.nearby.Advertise;
 import com.example.proyectonfc.parser.NdefMessageParser;
 import com.example.proyectonfc.record.ParsedNdefRecord;
+import com.google.android.gms.nearby.connection.Payload;
+import com.google.android.gms.nearby.connection.PayloadCallback;
+import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
 
 public class RegistroAlumnos extends AppCompatActivity {
+
+    Advertise advertise;
 
     private ArrayList<String> listaIdentificadores = new ArrayList<>();
     private NfcAdapter nfcAdapter;
@@ -63,6 +74,10 @@ public class RegistroAlumnos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registro_alumnos);
+
+        advertise = new Advertise(this, android.os.Build.MODEL, getApplicationContext().getPackageName(), payloadCallback);
+        advertise.start();
+
         text = (TextView) findViewById(R.id.text);
 
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
@@ -96,6 +111,26 @@ public class RegistroAlumnos extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,}, 1000);
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_attendance, menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menu) {
+        if (menu.getItemId() == R.id.action_attendance) {
+            Intent intent = new Intent(this, DiscoverLogActivity.class);
+            intent.putExtra(DiscoverLogActivity.EXTRA_LOG, advertise.getLog());
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(menu);
     }
 
     private void nextActivity() {
@@ -226,14 +261,13 @@ public class RegistroAlumnos extends AppCompatActivity {
 
         //select * from usuarios
 
-
-        Cursor cursor=db.rawQuery("SELECT * FROM ALUMNO WHERE id = '"+asignatura+toDec(identificador)+"'", null);
+        Cursor cursor=db.rawQuery("SELECT * FROM ALUMNO WHERE id = '" + asignatura+toDec(identificador) + "'", null);
 
         while (cursor.moveToNext()){
             identificadorTemporal = cursor.getString(0);
         }
 
-        if (identificadorTemporal == null){
+        if (identificadorTemporal == null) {
             identificadorTemporal = "1234567890123456789012345678901234567890123456789012345678901234567890";
         }else {
             identificadorTemporal = identificadorTemporal.substring(3);
@@ -273,6 +307,8 @@ public class RegistroAlumnos extends AppCompatActivity {
     }
     /*****************************************************FIN LECTOR NFC*****************************************************************/
 
+    /*** INICIO AUTENTICACIÓN BIOMÉTRICA ***/
+
     private void prepareBiometricPrompt(Callable<Void> method) {
         executor = ContextCompat.getMainExecutor(this);
         biometricPrompt = new BiometricPrompt(this, executor, new BiometricPrompt.AuthenticationCallback() {
@@ -305,4 +341,51 @@ public class RegistroAlumnos extends AppCompatActivity {
                 .setDeviceCredentialAllowed(true)
                 .build();
     }
+
+    /*** FIN AUTENTICACIÓN BIOMÉTRICA ***/
+
+    /*** INICIO NEARBY ADVERTISE ***/
+    private PayloadCallback payloadCallback = new PayloadCallback() {
+        @Override
+        public void onPayloadReceived(@NonNull String endpointId, @NonNull Payload payload) {
+            String log = "\nRecibiendo información (onPayloadReceived)...";
+            // This always gets the full data of the payload. Will be null if it's not a BYTES payload. You can check the payload type with payload.getType().
+            byte[] receivedBytes = payload.asBytes();
+            String identifier = new String(receivedBytes, StandardCharsets.UTF_8);
+            log += "\nIdentificador recibido: " + identifier;
+            advertise.setLog( advertise.getLog() + log);
+            add(identifier);
+        }
+
+        @Override
+        public void onPayloadTransferUpdate(@NonNull String endpointId, @NonNull PayloadTransferUpdate payloadTransferUpdate) {
+            String log = "\nRecibiendo información (onPayloadTransferUpdate)...";
+            advertise.setLog( advertise.getLog() + log);
+            // Bytes payloads are sent as a single chunk, so you'll receive a SUCCESS update immediately after the call to onPayloadReceived().
+        }
+    };
+
+    private void add(String identifier) {
+
+        final DataBase dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
+
+        SQLiteDatabase db = dataBase.getReadableDatabase();
+        //select * from usuarios
+        Cursor cursor = db.rawQuery("SELECT * FROM ALUMNO WHERE id = '" + asignatura+identifier + "'", null);
+        if (cursor.getCount() < 1 ) {
+            Toast.makeText(getApplicationContext(), "EL ALUMNO CON IDENTIFIFCADOR: "+ identifier + " NO ESTÁ DADO DE ALTA", Toast.LENGTH_SHORT).show();
+        } else {
+
+            if (listaIdentificadores.contains(identifier)) {
+                Toast.makeText(getApplicationContext(), "ESTE ALUMNO YA TIENE REGISTRADA LA ASISTENCIA", Toast.LENGTH_SHORT).show();
+            } else {
+                listaIdentificadores.add(identifier);
+                Toast.makeText(getApplicationContext(), "Fichaje realizado.", Toast.LENGTH_SHORT).show();
+                text.setText(identifier);
+            }
+        }
+
+    }
+    /*** FIN NEARBY ADVERTISE ***/
+
 }

@@ -9,10 +9,9 @@ import com.google.android.gms.nearby.connection.AdvertisingOptions;
 import com.google.android.gms.nearby.connection.ConnectionInfo;
 import com.google.android.gms.nearby.connection.ConnectionLifecycleCallback;
 import com.google.android.gms.nearby.connection.ConnectionResolution;
+import com.google.android.gms.nearby.connection.ConnectionsClient;
 import com.google.android.gms.nearby.connection.ConnectionsStatusCodes;
-import com.google.android.gms.nearby.connection.Payload;
 import com.google.android.gms.nearby.connection.PayloadCallback;
-import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.android.gms.nearby.connection.Strategy;
 
 public class Advertise {
@@ -21,21 +20,27 @@ public class Advertise {
     private String nickname, serviceId;
     private String log;
 
-    public Advertise(Context context, String nickname, String serviceId) {
+    private ConnectionsClient mConnectionsClient;
+    private PayloadCallback payloadCallback;
+
+    public Advertise(Context context, String nickname, String serviceId, PayloadCallback payloadCallback) {
         this.context = context;
         this.nickname = nickname;
         this.serviceId = serviceId;
+        this.payloadCallback = payloadCallback;
+
         log = "";
+        mConnectionsClient = Nearby.getConnectionsClient(context);
     }
 
     public String getLog() { return log; }
 
     public void setLog(String log) { this.log = log; }
 
-    public void startAdvertising() {
+    public void start() {
         AdvertisingOptions advertisingOptions = new AdvertisingOptions.Builder().setStrategy( Strategy.P2P_STAR ).build();
 
-        Nearby.getConnectionsClient( context )
+        mConnectionsClient
                 .startAdvertising(nickname, serviceId, connectionLifecycleCallback, advertisingOptions)
                 .addOnSuccessListener( (Void unused) -> log = "Anunciante iniciado..." )
                 .addOnFailureListener( (Exception e) -> log = "Se ha producido un error...");
@@ -46,7 +51,7 @@ public class Advertise {
         public void onConnectionInitiated(@NonNull String endpointId, @NonNull ConnectionInfo connectionInfo) {
             // Automatically accept the connection on both sides.
             log += "\nAceptando conexión con el cliente...";
-            Nearby.getConnectionsClient( context ).acceptConnection(endpointId, payloadCallback);
+            mConnectionsClient.acceptConnection(endpointId, payloadCallback);
         }
 
         @Override
@@ -72,15 +77,7 @@ public class Advertise {
         }
     };
 
-    private PayloadCallback payloadCallback = new PayloadCallback() {
-        @Override
-        public void onPayloadReceived(@NonNull String s, @NonNull Payload payload) {
-            log += "\nRecibiendo información...";
-        }
-
-        @Override
-        public void onPayloadTransferUpdate(@NonNull String s, @NonNull PayloadTransferUpdate payloadTransferUpdate) {
-            log += "\nRecibiendo información...";
-        }
-    };
+    public void stop() {
+        mConnectionsClient.stopAdvertising();
+    }
 }

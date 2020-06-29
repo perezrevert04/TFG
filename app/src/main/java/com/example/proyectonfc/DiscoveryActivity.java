@@ -12,6 +12,7 @@ import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.ConnectionInfo;
 import com.google.android.gms.nearby.connection.ConnectionLifecycleCallback;
 import com.google.android.gms.nearby.connection.ConnectionResolution;
+import com.google.android.gms.nearby.connection.ConnectionsClient;
 import com.google.android.gms.nearby.connection.ConnectionsStatusCodes;
 import com.google.android.gms.nearby.connection.DiscoveredEndpointInfo;
 import com.google.android.gms.nearby.connection.DiscoveryOptions;
@@ -23,6 +24,7 @@ import com.google.android.gms.nearby.connection.Strategy;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 public class DiscoveryActivity extends AppCompatActivity {
@@ -34,6 +36,8 @@ public class DiscoveryActivity extends AppCompatActivity {
     TextView ring;
 
     String myEndpoint;
+
+    private ConnectionsClient mConnectionsClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +106,13 @@ public class DiscoveryActivity extends AppCompatActivity {
                     switch (result.getStatus().getStatusCode()) {
                         case ConnectionsStatusCodes.STATUS_OK:
                             ring.setText(ring.getText().toString() + "\n¡SE HA CONECTADO!");
+
+                            String student = "3967203186";
+                            ring.setText(ring.getText().toString() + "\nEnviando datos..." + " (" + student + ")");
+                            byte[] bytes = student.getBytes(Charset.forName("UTF-8"));
+                            Payload data = Payload.fromBytes(bytes);
+                            Nearby.getConnectionsClient(getApplicationContext()).sendPayload(endpointId, data);
+
                             break;
                         case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
                             ring.setText(ring.getText().toString() + "\nThe connection was rejected by one or both sides.");
@@ -132,11 +143,3 @@ public class DiscoveryActivity extends AppCompatActivity {
         }
     };
 }
-
-
-
-//                String student = "20458644 - Carles Pérez Revert";
-//                ring.setText(ring.getText().toString() + "\nEnviando datos..." + " (" + student + ")");
-//                InputStream stream = new ByteArrayInputStream(student.getBytes(StandardCharsets.UTF_8));
-//                Payload data = Payload.fromStream(stream);
-//                Nearby.getConnectionsClient(getApplicationContext()).sendPayload(endpointId, data);
