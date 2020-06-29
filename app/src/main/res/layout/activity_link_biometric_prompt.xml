@@ -62,18 +62,18 @@
         style="@style/Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="Nombre:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewRole" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewStudentIdentifier" />
 
     <TextView
         android:id="@+id/textViewName"
         style="@style/Value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="16dp"
         android:text="Juan Ignacio Delgado Alemany"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView18" />
@@ -190,5 +190,14 @@
         app:layout_constraintBottom_toTopOf="@+id/buttonLink"
         app:layout_constraintEnd_toEndOf="@+id/buttonLink"
         app:layout_constraintStart_toStartOf="@+id/buttonLink" />
+
+    <TextView
+        android:id="@+id/textViewStudentIdentifier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewRole"
+        app:layout_constraintStart_toStartOf="@+id/textViewRole"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRole" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

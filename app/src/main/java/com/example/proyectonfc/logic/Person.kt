@@ -4,13 +4,13 @@ import java.io.Serializable
 
 class Person : Serializable {
 
+    var identifier: String = "predefined_id"
     var name: String = ""
     var dni: String = ""
     var card: String = ""
     var validity: String = ""
     var role: Role = Role.STUDENT
     var status: String = ""
-    var identifier: String = ""
 
     companion object {
         const val CARD_INFO = "CARD_INFO"

@@ -87,9 +87,12 @@ public class LinkCardNfcActivity extends AppCompatActivity {
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action) || NfcAdapter.ACTION_TECH_DISCOVERED.equals(action) || NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
 
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            String studentId = "" + Nfc.tagToString(tag);
+            String studentId = Nfc.tagToString(tag);
             person.setIdentifier(studentId);
 
+            Intent in = new Intent(this, LinkBiometricPromptActivity.class);
+            in.putExtra(Person.CARD_INFO, person);
+            startActivity(in);
         }
     }
 

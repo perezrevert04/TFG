@@ -27,6 +27,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, "shopping_notes", n
         if (deviceIsLinked()) return false;
 
         val values = ContentValues().apply {
+            put("id", person.identifier)
             put("name", person.name)
             put("dni", person.dni)
             put("card", person.card)
@@ -52,6 +53,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, "shopping_notes", n
         cursor.moveToFirst()
 
         val person = Person()
+        person.identifier = cursor.getString(0)
         person.name = cursor.getString(1)
         person.dni = cursor.getString(2)
         person.card = cursor.getString(3)
@@ -178,7 +180,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, "shopping_notes", n
     private fun createLinkedPersonTable(db: SQLiteDatabase) {
         db.execSQL(
                 "CREATE TABLE $TABLE_LINKED_PERSON (" +
-                        "_id INTEGER PRIMARY KEY AUTOINCREMENT , " +
+                        "id INTEGER PRIMARY KEY , " +
                         "name TEXT , " +
                         "dni TEXT , " +
                         "card TEXT , " +
