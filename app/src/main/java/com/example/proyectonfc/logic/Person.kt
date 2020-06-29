@@ -8,8 +8,9 @@ class Person : Serializable {
     var dni: String = ""
     var card: String = ""
     var validity: String = ""
-    var role: String = ""
+    var role: Role = Role.STUDENT
     var status: String = ""
+    var identifier: String = ""
 
     companion object {
         const val CARD_INFO = "CARD_INFO"

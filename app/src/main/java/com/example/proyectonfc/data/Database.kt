@@ -9,6 +9,7 @@ import android.util.Log
 import com.example.proyectonfc.logic.Person
 import com.example.proyectonfc.logic.Report
 import com.example.proyectonfc.logic.ReportFilter
+import com.example.proyectonfc.logic.Role
 
 const val TABLE_LINKED_PERSON = "TABLE_LINKED_PERSON"
 const val TABLE_REPORT = "TABLE_REPORT"
@@ -30,7 +31,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, "shopping_notes", n
             put("dni", person.dni)
             put("card", person.card)
             put("validity", person.validity)
-            put("role", person.role)
+            put("role", person.role.role)
             put("status", person.status)
         }
 
@@ -55,7 +56,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, "shopping_notes", n
         person.dni = cursor.getString(2)
         person.card = cursor.getString(3)
         person.validity = cursor.getString(4)
-        person.role = cursor.getString(5)
+        person.role = Role.getRole(cursor.getString(5))
         person.status = cursor.getString(6)
 
         cursor.close()

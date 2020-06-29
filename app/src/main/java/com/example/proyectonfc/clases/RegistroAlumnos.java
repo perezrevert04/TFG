@@ -43,7 +43,7 @@ import java.util.concurrent.Executor;
 
 public class RegistroAlumnos extends AppCompatActivity {
 
-    Advertise advertise;
+    private Advertise advertise;
 
     private ArrayList<String> listaIdentificadores = new ArrayList<>();
     private NfcAdapter nfcAdapter;

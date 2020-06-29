@@ -27,10 +27,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".LinkCardNfcActivity"
+            android:launchMode="singleTask"
+            android:label="Vincular carnet"
+            android:parentActivityName=".LinkCardQRActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".DiscoverLogActivity"
             android:label="Nearby Discovery Log"
-            android:parentActivityName=".clases.RegistroAlumnos"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:parentActivityName=".clases.RegistroAlumnos" />
         <activity
             android:name=".DiscoveryActivity"
             android:launchMode="singleTask"
@@ -82,10 +88,10 @@
             android:name=".LinkBiometricPromptActivity"
             android:label="Vincular carnet"
             android:launchMode="singleTask"
-            android:parentActivityName=".LinkCardActivity"
+            android:parentActivityName=".LinkCardQRActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".LinkCardActivity"
+            android:name=".LinkCardQRActivity"
             android:label="Vincular carnet"
             android:launchMode="singleTask"
             android:parentActivityName=".clases.RequirementsToLinkActivity"
