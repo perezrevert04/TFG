@@ -146,6 +146,7 @@ public class RegistroAlumnos extends AppCompatActivity {
         builder.setNegativeButton("No", (dialog, which) -> {});
         builder.setPositiveButton("Sí", (dialog, which) -> {
             prepareBiometricPrompt( () -> {
+                advertise.stop();
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 finish();
