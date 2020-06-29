@@ -17,17 +17,22 @@ import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.android.gms.nearby.connection.Strategy;
 
-public class Discovery {
+public class Discover {
     
-    Context context;
-    String serviceId, nickname;
-    String log;
+    private Context context;
+    private String nickname, serviceId;
+    private String log;
     
-    public Discovery(Context context, String nickname) {
+    public Discover(Context context, String nickname, String serviceId) {
         this.context = context;
         this.nickname = nickname;
+        this.serviceId = serviceId;
         log = "";
     }
+
+    public String getLog() { return log; }
+
+    public void setLog(String log) { this.log = log; }
 
     public void startDiscovery() {
         DiscoveryOptions discoveryOptions = new DiscoveryOptions.Builder().setStrategy( Strategy.P2P_STAR ).build();
