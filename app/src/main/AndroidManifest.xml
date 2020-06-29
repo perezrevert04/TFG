@@ -27,17 +27,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".DiscoveryLogActivity"
+            android:label="Nearby Discovery Log"
+            android:parentActivityName=".clases.RegistroAlumnos"
+            android:launchMode="singleTask"/>
+        <activity
             android:name=".DiscoveryActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AdvertisingActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".NearbyTestActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+
         <meta-data
             android:name="com.google.android.nearby.messages.API_KEY"
             android:value="AIzaSyBdfTVRQUHfb4INou5ZeQ6l6--Cd-ohLi4" />

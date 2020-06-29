@@ -51,7 +51,7 @@ public class DiscoveryActivity extends AppCompatActivity {
 
     private void startDiscovery() {
         DiscoveryOptions discoveryOptions = new DiscoveryOptions.Builder().setStrategy( Strategy.P2P_STAR ).build();
-        Nearby.getConnectionsClient( this )
+        Nearby.getConnectionsClient( getApplicationContext() )
                 .startDiscovery(SERVICE_ID, endpointDiscoveryCallback, discoveryOptions)
                 .addOnSuccessListener( (Void unused) -> ring.setText("Buscador iniciado...") )
                 .addOnFailureListener( (Exception e) -> ring.setText("Se ha producido un error...") );
