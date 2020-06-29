@@ -24,6 +24,10 @@ class Person : Serializable {
         const val CSS_QUERY = "td"
     }
 
+    fun isStudent(): Boolean {
+        return role == Role.STUDENT;
+    }
+
     override fun toString(): String {
         return "\nName: $name" +
                 "\nDNI: $dni" +

@@ -7,14 +7,12 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.example.proyectonfc.*
-import com.example.proyectonfc.db.DataBase
+import com.example.proyectonfc.R
+import com.example.proyectonfc.ShowReportsActivity
+import com.example.proyectonfc.SplashScreenActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
-    lateinit var db: DataBase
-    private val database by lazy { (application as Global).database }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,13 +20,12 @@ class MainActivity : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_main)
 
-        db = DataBase(applicationContext, "DB6.db", null, 1)
-
-        if (!database.deviceIsLinked()) {
+        if (SplashScreenActivity.notVisited) {
             val intent = Intent(this, SplashScreenActivity::class.java)
             startActivity(intent)
             finish()
         }
+
 //        val intent = Intent(this, NearbyTestActivity::class.java)
 //        startActivity(intent)
 //        finish()

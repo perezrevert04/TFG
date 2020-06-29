@@ -102,7 +102,7 @@ class LinkCardQRActivity : AppCompatActivity() {
                 alertDialog.dismiss()
 
                 if (loaded) {
-                    val cl = if (person.role == Role.STUDENT) {
+                    val cl = if (person.isStudent()) {
                         LinkCardNfcActivity::class.java
                     } else {
                         LinkBiometricPromptActivity::class.java
