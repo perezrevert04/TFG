@@ -14,9 +14,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +26,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.proyectonfc.CreacionParte;
-import com.example.proyectonfc.DiscoverLogActivity;
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
 import com.example.proyectonfc.logic.nearby.Advertise;
@@ -76,9 +72,8 @@ public class RegistroAlumnos extends AppCompatActivity {
         setContentView(R.layout.registro_alumnos);
 
         advertise = new Advertise(this, android.os.Build.MODEL, getApplicationContext().getPackageName(), payloadCallback);
-        advertise.start();
 
-        text = (TextView) findViewById(R.id.text);
+        text = findViewById(R.id.text);
 
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
         nombre = getIntent().getStringExtra( "NOMBRE");
@@ -91,7 +86,7 @@ public class RegistroAlumnos extends AppCompatActivity {
         horaInicio = getIntent().getStringExtra( "HORAINICIO");
         aula = getIntent().getStringExtra( "AULA");
 
-        Button btnNext = (Button) findViewById(R.id.buttonNext);
+        Button btnNext = findViewById(R.id.buttonNext);
         btnNext.setOnClickListener( view -> nextActivity() );
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -113,27 +108,9 @@ public class RegistroAlumnos extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_attendance, menu);
-        return true;
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem menu) {
-        if (menu.getItemId() == R.id.action_attendance) {
-            Intent intent = new Intent(this, DiscoverLogActivity.class);
-            intent.putExtra(DiscoverLogActivity.EXTRA_LOG, advertise.getLog());
-            startActivity(intent);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(menu);
-    }
-
     private void nextActivity() {
+        advertise.stop();
+
         Intent intent = new Intent(this, CreacionParte.class);
 
         intent.putExtra("listaIdentificadores", listaIdentificadores);
@@ -180,8 +157,6 @@ public class RegistroAlumnos extends AppCompatActivity {
         dialog.show();
     }
 
-    /******************************************************LECTOR NFC********************************************************************/
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -189,7 +164,11 @@ public class RegistroAlumnos extends AppCompatActivity {
         if (nfcAdapter != null) {
             nfcAdapter.enableForegroundDispatch(this, pendingIntent, null, null);
         }
+
+        advertise.start();
     }
+
+    /*** INICIO LECTOR NFC ***/
 
     @Override
     protected void onPause() {
@@ -305,7 +284,8 @@ public class RegistroAlumnos extends AppCompatActivity {
         }
         return result;
     }
-    /*****************************************************FIN LECTOR NFC*****************************************************************/
+
+    /*** FIN LECTOR NFC ***/
 
     /*** INICIO AUTENTICACIÓN BIOMÉTRICA ***/
 
