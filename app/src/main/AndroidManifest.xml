@@ -27,10 +27,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".StudentSignActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:label="Buscando parte"
+            android:parentActivityName=".logic.MainStudentActivity"/>
+        <activity
             android:name=".logic.MainStudentActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".LinkCardNfcActivity"
             android:label="Vincular carnet"

@@ -98,4 +98,12 @@ public class AdvertisingActivity extends AppCompatActivity {
             ring.setText(ring.getText().toString() + "\nRecibiendo información...");
         }
     };
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Nearby.getConnectionsClient( getApplicationContext() ).stopAdvertising();
+        Nearby.getConnectionsClient( getApplicationContext() ).stopAllEndpoints();
+
+    }
 }

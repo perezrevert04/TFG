@@ -16,7 +16,6 @@ import com.google.android.gms.nearby.connection.Strategy;
 
 public class Advertise {
 
-    private Context context;
     private String nickname, serviceId;
     private String log;
 
@@ -24,7 +23,6 @@ public class Advertise {
     private PayloadCallback payloadCallback;
 
     public Advertise(Context context, String nickname, String serviceId, PayloadCallback payloadCallback) {
-        this.context = context;
         this.nickname = nickname;
         this.serviceId = serviceId;
         this.payloadCallback = payloadCallback;

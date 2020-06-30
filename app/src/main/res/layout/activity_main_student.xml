@@ -7,7 +7,7 @@
     tools:context=".logic.MainStudentActivity">
 
     <Button
-        android:id="@+id/buttonSigh"
+        android:id="@+id/buttonSign"
         style="@style/AppTheme.PrimaryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSigh"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSign"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
