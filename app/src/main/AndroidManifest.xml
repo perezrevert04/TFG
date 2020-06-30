@@ -27,11 +27,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LinkCardNfcActivity"
+            android:name=".logic.MainStudentActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity
+            android:name=".LinkCardNfcActivity"
             android:label="Vincular carnet"
+            android:launchMode="singleTask"
             android:parentActivityName=".LinkCardQRActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".DiscoverLogActivity"
             android:label="Nearby Discovery Log"
@@ -213,7 +218,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.MainActivity"
-            android:label="Parte Firmas UPV"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.R
 import com.example.proyectonfc.ShowReportsActivity
 import com.example.proyectonfc.SplashScreenActivity
+import com.example.proyectonfc.logic.MainStudentActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +26,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        // Si es un estudiante derivar a main student activity
+        val intent = Intent(this, MainStudentActivity::class.java)
+        startActivity(intent)
+        finish()
 
 //        val intent = Intent(this, NearbyTestActivity::class.java)
 //        startActivity(intent)
