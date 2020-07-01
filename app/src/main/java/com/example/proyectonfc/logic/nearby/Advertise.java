@@ -16,12 +16,11 @@ import com.google.android.gms.nearby.connection.Payload;
 import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.Strategy;
 
-import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 
-public class Advertise implements Serializable {
+public class Advertise {
 
-    Context context;
+    private Context context;
     private String nickname, serviceId;
     private ConnectionsClient mConnectionsClient;
     private PayloadCallback payloadCallback;
@@ -32,8 +31,7 @@ public class Advertise implements Serializable {
         this.serviceId = serviceId;
         this.payloadCallback = payloadCallback;
     }
-
-
+    
     public void start() {
         mConnectionsClient = Nearby.getConnectionsClient(context);
 

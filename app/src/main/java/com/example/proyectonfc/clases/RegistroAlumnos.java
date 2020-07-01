@@ -1,17 +1,20 @@
 package com.example.proyectonfc.clases;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Button;
@@ -19,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
@@ -36,6 +40,7 @@ import com.google.android.gms.nearby.connection.Payload;
 import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -127,6 +132,37 @@ public class RegistroAlumnos extends AppCompatActivity {
         intent.putExtra("horaInicio", horaInicio);
         intent.putExtra("aula", aula);
 
+        startActivityForResult(intent, CreacionParte.REQ_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CreacionParte.REQ_CODE && resultCode == Activity.RESULT_OK) {
+            advertise.stop();
+
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+
+            if (data != null) {
+                String filename = data.getStringExtra("filename");
+                openFile(filename);
+            }
+        }
+    }
+
+    private void openFile(String filename) {
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+
+        String file = "/storage/emulated/0/Download/ParteFirmasUPV/" + filename;
+        File fileIn = new File(file);
+        Uri uri = Uri.fromFile(fileIn);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(uri, "application/pdf");
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 

@@ -20,7 +20,6 @@ import com.example.proyectonfc.clases.MainActivity
 import com.example.proyectonfc.db.DataBase
 import com.example.proyectonfc.logic.Person
 import com.example.proyectonfc.logic.Report
-import com.example.proyectonfc.logic.nearby.Advertise
 import com.lowagie.text.*
 import com.lowagie.text.pdf.PdfPTable
 import com.lowagie.text.pdf.PdfWriter
@@ -34,6 +33,10 @@ import java.util.*
 import java.util.concurrent.Executor
 
 class CreacionParte : AppCompatActivity() {
+
+    companion object {
+        const val REQ_CODE = 1213
+    }
 
     private val database by lazy { (application as Global).database }
     private lateinit var person: Person
@@ -150,31 +153,18 @@ class CreacionParte : AppCompatActivity() {
 
             generarPdf(filename, sdf.format(Date()))
 
-            startActivity(Intent(this, MainActivity::class.java))
+            val retIntent = Intent()
+            retIntent.putExtra("filename", filename)
+            setResult(Activity.RESULT_OK, retIntent)
+            finish()
 
-            openFile(filename)
         } catch (e: Exception) {
             toast("No se ha podido crear el archivo pdf")
         }
     }
 
-    private fun openFile(filename: String) {
-        val file = "/storage/emulated/0/Download/ParteFirmasUPV/$filename"
-
-        val builder = VmPolicy.Builder()
-        StrictMode.setVmPolicy(builder.build())
-
-        val fileIn = File(file)
-        val uri = Uri.fromFile(fileIn)
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.setDataAndType(uri, "application/pdf")
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        startActivity(intent)
-    }
-
     fun generarPdf(filename: String, date: String) {
         val documento = Document()
-
 
         try {
 
