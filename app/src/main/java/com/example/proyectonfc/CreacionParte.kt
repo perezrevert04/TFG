@@ -20,6 +20,7 @@ import com.example.proyectonfc.clases.MainActivity
 import com.example.proyectonfc.db.DataBase
 import com.example.proyectonfc.logic.Person
 import com.example.proyectonfc.logic.Report
+import com.example.proyectonfc.logic.nearby.Advertise
 import com.lowagie.text.*
 import com.lowagie.text.pdf.PdfPTable
 import com.lowagie.text.pdf.PdfWriter

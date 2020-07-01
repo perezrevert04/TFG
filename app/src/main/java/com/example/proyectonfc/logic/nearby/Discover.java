@@ -20,6 +20,7 @@ import com.google.android.gms.nearby.connection.Strategy;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Discover {
+public class Discover implements Serializable {
 
     /*** Observer pattern ***/
     public interface Observer {

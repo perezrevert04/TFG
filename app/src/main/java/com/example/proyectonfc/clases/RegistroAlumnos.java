@@ -110,7 +110,6 @@ public class RegistroAlumnos extends AppCompatActivity {
     }
 
     private void nextActivity() {
-//        advertise.stop();
         open = false;
 
         Intent intent = new Intent(this, CreacionParte.class);
@@ -133,7 +132,7 @@ public class RegistroAlumnos extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK/* && listaIdentificadores.size() > 0*/) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             backAlert();
             return false;
         }
@@ -149,7 +148,6 @@ public class RegistroAlumnos extends AppCompatActivity {
         builder.setNegativeButton("No", (dialog, which) -> {});
         builder.setPositiveButton("Sí", (dialog, which) -> {
             prepareBiometricPrompt( () -> {
-//                advertise.stop();
                 open = false;
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
