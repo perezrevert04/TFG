@@ -100,7 +100,7 @@ public class RegistroAlumnos extends AppCompatActivity {
         ProgressBar progressBar = findViewById(R.id.progressBar2);
         TextView nearbyStatus = findViewById(R.id.textView16);
         advertise.addObserver( () -> {
-            nearbyStatus.setText("Parte abierto a través de Nearby.");
+            nearbyStatus.setText("Parte abierto correctamente.");
             progressBar.setVisibility(View.INVISIBLE);
         });
 
