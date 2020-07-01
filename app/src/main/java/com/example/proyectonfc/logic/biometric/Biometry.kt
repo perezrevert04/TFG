@@ -23,7 +23,6 @@ class Biometry(val context: Context) {
 
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
-                toast("Authentication succeeded")
                 method()
             }
 

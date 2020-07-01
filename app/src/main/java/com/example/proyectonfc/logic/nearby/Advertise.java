@@ -12,8 +12,11 @@ import com.google.android.gms.nearby.connection.ConnectionLifecycleCallback;
 import com.google.android.gms.nearby.connection.ConnectionResolution;
 import com.google.android.gms.nearby.connection.ConnectionsClient;
 import com.google.android.gms.nearby.connection.ConnectionsStatusCodes;
+import com.google.android.gms.nearby.connection.Payload;
 import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.Strategy;
+
+import java.nio.charset.StandardCharsets;
 
 public class Advertise {
 
@@ -73,5 +76,10 @@ public class Advertise {
     public void stop() {
         mConnectionsClient.stopAllEndpoints();
         mConnectionsClient.stopAdvertising();
+    }
+
+    public void sendPayload(String endpointId, String msg) {
+        byte[] bytes = msg.getBytes(StandardCharsets.UTF_8);
+        mConnectionsClient.sendPayload(endpointId, Payload.fromBytes(bytes));
     }
 }

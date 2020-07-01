@@ -54,9 +54,12 @@ public class Discover {
         while (scanner.hasNextLine()) notifyObservers();
     }
 
-    public Discover(Context context, String nickname, String serviceId) {
+    private PayloadCallback payloadCallback;
+
+    public Discover(Context context, String nickname, String serviceId, PayloadCallback payloadCallback) {
         this.nickname = nickname;
         this.serviceId = serviceId;
+        this.payloadCallback = payloadCallback;
 
         mConnectionsClient = Nearby.getConnectionsClient( context );
         map = new HashMap<>();
@@ -145,26 +148,12 @@ public class Discover {
                 }
             };
 
-
-    private PayloadCallback payloadCallback = new PayloadCallback() {
-        @Override
-        public void onPayloadReceived(@NonNull String endpointId, @NonNull Payload payload) {
-
-        }
-
-        @Override
-        public void onPayloadTransferUpdate(@NonNull String endpointId, @NonNull PayloadTransferUpdate payloadTransferUpdate) {
-
-        }
-    };
-
     public void stop() {
         mConnectionsClient.stopAllEndpoints();
         mConnectionsClient.stopDiscovery();
     }
 
     public void sendPayload(String endpointId, String identifier) {
-        // "3967203186"
         Log.d("NearbyLog", "Sending payload");
         byte[] bytes = identifier.getBytes(StandardCharsets.UTF_8);
         mConnectionsClient.sendPayload(endpointId, Payload.fromBytes(bytes));

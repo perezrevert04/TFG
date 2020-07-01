@@ -29,6 +29,7 @@ import com.example.proyectonfc.CreacionParte;
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
 import com.example.proyectonfc.logic.nearby.Advertise;
+import com.example.proyectonfc.logic.nearby.NearbyCode;
 import com.example.proyectonfc.parser.NdefMessageParser;
 import com.example.proyectonfc.record.ParsedNdefRecord;
 import com.google.android.gms.nearby.connection.Payload;
@@ -329,41 +330,41 @@ public class RegistroAlumnos extends AppCompatActivity {
     private PayloadCallback payloadCallback = new PayloadCallback() {
         @Override
         public void onPayloadReceived(@NonNull String endpointId, @NonNull Payload payload) {
-            String log = "\nRecibiendo información (onPayloadReceived)...";
             // This always gets the full data of the payload. Will be null if it's not a BYTES payload. You can check the payload type with payload.getType().
             byte[] receivedBytes = payload.asBytes();
             String identifier = new String(receivedBytes, StandardCharsets.UTF_8);
-            log += "\nIdentificador recibido: " + identifier;
-            add(identifier);
+            NearbyCode code = add(identifier);
+            advertise.sendPayload(endpointId, code.getMsg());
         }
 
         @Override
         public void onPayloadTransferUpdate(@NonNull String endpointId, @NonNull PayloadTransferUpdate payloadTransferUpdate) {
-            String log = "\nRecibiendo información (onPayloadTransferUpdate)...";
             // Bytes payloads are sent as a single chunk, so you'll receive a SUCCESS update immediately after the call to onPayloadReceived().
         }
     };
 
-    private void add(String identifier) {
-
+    private NearbyCode add(String identifier) {
+        NearbyCode code;
+        String msg;
         final DataBase dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
 
         SQLiteDatabase db = dataBase.getReadableDatabase();
         //select * from usuarios
         Cursor cursor = db.rawQuery("SELECT * FROM ALUMNO WHERE id = '" + asignatura+identifier + "'", null);
         if (cursor.getCount() < 1 ) {
-            Toast.makeText(getApplicationContext(), "EL ALUMNO CON IDENTIFIFCADOR: "+ identifier + " NO ESTÁ DADO DE ALTA", Toast.LENGTH_SHORT).show();
+            msg = "No estás dado de alta en esta asignatura...";
+            code = NearbyCode.SUCCESS;
+        } else if (listaIdentificadores.contains(identifier)) {
+            msg = "Ya tienes registrada la asistencia en esta asignatura...";
+            code = NearbyCode.DUPLICATED;
         } else {
-
-            if (listaIdentificadores.contains(identifier)) {
-                Toast.makeText(getApplicationContext(), "ESTE ALUMNO YA TIENE REGISTRADA LA ASISTENCIA", Toast.LENGTH_SHORT).show();
-            } else {
-                listaIdentificadores.add(identifier);
-                Toast.makeText(getApplicationContext(), "Fichaje realizado.", Toast.LENGTH_SHORT).show();
-                text.setText(identifier);
-            }
+            listaIdentificadores.add(identifier);
+            msg = "Fichaje realizado con éxito.";
+            code = NearbyCode.SUCCESS;
+            text.setText(identifier);
         }
 
+        return code;
     }
     /*** FIN NEARBY ADVERTISE ***/
 
