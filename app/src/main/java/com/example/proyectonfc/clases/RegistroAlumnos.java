@@ -17,7 +17,9 @@ import android.os.Parcelable;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,6 +96,13 @@ public class RegistroAlumnos extends AppCompatActivity {
 
         String nickname = "\n[" + asignatura + "]\n" + nombre + "\n(" + grupo + ", " + aula + ")\n";
         advertise = new Advertise(this, nickname, getApplicationContext().getPackageName(), payloadCallback);
+
+        ProgressBar progressBar = findViewById(R.id.progressBar2);
+        TextView nearbyStatus = findViewById(R.id.textView16);
+        advertise.addObserver( () -> {
+            nearbyStatus.setText("Parte abierto a través de Nearby correctamente.");
+            progressBar.setVisibility(View.INVISIBLE);
+        });
 
         Button btnNext = findViewById(R.id.buttonNext);
         btnNext.setOnClickListener( view -> nextActivity() );

@@ -17,8 +17,33 @@ import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.Strategy;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class Advertise {
+
+
+    /*** Observer pattern ***/
+    public interface Observer {
+        void update();
+    }
+
+    private final List<Discover.Observer> observers = new ArrayList<>();
+
+    private void notifyObservers() {
+        observers.forEach(Discover.Observer::update);
+    }
+
+    public void addObserver(Discover.Observer observer) {
+        observers.add(observer);
+    }
+
+    public void scanSystemIn() {
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNextLine()) notifyObservers();
+    }
+    /*** Observer pattern ***/
 
     private Context context;
     private String nickname, serviceId;
@@ -31,7 +56,7 @@ public class Advertise {
         this.serviceId = serviceId;
         this.payloadCallback = payloadCallback;
     }
-    
+
     public void start() {
         mConnectionsClient = Nearby.getConnectionsClient(context);
 
@@ -39,8 +64,13 @@ public class Advertise {
 
         mConnectionsClient
                 .startAdvertising(nickname, serviceId, connectionLifecycleCallback, advertisingOptions)
-                .addOnSuccessListener( (Void unused) -> Log.d("NearbyLog", "Anunciante iniciado..." ))
-                .addOnFailureListener( (Exception e) -> Log.d("NearbyLog", "Se ha producido un error...\n" + e.getMessage()));
+                .addOnSuccessListener( (Void unused) -> {
+                    notifyObservers();
+                    Log.d("NearbyLog", "Anunciante iniciado..." );
+                })
+                .addOnFailureListener( (Exception e) -> {
+                    Log.d("NearbyLog", "Se ha producido un error...\n" + e.getMessage());
+                });
     }
 
     private final ConnectionLifecycleCallback connectionLifecycleCallback = new ConnectionLifecycleCallback() {
