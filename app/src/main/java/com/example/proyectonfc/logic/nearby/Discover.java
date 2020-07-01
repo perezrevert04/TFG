@@ -16,7 +16,6 @@ import com.google.android.gms.nearby.connection.DiscoveryOptions;
 import com.google.android.gms.nearby.connection.EndpointDiscoveryCallback;
 import com.google.android.gms.nearby.connection.Payload;
 import com.google.android.gms.nearby.connection.PayloadCallback;
-import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.android.gms.nearby.connection.Strategy;
 
 import org.jetbrains.annotations.NotNull;
@@ -53,9 +52,9 @@ public class Discover {
 
     private String nickname, serviceId;
     private ConnectionsClient mConnectionsClient;
+    private PayloadCallback payloadCallback;
 
     private static Map<String, String> map = new HashMap<>();
-    private PayloadCallback payloadCallback;
 
     public Discover(Context context, String nickname, String serviceId, PayloadCallback payloadCallback) {
         this.nickname = nickname;
@@ -69,12 +68,20 @@ public class Discover {
         return map;
     }
 
+    private void restart() {
+        stop();
+        start();
+    }
+
     public void start() {
         DiscoveryOptions discoveryOptions = new DiscoveryOptions.Builder().setStrategy( Strategy.P2P_STAR ).build();
         mConnectionsClient
                 .startDiscovery(serviceId, endpointDiscoveryCallback, discoveryOptions)
                 .addOnSuccessListener( (Void unused) -> Log.d("NearbyLog", "Buscador iniciado...") )
-                .addOnFailureListener( (Exception e) -> Log.d("NearbyLog", "Se ha producido un error...") );
+                .addOnFailureListener( (Exception e) -> {
+                    Log.d("NearbyLog", "Se ha producido un error...\n" + e.getMessage());
+                    if (e.getMessage().equals("8002: STATUS_ALREADY_DISCOVERING")) { restart(); }
+                } );
     }
 
     private final EndpointDiscoveryCallback endpointDiscoveryCallback = new EndpointDiscoveryCallback() {
