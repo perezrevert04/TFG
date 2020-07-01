@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import com.example.proyectonfc.logic.biometric.Biometry
 import com.example.proyectonfc.logic.nearby.Discover
 import kotlinx.android.synthetic.main.activity_student_sign.*
 
@@ -12,11 +13,13 @@ import kotlinx.android.synthetic.main.activity_student_sign.*
 class StudentSignActivity : AppCompatActivity() {
 
     private lateinit var discover: Discover
+    private lateinit var biometry: Biometry
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_sign)
 
+        biometry = Biometry(this)
         discover = Discover(this, android.os.Build.MODEL, applicationContext.packageName)
 
         discover.addObserver { updateAdapter() }
@@ -24,7 +27,7 @@ class StudentSignActivity : AppCompatActivity() {
 
         activeList.setOnItemClickListener { _: AdapterView<*>?, _: View, pos: Int, _: Long ->
             val keys = ArrayList<String>(discover.map.keys)
-            discover.sendPayload(keys[pos], "3967203186")
+            biometry.authenticate { discover.sendPayload(keys[pos], "3967203186") }
         }
     }
 
@@ -40,8 +43,10 @@ class StudentSignActivity : AppCompatActivity() {
         discover.start()
     }
 
+
+    /* TODO: Hacer parar al buscador */
     override fun onPause() {
         super.onPause()
-        discover.stop()
+//        discover.stop()
     }
 }

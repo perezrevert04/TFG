@@ -21,7 +21,6 @@ import com.google.android.gms.nearby.connection.Strategy;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -95,9 +94,7 @@ public class Discover {
                                     map.put(endpointId, info.getEndpointName());
                                     notifyObservers();
                                 }
-//                                Payload bytesPayload = Payload.fromBytes(new byte[] {0xa, 0xb, 0xc, 0xd});
-//                                Nearby.getConnectionsClient( context ).sendPayload(endpointId, bytesPayload);
-                                // Nearby Connections failed to request the connection.
+
                             });
         }
 
@@ -168,6 +165,7 @@ public class Discover {
 
     public void sendPayload(String endpointId, String identifier) {
         // "3967203186"
+        Log.d("NearbyLog", "Sending payload");
         byte[] bytes = identifier.getBytes(StandardCharsets.UTF_8);
         mConnectionsClient.sendPayload(endpointId, Payload.fromBytes(bytes));
     }
