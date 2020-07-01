@@ -68,20 +68,12 @@ public class Discover {
         return map;
     }
 
-    private void restart() {
-        stop();
-        start();
-    }
-
     public void start() {
         DiscoveryOptions discoveryOptions = new DiscoveryOptions.Builder().setStrategy( Strategy.P2P_STAR ).build();
         mConnectionsClient
                 .startDiscovery(serviceId, endpointDiscoveryCallback, discoveryOptions)
                 .addOnSuccessListener( (Void unused) -> Log.d("NearbyLog", "Buscador iniciado...") )
-                .addOnFailureListener( (Exception e) -> {
-                    Log.d("NearbyLog", "Se ha producido un error...\n" + e.getMessage());
-                    if (e.getMessage().equals("8002: STATUS_ALREADY_DISCOVERING")) { restart(); }
-                } );
+                .addOnFailureListener( (Exception e) -> Log.d("NearbyLog", "Se ha producido un error...\n" + e.getMessage()) );
     }
 
     private final EndpointDiscoveryCallback endpointDiscoveryCallback = new EndpointDiscoveryCallback() {

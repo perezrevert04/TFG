@@ -67,6 +67,8 @@ public class RegistroAlumnos extends AppCompatActivity {
     private BiometricPrompt biometricPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
 
+    private boolean open = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +103,6 @@ public class RegistroAlumnos extends AppCompatActivity {
 
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),0);
 
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,}, 1000);
         }
@@ -109,7 +110,8 @@ public class RegistroAlumnos extends AppCompatActivity {
     }
 
     private void nextActivity() {
-        advertise.stop();
+//        advertise.stop();
+        open = false;
 
         Intent intent = new Intent(this, CreacionParte.class);
 
@@ -147,7 +149,8 @@ public class RegistroAlumnos extends AppCompatActivity {
         builder.setNegativeButton("No", (dialog, which) -> {});
         builder.setPositiveButton("Sí", (dialog, which) -> {
             prepareBiometricPrompt( () -> {
-                advertise.stop();
+//                advertise.stop();
+                open = false;
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -168,6 +171,7 @@ public class RegistroAlumnos extends AppCompatActivity {
         }
 
         advertise.start();
+        open = true;
     }
 
     /*** INICIO LECTOR NFC ***/
@@ -350,7 +354,10 @@ public class RegistroAlumnos extends AppCompatActivity {
         SQLiteDatabase db = dataBase.getReadableDatabase();
         //select * from usuarios
         Cursor cursor = db.rawQuery("SELECT * FROM ALUMNO WHERE id = '" + asignatura+identifier + "'", null);
-        if (cursor.getCount() < 1 ) {
+
+        if (!open) {
+            code = NearbyCode.CLOSING;
+        } else if (cursor.getCount() < 1 ) {
             code = NearbyCode.UNREGISTERED;
         } else if (listaIdentificadores.contains(identifier)) {
             code = NearbyCode.DUPLICATED;
