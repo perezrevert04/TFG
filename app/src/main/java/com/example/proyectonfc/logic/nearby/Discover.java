@@ -29,12 +29,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Discover {
-    
-    private String nickname, serviceId;
-    private ConnectionsClient mConnectionsClient;
 
-    private Map<String, String> map;
-
+    /*** Observer pattern ***/
     public interface Observer {
         void update();
     }
@@ -53,7 +49,12 @@ public class Discover {
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) notifyObservers();
     }
+    /*** Observer pattern ***/
 
+    private String nickname, serviceId;
+    private ConnectionsClient mConnectionsClient;
+
+    private static Map<String, String> map = new HashMap<>();
     private PayloadCallback payloadCallback;
 
     public Discover(Context context, String nickname, String serviceId, PayloadCallback payloadCallback) {
@@ -62,7 +63,6 @@ public class Discover {
         this.payloadCallback = payloadCallback;
 
         mConnectionsClient = Nearby.getConnectionsClient( context );
-        map = new HashMap<>();
     }
 
     public Map<String, String> getMap() {

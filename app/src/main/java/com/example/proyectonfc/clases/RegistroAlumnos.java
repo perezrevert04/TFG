@@ -345,21 +345,17 @@ public class RegistroAlumnos extends AppCompatActivity {
 
     private NearbyCode add(String identifier) {
         NearbyCode code;
-        String msg;
         final DataBase dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
 
         SQLiteDatabase db = dataBase.getReadableDatabase();
         //select * from usuarios
         Cursor cursor = db.rawQuery("SELECT * FROM ALUMNO WHERE id = '" + asignatura+identifier + "'", null);
         if (cursor.getCount() < 1 ) {
-            msg = "No estás dado de alta en esta asignatura...";
-            code = NearbyCode.SUCCESS;
+            code = NearbyCode.UNREGISTERED;
         } else if (listaIdentificadores.contains(identifier)) {
-            msg = "Ya tienes registrada la asistencia en esta asignatura...";
             code = NearbyCode.DUPLICATED;
         } else {
             listaIdentificadores.add(identifier);
-            msg = "Fichaje realizado con éxito.";
             code = NearbyCode.SUCCESS;
             text.setText(identifier);
         }

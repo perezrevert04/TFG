@@ -2,7 +2,6 @@ package com.example.proyectonfc
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -18,7 +17,6 @@ import kotlinx.android.synthetic.main.activity_student_sign.*
 import org.jetbrains.anko.toast
 import java.nio.charset.StandardCharsets
 
-
 class StudentSignActivity : AppCompatActivity() {
 
     private lateinit var discover: Discover
@@ -30,6 +28,7 @@ class StudentSignActivity : AppCompatActivity() {
 
         biometry = Biometry(this)
         discover = Discover(this, android.os.Build.MODEL, applicationContext.packageName, payloadCallback)
+        updateAdapter()
 
         discover.addObserver { updateAdapter() }
         discover.scanSystemIn()
@@ -50,13 +49,6 @@ class StudentSignActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         discover.start()
-    }
-
-
-    /* TODO: Hacer parar al buscador */
-    override fun onPause() {
-        super.onPause()
-//        discover.stop()
     }
 
     /*** INICIO NEARBY DISCOVER ***/
