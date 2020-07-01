@@ -30,7 +30,6 @@
             android:name=".StudentSignActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:label="Buscando parte"
             android:parentActivityName=".logic.MainStudentActivity"/>
         <activity
             android:name=".logic.MainStudentActivity"

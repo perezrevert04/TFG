@@ -77,5 +77,6 @@ public class Advertise {
 
     public void stop() {
         mConnectionsClient.stopAdvertising();
+        mConnectionsClient.stopAllEndpoints();
     }
 }
