@@ -21,6 +21,8 @@ import com.google.android.gms.nearby.connection.Strategy;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -75,7 +77,7 @@ public class Discover {
 
     private final EndpointDiscoveryCallback endpointDiscoveryCallback = new EndpointDiscoveryCallback() {
         @Override
-        public void onEndpointFound(@NonNull String endpointId, @NonNull DiscoveredEndpointInfo discoveredEndpointInfo) {
+        public void onEndpointFound(@NonNull String endpointId, @NonNull DiscoveredEndpointInfo info) {
             Log.d("NearbyLog", "Se ha encontrado un endpoint: " + endpointId);
 
             // An endpoint was found. We request a connection to it.
@@ -87,8 +89,12 @@ public class Discover {
                             })
                     .addOnFailureListener(
                             (Exception e) -> {
-                                Log.d("NearbyLog", "Se ha producido un error...\n" + e.getMessage());
+                                Log.d("NearbyLog", "Se ha producido un error...\n" + e.getMessage() + " " + e.hashCode());
 
+                                if (e.getMessage().equals("8003: STATUS_ALREADY_CONNECTED_TO_ENDPOINT") && !map.containsKey(endpointId)) {
+                                    map.put(endpointId, info.getEndpointName());
+                                    notifyObservers();
+                                }
 //                                Payload bytesPayload = Payload.fromBytes(new byte[] {0xa, 0xb, 0xc, 0xd});
 //                                Nearby.getConnectionsClient( context ).sendPayload(endpointId, bytesPayload);
                                 // Nearby Connections failed to request the connection.
@@ -156,7 +162,13 @@ public class Discover {
     };
 
     public void stop() {
-        mConnectionsClient.stopDiscovery();
         mConnectionsClient.stopAllEndpoints();
+        mConnectionsClient.stopDiscovery();
+    }
+
+    public void sendPayload(String endpointId, String identifier) {
+        // "3967203186"
+        byte[] bytes = identifier.getBytes(StandardCharsets.UTF_8);
+        mConnectionsClient.sendPayload(endpointId, Payload.fromBytes(bytes));
     }
 }

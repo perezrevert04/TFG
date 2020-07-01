@@ -1,6 +1,7 @@
 package com.example.proyectonfc.logic.nearby;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -17,7 +18,6 @@ import com.google.android.gms.nearby.connection.Strategy;
 public class Advertise {
 
     private String nickname, serviceId;
-    private String log;
 
     private ConnectionsClient mConnectionsClient;
     private PayloadCallback payloadCallback;
@@ -27,28 +27,23 @@ public class Advertise {
         this.serviceId = serviceId;
         this.payloadCallback = payloadCallback;
 
-        log = "";
         mConnectionsClient = Nearby.getConnectionsClient(context);
     }
-
-    public String getLog() { return log; }
-
-    public void setLog(String log) { this.log = log; }
 
     public void start() {
         AdvertisingOptions advertisingOptions = new AdvertisingOptions.Builder().setStrategy( Strategy.P2P_STAR ).build();
 
         mConnectionsClient
                 .startAdvertising(nickname, serviceId, connectionLifecycleCallback, advertisingOptions)
-                .addOnSuccessListener( (Void unused) -> log = "Anunciante iniciado..." )
-                .addOnFailureListener( (Exception e) -> log = "Se ha producido un error...");
+                .addOnSuccessListener( (Void unused) -> Log.d("NearbyLog", "Anunciante iniciado..." ))
+                .addOnFailureListener( (Exception e) -> Log.d("NearbyLog", "Se ha producido un error..."));
     }
 
     private final ConnectionLifecycleCallback connectionLifecycleCallback = new ConnectionLifecycleCallback() {
         @Override
         public void onConnectionInitiated(@NonNull String endpointId, @NonNull ConnectionInfo connectionInfo) {
             // Automatically accept the connection on both sides.
-            log += "\nAceptando conexión con el cliente...";
+            Log.d("AppLog", "Aceptando conexión con el cliente...");
             mConnectionsClient.acceptConnection(endpointId, payloadCallback);
         }
 
@@ -56,27 +51,27 @@ public class Advertise {
         public void onConnectionResult(@NonNull String s, @NonNull ConnectionResolution result) {
             switch (result.getStatus().getStatusCode()) {
                 case ConnectionsStatusCodes.STATUS_OK:
-                    log += "\n¡SE HA CONECTADO!";
+                    Log.d("AppLog", "¡SE HA CONECTADO!");
                     break;
                 case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
-                    log += "\nThe connection was rejected by one or both sides.";
+                    Log.d("AppLog", "he connection was rejected by one or both sides.");
                     break;
                 case ConnectionsStatusCodes.STATUS_ERROR:
-                    log += "\nThe connection broke before it was able to be accepted.";
+                    Log.d("AppLog", "he connection broke before it was able to be accepted.");
                     break;
                 default:
-                    log += "\nUnknown status code";
+                    Log.d("AppLog", "nknown status code");
             }
         }
 
         @Override
         public void onDisconnected(@NonNull String s) {
-            log += "\nDesconectado...";
+            Log.d("AppLog", "Desconectado...");
         }
     };
 
     public void stop() {
-        mConnectionsClient.stopAdvertising();
         mConnectionsClient.stopAllEndpoints();
+        mConnectionsClient.stopAdvertising();
     }
 }

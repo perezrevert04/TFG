@@ -24,6 +24,7 @@ class StudentSignActivity : AppCompatActivity() {
 
         activeList.setOnItemClickListener { _: AdapterView<*>?, _: View, pos: Int, _: Long ->
             val keys = ArrayList<String>(discover.map.keys)
+            discover.sendPayload(keys[pos], "3967203186")
         }
     }
 

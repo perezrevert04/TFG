@@ -71,8 +71,6 @@ public class RegistroAlumnos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registro_alumnos);
 
-        advertise = new Advertise(this, android.os.Build.MODEL, getApplicationContext().getPackageName(), payloadCallback);
-
         text = findViewById(R.id.text);
 
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
@@ -86,6 +84,9 @@ public class RegistroAlumnos extends AppCompatActivity {
         horaInicio = getIntent().getStringExtra( "HORAINICIO");
         aula = getIntent().getStringExtra( "AULA");
 
+        String nickname = "\n[" + asignatura + "]\n" + nombre + "\n(" + grupo + ", " + aula + ")\n";
+        advertise = new Advertise(this, nickname, getApplicationContext().getPackageName(), payloadCallback);
+
         Button btnNext = findViewById(R.id.buttonNext);
         btnNext.setOnClickListener( view -> nextActivity() );
 
@@ -97,9 +98,7 @@ public class RegistroAlumnos extends AppCompatActivity {
             return;
         }
 
-        pendingIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, this.getClass())
-                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),0);
+        pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),0);
 
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -131,10 +130,11 @@ public class RegistroAlumnos extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && listaIdentificadores.size() > 0) {
+        if (keyCode == KeyEvent.KEYCODE_BACK/* && listaIdentificadores.size() > 0*/) {
             backAlert();
             return false;
         }
+
         return super.onKeyDown(keyCode, event);
     }
 
@@ -334,14 +334,12 @@ public class RegistroAlumnos extends AppCompatActivity {
             byte[] receivedBytes = payload.asBytes();
             String identifier = new String(receivedBytes, StandardCharsets.UTF_8);
             log += "\nIdentificador recibido: " + identifier;
-            advertise.setLog( advertise.getLog() + log);
             add(identifier);
         }
 
         @Override
         public void onPayloadTransferUpdate(@NonNull String endpointId, @NonNull PayloadTransferUpdate payloadTransferUpdate) {
             String log = "\nRecibiendo información (onPayloadTransferUpdate)...";
-            advertise.setLog( advertise.getLog() + log);
             // Bytes payloads are sent as a single chunk, so you'll receive a SUCCESS update immediately after the call to onPayloadReceived().
         }
     };

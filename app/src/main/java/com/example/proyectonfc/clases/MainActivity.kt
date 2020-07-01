@@ -29,9 +29,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Si es un estudiante derivar a main student activity
-        val intent = Intent(this, MainStudentActivity::class.java)
-        startActivity(intent)
-        finish()
+//        val intent = Intent(this, MainStudentActivity::class.java)
+//        startActivity(intent)
+//        finish()
 
 //        val intent = Intent(this, NearbyTestActivity::class.java)
 //        startActivity(intent)
@@ -59,5 +59,17 @@ class MainActivity : AppCompatActivity() {
         } else {
             return super.onKeyDown(keyCode, event)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val decorView = window.decorView
+        decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
     }
 }
