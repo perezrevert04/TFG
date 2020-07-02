@@ -93,6 +93,7 @@ public class RegistroAlumnos extends AppCompatActivity {
 
         String nickname = "\n[" + asignatura + "]\n" + nombre + "\n(" + grupo + ", " + aula + ")\n";
         advertise = new Advertise(this, nickname, getApplicationContext().getPackageName(), payloadCallback);
+        advertise.scanSystemIn();
 
         ProgressBar progressBar = findViewById(R.id.progressBar2);
         TextView nearbyStatus = findViewById(R.id.textView16);
