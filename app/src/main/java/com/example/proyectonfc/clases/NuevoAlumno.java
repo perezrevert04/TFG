@@ -60,7 +60,7 @@ public class NuevoAlumno extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nuevo_alumno);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         text = (TextView) findViewById(R.id.text);
         asignatura = getIntent().getStringExtra( "ASIGNATURA");

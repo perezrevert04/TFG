@@ -86,7 +86,6 @@ public class Alumnos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alumnos);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
         dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);

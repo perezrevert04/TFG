@@ -40,6 +40,7 @@ import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class RegistroAlumnos extends AppCompatActivity {
 
@@ -68,6 +69,8 @@ public class RegistroAlumnos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registro_alumnos);
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
 
         biometry = new Biometry(this, "Autenticación", "Identifíquese para cancelar el parte.");
 

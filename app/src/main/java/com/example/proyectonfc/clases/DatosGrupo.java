@@ -57,12 +57,8 @@ public class DatosGrupo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datos_grupo);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
 
         dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
-
-
 
         //Intent intent = new Intent(DatosAsignatura.this.getApplicationContext(), DatosAsignatura.class);
         Nombregrupo = getIntent().getStringExtra( "GRUPO");

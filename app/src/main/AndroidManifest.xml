@@ -104,16 +104,19 @@
         <activity
             android:name=".clases.EditarGrupo"
             android:label="Editar Datos Grupo"
+            android:launchMode="singleTask"
             android:parentActivityName=".clases.DatosGrupo"
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.DatosGrupo"
             android:label="Datos Grupo"
+            android:launchMode="singleTask"
             android:parentActivityName=".clases.Grupos"
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.Grupos"
             android:label="Grupos Asignatura"
+            android:launchMode="singleTask"
             android:parentActivityName=".clases.Asignaturas"
             android:screenOrientation="portrait" />
         <activity
@@ -141,37 +144,44 @@
         <activity
             android:name=".clases.NuevoAlumno"
             android:label="Nuevo Alumno"
+            android:launchMode="singleTask"
             android:parentActivityName=".clases.Alumnos"
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.EditarAlumno"
             android:label="Editar Alumno"
+            android:launchMode="singleTask"
             android:parentActivityName=".clases.DatosAlumno"
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.DatosAlumno"
             android:label="Datos Alumno"
+            android:launchMode="singleTask"
             android:parentActivityName=".clases.Alumnos"
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.Alumnos"
             android:label="Alumnos Asignatura"
-            android:parentActivityName=".clases.Alumnos"
+            android:parentActivityName=".clases.Asignaturas"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.EditarAsignatura"
             android:label="Editar Asignatura"
             android:parentActivityName=".clases.DatosAsignatura"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.DatosAsignatura"
             android:label="Datos Asignatura"
             android:parentActivityName=".clases.Asignaturas"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.Asignaturas"
             android:label="Menú Asignaturas"
             android:parentActivityName=".clases.Configuracion"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.Configuracion"
