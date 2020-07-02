@@ -19,7 +19,6 @@ import com.google.android.gms.nearby.connection.Strategy;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Advertise {
 
@@ -29,20 +28,16 @@ public class Advertise {
         void update();
     }
 
-    private final List<Discover.Observer> observers = new ArrayList<>();
+    private final List<Observer> observers = new ArrayList<>();
 
     private void notifyObservers() {
-        observers.forEach(Discover.Observer::update);
+        observers.forEach(Observer::update);
     }
 
-    public void addObserver(Discover.Observer observer) {
+    public void addObserver(Observer observer) {
         observers.add(observer);
     }
 
-    public void scanSystemIn() {
-        Scanner scanner = new Scanner(System.in);
-        while (scanner.hasNextLine()) notifyObservers();
-    }
     /*** Observer pattern ***/
 
     private Context context;

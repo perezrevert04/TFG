@@ -25,29 +25,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 public class Discover {
 
     /*** Observer pattern ***/
     public interface Observer {
-        void update();
+        void update(Map<String, String> map);
     }
 
     private final List<Observer> observers = new ArrayList<>();
 
-    private void notifyObservers() {
-        observers.forEach(Observer::update);
+    private void notifyObservers(Map<String, String> map) {
+        observers.forEach(observer -> observer.update(map));
     }
 
     public void addObserver(Observer observer) {
         observers.add(observer);
     }
 
-    public void scanSystemIn() {
-        Scanner scanner = new Scanner(System.in);
-        while (scanner.hasNextLine()) notifyObservers();
-    }
     /*** Observer pattern ***/
 
     private String nickname, serviceId;
@@ -101,7 +96,7 @@ public class Discover {
 
                                 if (e.getMessage().equals("8003: STATUS_ALREADY_CONNECTED_TO_ENDPOINT") && !map.containsKey(endpointId)) {
                                     map.put(endpointId, info.getEndpointName());
-                                    notifyObservers();
+                                    notifyObservers(map);
                                 }
 
                             });
@@ -133,7 +128,7 @@ public class Discover {
                         case ConnectionsStatusCodes.STATUS_OK:
                             Log.d("NearbyLog", "¡SE HA CONECTADO!");
                             map.put(endpointId, endpointName);
-                            notifyObservers();
+                            notifyObservers(map);
                             break;
                         case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
                             Log.d("NearbyLog", "The connection was rejected by one or both sides.");
@@ -148,9 +143,9 @@ public class Discover {
 
                 @Override
                 public void onDisconnected(@NotNull String endpointId) {
-                    Log.d("NearbyLog", "Desconectado...");
                     map.remove(endpointId);
-                    notifyObservers();
+                    notifyObservers(map);
+                    Log.d("NearbyLog", "Desconectado... (endpoint=" + endpointId + ") [map.size=" + map.size() + "]");
                 }
             };
 

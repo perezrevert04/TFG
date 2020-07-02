@@ -31,10 +31,13 @@ class StudentSignActivity : AppCompatActivity() {
 
         biometry = Biometry(this, title = "Autenticación", subtitle = "Ficha con tu huella.")
         discover = Discover(this, android.os.Build.MODEL, applicationContext.packageName, payloadCallback)
-        updateAdapter()
 
-        discover.addObserver { updateAdapter() }
-        discover.scanSystemIn()
+        discover.addObserver {
+            activeList.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, ArrayList<String>(it.values))
+
+            if (discover.map.isEmpty()) progressBar.visibility = View.VISIBLE
+            else progressBar.visibility = View.INVISIBLE
+        }
 
         activeList.setOnItemClickListener { _: AdapterView<*>?, _: View, pos: Int, _: Long ->
             val keys = ArrayList<String>(discover.map.keys)
@@ -47,13 +50,6 @@ class StudentSignActivity : AppCompatActivity() {
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) { discover.stop() }
         return super.onKeyDown(keyCode, event)
-    }
-
-    private fun updateAdapter() {
-        activeList.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, ArrayList<String>(discover.map.values))
-
-        if (discover.map.isEmpty()) progressBar.visibility = View.VISIBLE
-        else progressBar.visibility = View.INVISIBLE
     }
 
     /*** INICIO NEARBY DISCOVER ***/
