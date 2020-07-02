@@ -22,6 +22,8 @@ class StudentSignActivity : AppCompatActivity() {
     private lateinit var discover: Discover
     private lateinit var biometry: Biometry
 
+    private var authenticating = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_sign)
@@ -30,29 +32,32 @@ class StudentSignActivity : AppCompatActivity() {
 
         activeList.setOnItemClickListener { _: AdapterView<*>?, _: View, pos: Int, _: Long ->
             val keys = ArrayList<String>(discover.map.keys)
+            authenticating = true
             biometry.authenticate { discover.sendPayload(keys[pos], "3967203186") }
         }
     }
 
     override fun onStart() {
         super.onStart()
-        discover = Discover(this, android.os.Build.MODEL, applicationContext.packageName, payloadCallback)
+        if (!authenticating) {
+            discover = Discover(this, android.os.Build.MODEL, applicationContext.packageName, payloadCallback)
 
-        discover.addObserver {
-            if (discover.map.isEmpty()) progressBar.visibility = View.VISIBLE
-            else progressBar.visibility = View.INVISIBLE
+            discover.addObserver {
+                if (discover.map.isEmpty()) progressBar.visibility = View.VISIBLE
+                else progressBar.visibility = View.INVISIBLE
 
-            val collection = it.values
-            val array = ArrayList<String>(collection)
-            activeList.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, array)
+                val collection = it.values
+                val array = ArrayList<String>(collection)
+                activeList.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, array)
+            }
+
+            discover.start()
         }
-
-        discover.start()
     }
 
     override fun onStop() {
         super.onStop()
-        discover.stop()
+        if (!authenticating) discover.stop()
     }
 
     /*** INICIO NEARBY DISCOVER ***/

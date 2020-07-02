@@ -99,6 +99,7 @@ public class RegistroAlumnos extends AppCompatActivity {
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
+        /* Todo: descomentar estas líneas */
 //        if (nfcAdapter == null) {
 //            Toast.makeText(this, "No NFC", Toast.LENGTH_SHORT).show();
 //            finish();
