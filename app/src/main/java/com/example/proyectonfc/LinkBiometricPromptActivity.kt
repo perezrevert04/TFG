@@ -4,23 +4,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.biometric.BiometricManager
-import androidx.biometric.BiometricPrompt
-import androidx.core.content.ContextCompat
 import com.example.proyectonfc.clases.MainActivity
 import com.example.proyectonfc.logic.Person
+import com.example.proyectonfc.logic.biometric.Biometry
 import kotlinx.android.synthetic.main.activity_link_biometric_prompt.*
 import org.jetbrains.anko.toast
-import java.util.concurrent.Executor
 
 class LinkBiometricPromptActivity : AppCompatActivity() {
 
-    private lateinit var executor: Executor
-    private lateinit var biometricPrompt: BiometricPrompt
-    private lateinit var promptInfo: BiometricPrompt.PromptInfo
-
     private val database by lazy { (application as Global).database }
     private lateinit var person: Person
+
+    private lateinit var biometry: Biometry
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,8 +23,18 @@ class LinkBiometricPromptActivity : AppCompatActivity() {
 
         buttonLink.visibility = View.INVISIBLE
 
-        getData()
-        prepareBiometricPrompt()
+        biometry = Biometry(context = this, title = "Confirmación", subtitle = "Autentíquese para vincular")
+
+        obtainData()
+
+        buttonAuthenticate.setOnClickListener {
+            biometry.authenticate {
+                textViewAuthenticate.visibility = View.INVISIBLE
+                buttonAuthenticate.visibility = View.INVISIBLE
+                buttonLink.visibility = View.VISIBLE
+                toast("Autenticación realizada con éxito")
+            }
+        }
 
         buttonLink.setOnClickListener {
             if (database.addLinkedPerson(person)) {
@@ -42,56 +47,16 @@ class LinkBiometricPromptActivity : AppCompatActivity() {
         }
     }
 
-    private fun getData() {
+    private fun obtainData() {
         person = intent.getSerializableExtra(Person.CARD_INFO) as Person
 
-//        textViewStudentIdentifier.text = person.identifier
+        textViewStudentIdentifier.text = person.identifier
         textViewRole.text = person.role.role
         textViewName.text = person.name
         textViewDNI.text = person.dni
         textViewCard.text = person.card
         textViewValidity.text = person.validity
         textViewStatus.text = person.status
-    }
-
-    private fun prepareBiometricPrompt() {
-
-        if (BiometricManager.from(this).canAuthenticate() == BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE) {
-            toast("Se ha producido un error en el hardware de huellas biométricas. Inténtelo de nuevo más tarde.")
-            finish()
-        }
-
-        executor = ContextCompat.getMainExecutor(this)
-
-        biometricPrompt = BiometricPrompt(this, executor,
-                object : BiometricPrompt.AuthenticationCallback() {
-                    override fun onAuthenticationError(errorCode: Int,
-                                                       errString: CharSequence) {
-                        super.onAuthenticationError(errorCode, errString)
-                        toast("Error en la autenticación: $errString")
-                    }
-
-                    override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                        super.onAuthenticationSucceeded(result)
-                        textViewAuthenticate.visibility = View.INVISIBLE
-                        buttonAuthenticate.visibility = View.INVISIBLE
-                        buttonLink.visibility = View.VISIBLE
-                        toast("Autenticación realizada con éxito")
-                    }
-
-                    override fun onAuthenticationFailed() {
-                        super.onAuthenticationFailed()
-                        toast("Autenticación fallida")
-                    }
-                })
-
-        promptInfo = BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Confirmación")
-                .setSubtitle("Autentíquese para vincular")
-                .setDeviceCredentialAllowed(true)
-                .build()
-
-        buttonAuthenticate.setOnClickListener { biometricPrompt.authenticate(promptInfo) }
     }
 
 }
