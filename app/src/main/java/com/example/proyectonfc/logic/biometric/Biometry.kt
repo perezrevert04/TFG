@@ -7,7 +7,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import java.util.concurrent.Executor
 
-class Biometry(val context: Context) {
+class Biometry(
+        val context: Context,
+        var title: String = "Autenticación biométrica",
+        var subtitle: String = "Use su huella para identificarse."
+) {
 
     private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
@@ -32,10 +36,9 @@ class Biometry(val context: Context) {
             }
         })
 
-        /* TODO: Cambiar titulo y subtitulo */
         promptInfo = BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Title")
-                .setSubtitle("Subtitle")
+                .setTitle(title)
+                .setSubtitle(subtitle)
                 .setDeviceCredentialAllowed(true)
                 .build()
     }

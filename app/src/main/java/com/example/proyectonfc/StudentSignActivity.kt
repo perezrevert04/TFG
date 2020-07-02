@@ -26,7 +26,7 @@ class StudentSignActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_sign)
 
-        biometry = Biometry(this)
+        biometry = Biometry(this, title = "Autenticación", subtitle = "Ficha con tu huella.")
         discover = Discover(this, android.os.Build.MODEL, applicationContext.packageName, payloadCallback)
         updateAdapter()
 
