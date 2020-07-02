@@ -2,24 +2,17 @@ package com.example.proyectonfc
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.os.StrictMode
-import android.os.StrictMode.VmPolicy
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.biometric.BiometricPrompt
-import androidx.biometric.BiometricPrompt.PromptInfo
-import androidx.core.content.ContextCompat
 import com.example.proyectonfc.clases.AddComment
-import com.example.proyectonfc.clases.MainActivity
 import com.example.proyectonfc.db.DataBase
 import com.example.proyectonfc.logic.Person
 import com.example.proyectonfc.logic.Report
+import com.example.proyectonfc.logic.biometric.Biometry
 import com.lowagie.text.*
 import com.lowagie.text.pdf.PdfPTable
 import com.lowagie.text.pdf.PdfWriter
@@ -30,13 +23,10 @@ import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.Executor
 
 class CreacionParte : AppCompatActivity() {
 
-    companion object {
-        const val REQ_CODE = 1213
-    }
+    companion object { const val REQ_CODE = 1213 }
 
     private val database by lazy { (application as Global).database }
     private lateinit var person: Person
@@ -55,14 +45,13 @@ class CreacionParte : AppCompatActivity() {
     lateinit var aula: String
     var comments = ""
 
-    private lateinit var executor: Executor
-    private lateinit var biometricPrompt: BiometricPrompt
-    private lateinit var promptInfo: BiometricPrompt.PromptInfo
+    private lateinit var biometry: Biometry
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_creacion_parte)
 
+        biometry = Biometry(this, title = "Autenticación", subtitle = "Identifíquese para generar el pdf.")
         getData()
 
         buttonAddComment.setOnClickListener {
@@ -72,8 +61,7 @@ class CreacionParte : AppCompatActivity() {
         }
 
         buttonCrearPdf.setOnClickListener {
-            prepareBiometricPrompt { finalizarParte() }
-            biometricPrompt.authenticate(promptInfo)
+            biometry.authenticate  { finalizarParte() }
         }
     }
 
@@ -271,29 +259,4 @@ class CreacionParte : AppCompatActivity() {
         database.addReport(report)
     }
 
-
-    private fun prepareBiometricPrompt(method: () -> Unit) {
-        executor = ContextCompat.getMainExecutor(this)
-        biometricPrompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
-            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                super.onAuthenticationError(errorCode, errString)
-                Toast.makeText(applicationContext, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                super.onAuthenticationSucceeded(result)
-                method()
-            }
-
-            override fun onAuthenticationFailed() {
-                super.onAuthenticationFailed()
-                Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT).show()
-            }
-        })
-        promptInfo = PromptInfo.Builder()
-                .setTitle("Autenticación")
-                .setSubtitle("Identifíquese para generar el pdf.")
-                .setDeviceCredentialAllowed(true)
-                .build()
-    }
 }
