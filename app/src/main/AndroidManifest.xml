@@ -43,28 +43,6 @@
             android:parentActivityName=".LinkCardQRActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".DiscoverLogActivity"
-            android:label="Nearby Discovery Log"
-            android:launchMode="singleTask"
-            android:parentActivityName=".clases.RegistroAlumnos" />
-        <activity
-            android:name=".DiscoveryActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".AdvertisingActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".NearbyTestActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-
-        <meta-data
-            android:name="com.google.android.nearby.messages.API_KEY"
-            android:value="AIzaSyBdfTVRQUHfb4INou5ZeQ6l6--Cd-ohLi4" />
-
-        <activity
             android:name=".AttendanceActivity"
             android:launchMode="singleTask"
             android:parentActivityName=".CreacionParte"
