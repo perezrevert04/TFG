@@ -26,11 +26,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-//        else { // Si es un estudiante derivar a main student activity
-//            val intent = Intent(this, MainStudentActivity::class.java)
-//            startActivity(intent)
-//            finish()
-//        }
+        else { // Si es un estudiante derivar a main student activity
+            val intent = Intent(this, MainStudentActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
 //        val intent = Intent(this, NearbyTestActivity::class.java)
 //        startActivity(intent)

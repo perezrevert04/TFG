@@ -2,9 +2,12 @@ package com.example.proyectonfc
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.logic.MainStudentActivity
 import com.example.proyectonfc.logic.biometric.Biometry
@@ -37,6 +40,13 @@ class StudentSignActivity : AppCompatActivity() {
             val keys = ArrayList<String>(discover.map.keys)
             biometry.authenticate { discover.sendPayload(keys[pos], "3967203186") }
         }
+
+        discover.start()
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) { discover.stop() }
+        return super.onKeyDown(keyCode, event)
     }
 
     private fun updateAdapter() {
@@ -44,11 +54,6 @@ class StudentSignActivity : AppCompatActivity() {
 
         if (discover.map.isEmpty()) progressBar.visibility = View.VISIBLE
         else progressBar.visibility = View.INVISIBLE
-    }
-
-    override fun onResume() {
-        super.onResume()
-        discover.start()
     }
 
     /*** INICIO NEARBY DISCOVER ***/

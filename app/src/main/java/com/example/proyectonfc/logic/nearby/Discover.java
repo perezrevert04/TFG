@@ -54,7 +54,7 @@ public class Discover {
     private ConnectionsClient mConnectionsClient;
     private PayloadCallback payloadCallback;
 
-    private static Map<String, String> map = new HashMap<>();
+    private Map<String, String> map;
 
     public Discover(Context context, String nickname, String serviceId, PayloadCallback payloadCallback) {
         this.nickname = nickname;
@@ -62,6 +62,7 @@ public class Discover {
         this.payloadCallback = payloadCallback;
 
         mConnectionsClient = Nearby.getConnectionsClient( context );
+        map = new HashMap<>();
     }
 
     public Map<String, String> getMap() {
@@ -73,7 +74,13 @@ public class Discover {
         mConnectionsClient
                 .startDiscovery(serviceId, endpointDiscoveryCallback, discoveryOptions)
                 .addOnSuccessListener( (Void unused) -> Log.d("NearbyLog", "Buscador iniciado...") )
-                .addOnFailureListener( (Exception e) -> Log.d("NearbyLog", "Se ha producido un error...\n" + e.getMessage()) );
+                .addOnFailureListener( (Exception e) -> {
+                    Log.d("NearbyLog", "Se ha producido un error...\n" + e.getMessage());
+                    if (e.getMessage().equals("8002: STATUS_ALREADY_DISCOVERING") && map.isEmpty()) {
+                        mConnectionsClient.stopDiscovery();
+                        start();
+                    }
+                });
     }
 
     private final EndpointDiscoveryCallback endpointDiscoveryCallback = new EndpointDiscoveryCallback() {
@@ -148,6 +155,7 @@ public class Discover {
             };
 
     public void stop() {
+        map.clear();
         mConnectionsClient.stopAllEndpoints();
         mConnectionsClient.stopDiscovery();
     }
