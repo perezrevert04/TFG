@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Discover {
+public class Discover implements NearbyInterface {
 
     /*** Observer pattern ***/
     public interface Observer {
@@ -64,13 +64,14 @@ public class Discover {
         return map;
     }
 
+    @Override
     public void start() {
         DiscoveryOptions discoveryOptions = new DiscoveryOptions.Builder().setStrategy( Strategy.P2P_STAR ).build();
         mConnectionsClient
                 .startDiscovery(serviceId, endpointDiscoveryCallback, discoveryOptions)
-                .addOnSuccessListener( (Void unused) -> Log.d("NearbyLog", "Buscador iniciado...") )
+                .addOnSuccessListener( (Void unused) -> Log.d(NearbyInterface.LOG, "Buscador iniciado...") )
                 .addOnFailureListener( (Exception e) -> {
-                    Log.d("NearbyLog", "Se ha producido un error...\n" + e.getMessage());
+                    Log.d(NearbyInterface.LOG, "Se ha producido un error...\n" + e.getMessage());
                     if (e.getMessage().equals("8002: STATUS_ALREADY_DISCOVERING") && map.isEmpty()) {
                         mConnectionsClient.stopDiscovery();
                         start();
@@ -81,18 +82,18 @@ public class Discover {
     private final EndpointDiscoveryCallback endpointDiscoveryCallback = new EndpointDiscoveryCallback() {
         @Override
         public void onEndpointFound(@NonNull String endpointId, @NonNull DiscoveredEndpointInfo info) {
-            Log.d("NearbyLog", "Se ha encontrado un endpoint: " + endpointId);
+            Log.d(NearbyInterface.LOG, "Se ha encontrado un endpoint: " + endpointId);
 
             // An endpoint was found. We request a connection to it.
             mConnectionsClient.requestConnection(nickname, endpointId, connectionLifecycleCallback)
                     .addOnSuccessListener(
                             (Void unused) -> {
                                 // We successfully requested a connection. Now both sides must accept before the connection is established.
-                                Log.d("NearbyLog", "Se ha enviado una petición de conexión...");
+                                Log.d(NearbyInterface.LOG, "Se ha enviado una petición de conexión...");
                             })
                     .addOnFailureListener(
                             (Exception e) -> {
-                                Log.d("NearbyLog", "Se ha producido un error...\n" + e.getMessage() + " " + e.hashCode());
+                                Log.d(NearbyInterface.LOG, "Se ha producido un error...\n" + e.getMessage() + " " + e.hashCode());
 
                                 if (e.getMessage().equals("8003: STATUS_ALREADY_CONNECTED_TO_ENDPOINT") && !map.containsKey(endpointId)) {
                                     map.put(endpointId, info.getEndpointName());
@@ -105,7 +106,7 @@ public class Discover {
         @Override
         public void onEndpointLost(@NonNull String endpointId) {
             // A previously discovered endpoint has gone away.
-            Log.d("NearbyLog", "Se ha perdido la conexión con: " + endpointId);
+            Log.d(NearbyInterface.LOG, "Se ha perdido la conexión con: " + endpointId);
         }
     };
 
@@ -117,7 +118,7 @@ public class Discover {
                 @Override
                 public void onConnectionInitiated(@NotNull String endpointId, @NotNull ConnectionInfo info) {
                     // Automatically accept the connection on both sides.
-                    Log.d("NearbyLog", "Aceptando conexión con el servidor...");
+                    Log.d(NearbyInterface.LOG, "Aceptando conexión con el servidor...");
                     endpointName = info.getEndpointName();
                     mConnectionsClient.acceptConnection(endpointId, payloadCallback);
                 }
@@ -126,37 +127,40 @@ public class Discover {
                 public void onConnectionResult(@NotNull String endpointId, ConnectionResolution result) {
                     switch (result.getStatus().getStatusCode()) {
                         case ConnectionsStatusCodes.STATUS_OK:
-                            Log.d("NearbyLog", "¡SE HA CONECTADO!");
+                            Log.d(NearbyInterface.LOG, "¡SE HA CONECTADO!");
                             map.put(endpointId, endpointName);
                             notifyObservers(map);
                             break;
                         case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
-                            Log.d("NearbyLog", "The connection was rejected by one or both sides.");
+                            Log.d(NearbyInterface.LOG, "The connection was rejected by one or both sides.");
                             break;
                         case ConnectionsStatusCodes.STATUS_ERROR:
-                            Log.d("NearbyLog", "The connection broke before it was able to be accepted.");
+                            Log.d(NearbyInterface.LOG, "The connection broke before it was able to be accepted.");
                             break;
                         default:
-                            Log.d("NearbyLog", "Unknown status code");
+                            Log.d(NearbyInterface.LOG, "Unknown status code");
                     }
                 }
 
                 @Override
                 public void onDisconnected(@NotNull String endpointId) {
                     map.remove(endpointId);
-                    Log.d("NearbyLog", "Desconectado... (endpoint=" + endpointId + ") [map.size=" + map.size() + "]");
+                    Log.d(NearbyInterface.LOG, "Desconectado... (endpoint=" + endpointId + ") [map.size=" + map.size() + "]");
                     notifyObservers(map);
                 }
             };
 
+    @Override
     public void stop() {
         map.clear();
         mConnectionsClient.stopAllEndpoints();
         mConnectionsClient.stopDiscovery();
+        Log.d(NearbyInterface.LOG, "Stop discovery");
     }
 
+    @Override
     public void sendPayload(String endpointId, String identifier) {
-        Log.d("NearbyLog", "Sending payload");
+        Log.d(NearbyInterface.LOG, "Sending payload");
         byte[] bytes = identifier.getBytes(StandardCharsets.UTF_8);
         mConnectionsClient.sendPayload(endpointId, Payload.fromBytes(bytes));
     }

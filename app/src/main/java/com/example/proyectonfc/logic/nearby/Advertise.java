@@ -20,7 +20,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Advertise {
+public class Advertise implements NearbyInterface {
 
 
     /*** Observer pattern ***/
@@ -61,10 +61,10 @@ public class Advertise {
                 .startAdvertising(nickname, serviceId, connectionLifecycleCallback, advertisingOptions)
                 .addOnSuccessListener( (Void unused) -> {
                     notifyObservers();
-                    Log.d("NearbyLog", "Anunciante iniciado..." );
+                    Log.d(NearbyInterface.LOG, "Anunciante iniciado..." );
                 })
                 .addOnFailureListener( (Exception e) -> {
-                    Log.d("NearbyLog", "Se ha producido un error...\n" + e.getMessage());
+                    Log.d(NearbyInterface.LOG, "Se ha producido un error...\n" + e.getMessage());
                 });
     }
 
@@ -72,7 +72,7 @@ public class Advertise {
         @Override
         public void onConnectionInitiated(@NonNull String endpointId, @NonNull ConnectionInfo connectionInfo) {
             // Automatically accept the connection on both sides.
-            Log.d("NearbyLog", "Aceptando conexión con el cliente...");
+            Log.d(NearbyInterface.LOG, "Aceptando conexión con el cliente...");
             mConnectionsClient.acceptConnection(endpointId, payloadCallback);
         }
 
@@ -80,32 +80,37 @@ public class Advertise {
         public void onConnectionResult(@NonNull String s, @NonNull ConnectionResolution result) {
             switch (result.getStatus().getStatusCode()) {
                 case ConnectionsStatusCodes.STATUS_OK:
-                    Log.d("NearbyLog", "¡SE HA CONECTADO!");
+                    Log.d(NearbyInterface.LOG, "¡SE HA CONECTADO!");
                     break;
                 case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
-                    Log.d("NearbyLog", "he connection was rejected by one or both sides.");
+                    Log.d(NearbyInterface.LOG, "he connection was rejected by one or both sides.");
                     break;
                 case ConnectionsStatusCodes.STATUS_ERROR:
-                    Log.d("NearbyLog", "he connection broke before it was able to be accepted.");
+                    Log.d(NearbyInterface.LOG, "he connection broke before it was able to be accepted.");
                     break;
                 default:
-                    Log.d("NearbyLog", "nknown status code");
+                    Log.d(NearbyInterface.LOG, "nknown status code");
             }
         }
 
         @Override
         public void onDisconnected(@NonNull String s) {
-            Log.d("NearbyLog", "Desconectado...");
+            Log.d(NearbyInterface.LOG, "Desconectado...");
         }
     };
 
+    @Override
     public void stop() {
         mConnectionsClient.stopAllEndpoints();
         mConnectionsClient.stopAdvertising();
+        Log.d(NearbyInterface.LOG, "Stop advertising");
     }
 
+    @Override
     public void sendPayload(String endpointId, String msg) {
         byte[] bytes = msg.getBytes(StandardCharsets.UTF_8);
         mConnectionsClient.sendPayload(endpointId, Payload.fromBytes(bytes));
+
+        Log.d(NearbyInterface.LOG, "Sending payload");
     }
 }
