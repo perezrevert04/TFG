@@ -73,7 +73,6 @@ public class Grupos extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.grupos);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
         dataBase = new DataBase(getApplicationContext(), "DB5.db", null, 1);

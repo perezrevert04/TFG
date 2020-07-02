@@ -21,7 +21,6 @@ public class Asignaturas extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.asignaturas);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
 
         buttonDatosAsignatura= (Button) findViewById(R.id.buttonDatosAsignatura);

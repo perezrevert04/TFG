@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.view.KeyEvent;
 import android.view.View;
@@ -39,6 +40,7 @@ import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class RegistroAlumnos extends AppCompatActivity {
 
@@ -67,6 +69,8 @@ public class RegistroAlumnos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registro_alumnos);
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
 
         biometry = new Biometry(this, "Autenticación", "Identifíquese para cancelar el parte.");
 
@@ -98,11 +102,12 @@ public class RegistroAlumnos extends AppCompatActivity {
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        if (nfcAdapter == null) {
-            Toast.makeText(this, "No NFC", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
+        /* Todo: descomentar estas líneas */
+//        if (nfcAdapter == null) {
+//            Toast.makeText(this, "No NFC", Toast.LENGTH_SHORT).show();
+//            finish();
+//            return;
+//        }
 
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),0);
 
@@ -155,8 +160,8 @@ public class RegistroAlumnos extends AppCompatActivity {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
 
-        String file = "/storage/emulated/0/Download/ParteFirmasUPV/" + filename;
-        File fileIn = new File(file);
+        String path = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "ParteFirmasUPV").getPath();
+        File fileIn = new File(path + "/" + filename);
         Uri uri = Uri.fromFile(fileIn);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(uri, "application/pdf");
