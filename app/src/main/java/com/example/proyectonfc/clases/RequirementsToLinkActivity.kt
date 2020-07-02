@@ -9,7 +9,7 @@ import android.os.Bundle
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
-import com.example.proyectonfc.LinkCardActivity
+import com.example.proyectonfc.LinkCardQRActivity
 import com.example.proyectonfc.R
 import kotlinx.android.synthetic.main.activity_requirements_to_link.*
 
@@ -29,7 +29,7 @@ class RequirementsToLinkActivity : AppCompatActivity() {
             } else if (!(getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager).isDeviceSecure) {
                 showAlert(Intent(Settings.ACTION_SECURITY_SETTINGS), "El dispositivo debe estar dispositivo debe estar protegido con algún tipo de bloqueo de pantalla.")
             } else {
-                startActivity(Intent(this, LinkCardActivity::class.java))
+                startActivity(Intent(this, LinkCardQRActivity::class.java))
             }
         }
     }

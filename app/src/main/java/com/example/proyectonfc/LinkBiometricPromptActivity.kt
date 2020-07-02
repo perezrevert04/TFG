@@ -45,7 +45,8 @@ class LinkBiometricPromptActivity : AppCompatActivity() {
     private fun getData() {
         person = intent.getSerializableExtra(Person.CARD_INFO) as Person
 
-        textViewRole.text = person.role
+//        textViewStudentIdentifier.text = person.identifier
+        textViewRole.text = person.role.role
         textViewName.text = person.name
         textViewDNI.text = person.dni
         textViewCard.text = person.card
