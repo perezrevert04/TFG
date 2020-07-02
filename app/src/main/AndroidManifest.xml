@@ -159,26 +159,6 @@
             android:parentActivityName=".clases.Alumnos"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".clases.NuevoProfesor"
-            android:label="Nuevo Profesor"
-            android:parentActivityName=".clases.Profesores"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".clases.EditarProfesor"
-            android:label="Editar Profesor"
-            android:parentActivityName=".clases.DatosProfesor"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".clases.DatosProfesor"
-            android:label="Datos Profesor"
-            android:parentActivityName=".clases.Profesores"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".clases.Profesores"
-            android:label="Profesores Asignatura"
-            android:parentActivityName=".clases.Asignaturas"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".clases.EditarAsignatura"
             android:label="Editar Asignatura"
             android:parentActivityName=".clases.DatosAsignatura"

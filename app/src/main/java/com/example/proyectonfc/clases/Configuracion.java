@@ -4,9 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -56,32 +53,6 @@ public class Configuracion extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         consultarListaAsignaturas();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //Alternativa 1
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_asignatura,menu);
-        return true;
-
-    }
-
-
-    public boolean onOptionsItemSelected(MenuItem menu)
-    {
-        // gracias a la id, sabemos que item es el que se oprime, en este caso usamos un switch
-        switch (menu.getItemId())
-        {
-            case R.id.MenuBorrarBD:
-                Intent intent1 = new Intent(Configuracion.this, Configuracion.class);
-                dataBase.borrarTodo();
-                startActivity(intent1);
-                return true;
-
-            default:
-        }
-        return super.onOptionsItemSelected(menu);
     }
 
     protected void onCreate(Bundle savedInstanceState) {
