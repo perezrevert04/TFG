@@ -144,8 +144,8 @@ public class Discover {
                 @Override
                 public void onDisconnected(@NotNull String endpointId) {
                     map.remove(endpointId);
-                    notifyObservers(map);
                     Log.d("NearbyLog", "Desconectado... (endpoint=" + endpointId + ") [map.size=" + map.size() + "]");
+                    notifyObservers(map);
                 }
             };
 

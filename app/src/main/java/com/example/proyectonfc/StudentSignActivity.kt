@@ -2,12 +2,10 @@ package com.example.proyectonfc
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.logic.MainStudentActivity
 import com.example.proyectonfc.logic.biometric.Biometry
@@ -30,26 +28,32 @@ class StudentSignActivity : AppCompatActivity() {
         setContentView(R.layout.activity_student_sign)
 
         biometry = Biometry(this, title = "Autenticación", subtitle = "Ficha con tu huella.")
-        discover = Discover(this, android.os.Build.MODEL, applicationContext.packageName, payloadCallback)
-
-        discover.addObserver {
-            activeList.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, ArrayList<String>(it.values))
-
-            if (discover.map.isEmpty()) progressBar.visibility = View.VISIBLE
-            else progressBar.visibility = View.INVISIBLE
-        }
 
         activeList.setOnItemClickListener { _: AdapterView<*>?, _: View, pos: Int, _: Long ->
             val keys = ArrayList<String>(discover.map.keys)
             biometry.authenticate { discover.sendPayload(keys[pos], "3967203186") }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        discover = Discover(this, android.os.Build.MODEL, applicationContext.packageName, payloadCallback)
+
+        discover.addObserver {
+            if (discover.map.isEmpty()) progressBar.visibility = View.VISIBLE
+            else progressBar.visibility = View.INVISIBLE
+
+            val collection = it.values
+            val array = ArrayList<String>(collection)
+            activeList.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, array)
+        }
 
         discover.start()
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK) { discover.stop() }
-        return super.onKeyDown(keyCode, event)
+    override fun onPause() {
+        super.onPause()
+        discover.stop()
     }
 
     /*** INICIO NEARBY DISCOVER ***/
