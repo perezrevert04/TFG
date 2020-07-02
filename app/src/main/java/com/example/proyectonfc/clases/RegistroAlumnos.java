@@ -27,13 +27,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.biometric.BiometricPrompt;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.example.proyectonfc.CreacionParte;
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
+import com.example.proyectonfc.logic.biometric.Biometry;
 import com.example.proyectonfc.logic.nearby.Advertise;
 import com.example.proyectonfc.logic.nearby.NearbyCode;
 import com.example.proyectonfc.parser.NdefMessageParser;
@@ -46,8 +45,6 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Executor;
 
 public class RegistroAlumnos extends AppCompatActivity {
 
@@ -70,9 +67,7 @@ public class RegistroAlumnos extends AppCompatActivity {
     private String aula;
     private String identificadorTemporal;
 
-    private Executor executor;
-    private BiometricPrompt biometricPrompt;
-    private BiometricPrompt.PromptInfo promptInfo;
+    private Biometry biometry;
 
     private boolean open = true;
 
@@ -80,6 +75,8 @@ public class RegistroAlumnos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registro_alumnos);
+
+        biometry = new Biometry(this, "Autenticación", "Identifíquese para cancelar el parte.");
 
         text = findViewById(R.id.text);
 
@@ -192,14 +189,14 @@ public class RegistroAlumnos extends AppCompatActivity {
 
         builder.setNegativeButton("No", (dialog, which) -> {});
         builder.setPositiveButton("Sí", (dialog, which) -> {
-            prepareBiometricPrompt( () -> {
+            biometry.authenticate( () -> {
+                advertise.stop();
                 open = false;
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 finish();
                 return null;
             });
-            biometricPrompt.authenticate(promptInfo);
         });
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -335,43 +332,6 @@ public class RegistroAlumnos extends AppCompatActivity {
     }
 
     /*** FIN LECTOR NFC ***/
-
-    /*** INICIO AUTENTICACIÓN BIOMÉTRICA ***/
-
-    private void prepareBiometricPrompt(Callable<Void> method) {
-        executor = ContextCompat.getMainExecutor(this);
-        biometricPrompt = new BiometricPrompt(this, executor, new BiometricPrompt.AuthenticationCallback() {
-            @Override
-            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
-                super.onAuthenticationError(errorCode, errString);
-                Toast.makeText(getApplicationContext(), "Authentication error: " + errString, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
-                super.onAuthenticationSucceeded(result);
-                try {
-                    method.call();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onAuthenticationFailed() {
-                super.onAuthenticationFailed();
-                Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Autenticación")
-                .setSubtitle("Identifíquese para cancelar el parte.")
-                .setDeviceCredentialAllowed(true)
-                .build();
-    }
-
-    /*** FIN AUTENTICACIÓN BIOMÉTRICA ***/
 
     /*** INICIO NEARBY ADVERTISE ***/
     private PayloadCallback payloadCallback = new PayloadCallback() {
