@@ -2,7 +2,7 @@ package com.example.proyectonfc.logic.nearby;
 
 interface NearbyInterface {
 
-    String LOG = "AppNearby";
+    String LOG = "NearbyLog";
 
     void start();
     void stop();

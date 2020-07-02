@@ -34,8 +34,8 @@ class StudentSignActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         discover = Discover(this, android.os.Build.MODEL, applicationContext.packageName, payloadCallback)
 
         discover.addObserver {
@@ -50,8 +50,8 @@ class StudentSignActivity : AppCompatActivity() {
         discover.start()
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         discover.stop()
     }
 

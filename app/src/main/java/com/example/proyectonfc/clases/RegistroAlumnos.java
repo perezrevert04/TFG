@@ -8,14 +8,10 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.nfc.NdefMessage;
-import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -35,8 +31,7 @@ import com.example.proyectonfc.db.DataBase;
 import com.example.proyectonfc.logic.biometric.Biometry;
 import com.example.proyectonfc.logic.nearby.Advertise;
 import com.example.proyectonfc.logic.nearby.NearbyCode;
-import com.example.proyectonfc.parser.NdefMessageParser;
-import com.example.proyectonfc.record.ParsedNdefRecord;
+import com.example.proyectonfc.logic.nfc.Nfc;
 import com.google.android.gms.nearby.connection.Payload;
 import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
@@ -44,7 +39,6 @@ import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.List;
 
 public class RegistroAlumnos extends AppCompatActivity {
 
@@ -54,7 +48,6 @@ public class RegistroAlumnos extends AppCompatActivity {
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
     private TextView text;
-    private static byte[] identificador;
     private String asignatura;
     private String nombre;
     private String titulacion;
@@ -65,7 +58,6 @@ public class RegistroAlumnos extends AppCompatActivity {
     private String duracion;
     private String horaInicio;
     private String aula;
-    private String identificadorTemporal;
 
     private Biometry biometry;
 
@@ -235,100 +227,36 @@ public class RegistroAlumnos extends AppCompatActivity {
     public void resolveIntent(Intent intent) {
         String action = intent.getAction();
 
-        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)
-                || NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)
-                || NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
-            Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-            NdefMessage[] msgs;
-            if(rawMsgs != null) {
-                msgs = new NdefMessage[rawMsgs.length];
-                for (int i = 0; i < rawMsgs.length; i++) {
-                    msgs[i] = (NdefMessage) rawMsgs[i];
-                }
-            }else{
-                byte[] empty = new byte[0];
-                byte[] id = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
-                identificador = id;
-                Tag tag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-                byte[] payload = dumpTagData(tag).getBytes();
-                NdefRecord record = new NdefRecord(NdefRecord.TNF_UNKNOWN, empty, id, payload);
-                NdefMessage msg = new NdefMessage(new NdefRecord[] {record});
-                msgs = new NdefMessage[] {msg};
-            }
-            displayMsgs(msgs);
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action) || NfcAdapter.ACTION_TECH_DISCOVERED.equals(action) || NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            String studentId = Nfc.tagToString(tag);
+            dumpTagData(studentId);
         }
     }
 
-    private void displayMsgs(NdefMessage[] msgs) {
-        if (msgs == null || msgs.length == 0)
-            return;
-
-        StringBuilder builder = new StringBuilder();
-        List<ParsedNdefRecord> records = NdefMessageParser.parse(msgs[0]);
-        final int size = records.size();
-
-        for (int i = 0; i < size; i++) {
-            ParsedNdefRecord record = records.get(i);
-            String str = record.str();
-            builder.append(str).append("\n");
-        }
-
-        text.setText(builder.toString());
-    }
-
-    private String dumpTagData(Tag tag) {
+    private void dumpTagData(String studentId) {
         final DataBase dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
-        StringBuilder sb = new StringBuilder();
-        byte[] id = tag.getId();
-        sb.append(toDec(id)).append('\n');
 
         SQLiteDatabase db=dataBase.getReadableDatabase();
 
         //select * from usuarios
+        Cursor cursor=db.rawQuery("SELECT * FROM ALUMNO WHERE id = '" + asignatura+studentId + "'", null);
 
-        Cursor cursor=db.rawQuery("SELECT * FROM ALUMNO WHERE id = '" + asignatura+toDec(identificador) + "'", null);
+        if (cursor.getCount() == 1) {
 
-        while (cursor.moveToNext()){
-            identificadorTemporal = cursor.getString(0);
-        }
-
-        if (identificadorTemporal == null) {
-            identificadorTemporal = "1234567890123456789012345678901234567890123456789012345678901234567890";
-        }else {
-            identificadorTemporal = identificadorTemporal.substring(3);
-        }
-
-        String identificadorFijo = String.valueOf(toDec(identificador));
-        if(identificadorTemporal.equals(identificadorFijo)){
-
-            try {
-                dataBase.agregarAlumnoTemporal(String.valueOf(toDec(identificador)));
-            }catch (Exception e){
-                Log.e("AppLog", "El alumno " + identificador + " ya figura en la base de datos.");
-            }
-            String idAux = String.valueOf(toDec(identificador));
-            if (listaIdentificadores.contains(idAux)) {
-                Toast.makeText(getApplicationContext(), "ESTE ALUMNO YA TIENE REGISTRADA LA ASISTENCIA", Toast.LENGTH_SHORT).show();
+            if (listaIdentificadores.contains(studentId)) {
+                Toast.makeText(getApplicationContext(), NearbyCode.DUPLICATED.getMsg(), Toast.LENGTH_SHORT).show();
             } else {
-                listaIdentificadores.add(idAux);
-                Toast.makeText(getApplicationContext(), "Fichaje realizado.", Toast.LENGTH_SHORT).show();
+                listaIdentificadores.add(studentId);
+                text.setText(studentId);
+                Toast.makeText(getApplicationContext(), NearbyCode.SUCCESS.getMsg(), Toast.LENGTH_SHORT).show();
             }
-        }else{
-            Toast.makeText(getApplicationContext(), "EL ALUMNO CON IDENTIFIFCADOR: "+String.valueOf(toDec(identificador))+"NO ESTÁ DADO DE ALTA", Toast.LENGTH_SHORT).show();
+
+        } else {
+            Toast.makeText(getApplicationContext(), NearbyCode.UNREGISTERED.getMsg(), Toast.LENGTH_SHORT).show();
         }
 
-        return sb.toString();
-    }
-
-    private long toDec(byte[] bytes) {
-        long result = 0;
-        long factor = 1;
-        for (int i = 0; i < bytes.length; ++i) {
-            long value = bytes[i] & 0xffl;
-            result += value * factor;
-            factor *= 256l;
-        }
-        return result;
+        cursor.close();
     }
 
     /*** FIN LECTOR NFC ***/
