@@ -1,24 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Asignaturas"
+    tools:context="clases.Asignaturas"
     android:background="@drawable/fondo"
     tools:ignore="MissingDefaultResource">
-
-    <androidx.appcompat.widget.Toolbar
-        android:layout_marginTop="20dp"
-        android:layout_width="390dp"
-        android:layout_height="500dp"
-        app:elevation="4dp"
-        android:background="@drawable/corners3"
-        android:backgroundTint="#70FFFFFF"
-        android:minHeight="?attr/actionBarSize"
-        android:radius="20dp"
-        android:theme="?attr/actionBarTheme"
-        android:layout_centerHorizontal="true"/>
 
     <Button
         android:layout_height="100dp"
@@ -36,23 +23,26 @@
         android:id="@+id/buttonAlumnos"
         android:layout_width="340dp"
         android:layout_height="100dp"
+        android:layout_below="@+id/buttonDatosAsignatura"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/boton_redondo"
         android:text="   Ver Alumnos Asignatura   "
         android:textColor="#31588B"
         android:textSize="21sp"
         android:textStyle="bold" />
 
-    <Button android:layout_height="100dp"
+    <Button
+        android:id="@+id/buttonGrupos"
         android:layout_width="340dp"
-        android:text="   Ver Grupos Asignatura   "
-        android:layout_marginTop="400dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/buttonAlumnos"
         android:layout_centerHorizontal="true"
-        android:textSize="21sp"
-        android:textStyle="bold"
+        android:layout_marginTop="16dp"
         android:background="@drawable/boton_redondo"
+        android:text="   Ver Grupos Asignatura   "
         android:textColor="#31588B"
-        android:id="@+id/buttonGrupos"/>
+        android:textSize="21sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
