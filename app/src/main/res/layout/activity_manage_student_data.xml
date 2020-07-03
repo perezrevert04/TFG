@@ -36,6 +36,16 @@
         app:layout_constraintStart_toStartOf="@+id/textView45"
         app:layout_constraintTop_toBottomOf="@+id/textViewStudentCard" />
 
+    <View
+        android:id="@+id/view19"
+        style="@style/Divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewStudentValidity"
+        app:layout_constraintStart_toStartOf="@+id/textView46"
+        app:layout_constraintTop_toBottomOf="@+id/textViewStudentValidity" />
+
     <TextView
         android:id="@+id/textViewStudentName"
         style="@style/Value"
@@ -72,6 +82,30 @@
         app:layout_constraintEnd_toEndOf="@+id/view17"
         app:layout_constraintStart_toEndOf="@+id/textView45"
         app:layout_constraintTop_toTopOf="@+id/textView45" />
+
+    <TextView
+        android:id="@+id/textViewStudentValidity"
+        style="@style/Value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="00/00/0000"
+        android:textAlignment="textEnd"
+        app:layout_constraintEnd_toEndOf="@+id/view18"
+        app:layout_constraintStart_toEndOf="@+id/textView46"
+        app:layout_constraintTop_toTopOf="@+id/textView46" />
+
+    <TextView
+        android:id="@+id/textViewStudentStatus"
+        style="@style/Value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Active"
+        android:textAlignment="textEnd"
+        app:layout_constraintEnd_toEndOf="@+id/view19"
+        app:layout_constraintStart_toEndOf="@+id/textView47"
+        app:layout_constraintTop_toTopOf="@+id/textView47" />
 
     <TextView
         android:id="@+id/textViewStudentIdentifier3"
@@ -116,12 +150,32 @@
         app:layout_constraintTop_toBottomOf="@+id/view17" />
 
     <TextView
+        android:id="@+id/textView46"
+        style="@style/Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Vigencia:"
+        app:layout_constraintStart_toStartOf="@+id/view18"
+        app:layout_constraintTop_toBottomOf="@+id/view18" />
+
+    <TextView
+        android:id="@+id/textView47"
+        style="@style/Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Estado:"
+        app:layout_constraintStart_toStartOf="@+id/view18"
+        app:layout_constraintTop_toBottomOf="@+id/view19" />
+
+    <TextView
         android:id="@+id/textViewRole3"
         style="@style/Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="ALUMNE/A"
         app:layout_constraintEnd_toEndOf="parent"
