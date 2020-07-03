@@ -77,14 +77,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//    private fun handleWriteExternalStoragePermission(): Boolean {
-//        val bool = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-//
-//        if (bool) ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), WES_PERMISSION_REQUEST_CODE)
-//
-//        return bool
-//    }
-
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         return if (keyCode == KeyEvent.KEYCODE_BACK) {
             false
