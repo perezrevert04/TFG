@@ -49,7 +49,6 @@ public class DatosAlumno extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datos_alumno);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
 

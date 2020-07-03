@@ -35,7 +35,6 @@ public class EditarGrupo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editar_grupo);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
         identificador = getIntent().getStringExtra( "IDENTIFICADORGRUPO");

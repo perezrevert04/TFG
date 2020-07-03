@@ -94,7 +94,7 @@
                 style="@style/Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="24dp"
                 android:text="TextViewSubject"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -105,7 +105,7 @@
                 style="@style/Label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:text="Profesor:"
                 app:layout_constraintStart_toStartOf="parent"
@@ -114,11 +114,14 @@
             <TextView
                 android:id="@+id/textViewTeacher"
                 style="@style/Value"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
                 android:text="textViewTeacher"
+                android:textAlignment="textEnd"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView19"
                 app:layout_constraintTop_toTopOf="@+id/textView19" />
 
             <TextView
@@ -134,10 +137,13 @@
             <TextView
                 android:id="@+id/textViewGroup"
                 style="@style/Value"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:text="textViewGroup"
+                android:textAlignment="textEnd"
                 app:layout_constraintEnd_toEndOf="@+id/view2"
+                app:layout_constraintStart_toEndOf="@+id/textView22"
                 app:layout_constraintTop_toTopOf="@+id/textView22" />
 
             <TextView
@@ -153,10 +159,13 @@
             <TextView
                 android:id="@+id/textViewClassroom"
                 style="@style/Value"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:text="TextViewClassroom"
+                android:textAlignment="textEnd"
                 app:layout_constraintEnd_toEndOf="@+id/view3"
+                app:layout_constraintStart_toEndOf="@+id/textView25"
                 app:layout_constraintTop_toTopOf="@+id/textView25" />
 
             <TextView
@@ -172,10 +181,13 @@
             <TextView
                 android:id="@+id/textViewFecha"
                 style="@style/Value"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:text="textViewFecha"
+                android:textAlignment="textEnd"
                 app:layout_constraintEnd_toEndOf="@+id/view4"
+                app:layout_constraintStart_toEndOf="@+id/textView28"
                 app:layout_constraintTop_toTopOf="@+id/textView28" />
 
             <TextView
@@ -191,10 +203,13 @@
             <TextView
                 android:id="@+id/textViewHour"
                 style="@style/Value"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:text="TextViewHour"
+                android:textAlignment="textEnd"
                 app:layout_constraintEnd_toEndOf="@+id/view5"
+                app:layout_constraintStart_toEndOf="@+id/textView31"
                 app:layout_constraintTop_toTopOf="@+id/textView31" />
 
             <TextView
@@ -210,10 +225,13 @@
             <TextView
                 android:id="@+id/textViewDuration"
                 style="@style/Value"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:text="textViewDuration"
+                android:textAlignment="textEnd"
                 app:layout_constraintEnd_toEndOf="@+id/view6"
+                app:layout_constraintStart_toEndOf="@+id/textView35"
                 app:layout_constraintTop_toTopOf="@+id/textView35" />
 
             <TextView
@@ -229,10 +247,13 @@
             <TextView
                 android:id="@+id/textViewCount"
                 style="@style/Value"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:text="textViewCount"
+                android:textAlignment="textEnd"
                 app:layout_constraintEnd_toEndOf="@+id/view7"
+                app:layout_constraintStart_toEndOf="@+id/textView38"
                 app:layout_constraintTop_toTopOf="@+id/textView38" />
 
             <TextView
@@ -258,11 +279,14 @@
             <TextView
                 android:id="@+id/textViewEmptyComments"
                 style="@style/Value"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:text="Sin observaciones"
                 app:layout_constraintEnd_toEndOf="@+id/view8"
-                app:layout_constraintTop_toTopOf="@+id/textView40" />
+                app:layout_constraintStart_toEndOf="@+id/textView40"
+                app:layout_constraintTop_toTopOf="@+id/textView40"
+                android:textAlignment="textEnd" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -273,9 +297,9 @@
         style="@style/AppTheme.PrimaryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
         android:text="FINALIZAR PARTE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

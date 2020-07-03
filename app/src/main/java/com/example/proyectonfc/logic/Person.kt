@@ -4,11 +4,12 @@ import java.io.Serializable
 
 class Person : Serializable {
 
+    var identifier: String = "predefined_id"
     var name: String = ""
     var dni: String = ""
     var card: String = ""
     var validity: String = ""
-    var role: String = ""
+    var role: Role = Role.STUDENT
     var status: String = ""
 
     companion object {
@@ -21,6 +22,10 @@ class Person : Serializable {
         const val VALIDITY_TAG = "Vigencia:"
 
         const val CSS_QUERY = "td"
+    }
+
+    fun isStudent(): Boolean {
+        return role == Role.STUDENT;
     }
 
     override fun toString(): String {

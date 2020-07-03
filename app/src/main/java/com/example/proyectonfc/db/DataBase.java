@@ -91,14 +91,14 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
-    public void agregarAlumnoTemporal(String identificador) {
-        SQLiteDatabase db = getWritableDatabase();
-
-        if(db!=null) {
-            db.execSQL("INSERT INTO ALUMNOTEMPORAL VALUES('"+identificador+"') ");
-            db.close();
-        }
-    }
+//    public void agregarAlumnoTemporal(String identificador) {
+//        SQLiteDatabase db = getWritableDatabase();
+//
+//        if(db!=null) {
+//            db.execSQL("INSERT INTO ALUMNOTEMPORAL VALUES('"+identificador+"') ");
+//            db.close();
+//        }
+//    }
 
     public void agregarAlumno(String identificador, String dni, String nombre) {
         SQLiteDatabase db = getWritableDatabase();

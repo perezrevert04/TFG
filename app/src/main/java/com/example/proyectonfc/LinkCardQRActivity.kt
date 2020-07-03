@@ -9,9 +9,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.logic.Person
+import com.example.proyectonfc.logic.Role
 import com.example.proyectonfc.util.CaptureActivityPortrait
 import com.google.zxing.integration.android.IntentIntegrator
-import kotlinx.android.synthetic.main.activity_link_card.*
+import kotlinx.android.synthetic.main.activity_link_card_qr.*
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.webView
 import org.jsoup.Jsoup
@@ -22,11 +23,11 @@ const val END_URL = "&P_IDIOMA=c"
 const val MEME_URL = "https://ih1.redbubble.net/image.805673899.5571/flat,128x128,075,t.u8.jpg"
 const val QR_CODE_EXAMPLE = "Ojalá vivas tiempos interesantes"
 
-class LinkCardActivity : AppCompatActivity() {
+class LinkCardQRActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_link_card)
+        setContentView(R.layout.activity_link_card_qr)
 
         buttonScanQR.setOnClickListener { initScan() }
         imageViewQR.setOnClickListener { initScan() }
@@ -89,7 +90,7 @@ class LinkCardActivity : AppCompatActivity() {
                         Person.DNI_TAG -> person.dni = links[index + 1].text()
                         Person.NAME_TAG -> {
                             person.name = links[index + 1].text()
-                            person.role = links[index + 2].text()
+                            person.role = Role.getRole(links[index + 2].text())
                             loaded = true
                         }
                     }
@@ -101,7 +102,13 @@ class LinkCardActivity : AppCompatActivity() {
                 alertDialog.dismiss()
 
                 if (loaded) {
-                    val intent = Intent(this, LinkBiometricPromptActivity::class.java)
+                    val cl = if (person.isStudent()) {
+                        LinkCardNfcActivity::class.java
+                    } else {
+                        LinkBiometricPromptActivity::class.java
+                    }
+
+                    val intent = Intent(this, cl)
                     intent.putExtra(Person.CARD_INFO, person)
                     startActivity(intent)
                 }
