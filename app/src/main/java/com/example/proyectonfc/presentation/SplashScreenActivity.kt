@@ -10,7 +10,9 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
+import com.example.proyectonfc.model.Role
 import com.example.proyectonfc.presentation.link.RequirementsToLinkActivity
+import com.example.proyectonfc.presentation.student.MainStudentActivity
 
 const val DELAY_MILLIS: Long = 2000
 
@@ -42,6 +44,8 @@ class SplashScreenActivity : AppCompatActivity() {
 
             val cl = if (!database.deviceIsLinked()) {
                 RequirementsToLinkActivity::class.java
+            } else if (database.getLinkedPerson().role == Role.STUDENT) {
+                MainStudentActivity::class.java
             } else {
                 MainActivity::class.java
             }

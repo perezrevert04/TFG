@@ -18,7 +18,10 @@ class MainStudentActivity : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_main_student)
 
+        /* TODO: Gestionar aquí permisos de la aplicación */
+
         buttonSign.setOnClickListener { startActivity( Intent(this, StudentSignActivity::class.java) ) }
+        buttonInfo.setOnClickListener { startActivity( Intent(this, ManageStudentDataActivity::class.java) ) }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

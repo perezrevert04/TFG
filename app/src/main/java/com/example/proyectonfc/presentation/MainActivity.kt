@@ -35,14 +35,17 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SplashScreenActivity::class.java)
             startActivity(intent)
             finish()
-        } else {
-            handlePermissions()
         }
-        
-        // TODO: Si es un estudiante derivar a main student activity
-//        val intent = Intent(this, MainStudentActivity::class.java)
-//        startActivity(intent)
-//        finish()
+        else {
+            val intent = Intent(this, MainStudentActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+//        TODO: Gestionar permisos de la aplicación
+//        else {
+//            handlePermissions()
+//        }
 
         buttonStart.setOnClickListener { v: View ->
             val intent = Intent(v.context, AsignaturasProfesor::class.java)

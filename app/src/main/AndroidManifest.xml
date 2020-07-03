@@ -9,15 +9,13 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!-- Required for Nearby Connections -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- Required for Nearby Connections -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- Required for Nearby Connections -->
 
     <application
         android:name=".Global"
@@ -29,10 +27,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".presentation.student.StudentSignActivity"
+            android:name=".presentation.student.ManageStudentDataActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
+            android:label="Mis datos"
             android:parentActivityName=".presentation.student.MainStudentActivity"/>
+        <activity
+            android:name=".presentation.student.StudentSignActivity"
+            android:launchMode="singleTask"
+            android:parentActivityName=".presentation.student.MainStudentActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.student.MainStudentActivity"
             android:launchMode="singleTask"
@@ -159,26 +163,26 @@
         <activity
             android:name=".presentation.teacher.management.subjects.Alumnos"
             android:label="Alumnos Asignatura"
-            android:parentActivityName=".presentation.teacher.management.subjects.Asignaturas"
             android:launchMode="singleTask"
+            android:parentActivityName=".presentation.teacher.management.subjects.Asignaturas"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.management.subjects.EditarAsignatura"
             android:label="Editar Asignatura"
-            android:parentActivityName=".presentation.teacher.management.subjects.DatosAsignatura"
             android:launchMode="singleTask"
+            android:parentActivityName=".presentation.teacher.management.subjects.DatosAsignatura"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.management.subjects.DatosAsignatura"
             android:label="Datos Asignatura"
-            android:parentActivityName=".presentation.teacher.management.subjects.Asignaturas"
             android:launchMode="singleTask"
+            android:parentActivityName=".presentation.teacher.management.subjects.Asignaturas"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.management.subjects.Asignaturas"
             android:label="Menú asignaturas"
-            android:parentActivityName=".presentation.teacher.management.subjects.Configuracion"
             android:launchMode="singleTask"
+            android:parentActivityName=".presentation.teacher.management.subjects.Configuracion"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.management.subjects.Configuracion"
