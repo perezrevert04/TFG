@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="clases.NuevoAlumno"
+    tools:context=".presentation.teacher.management.subjects.NuevoAlumno"
     tools:ignore="MissingDefaultResource"
     android:background="@drawable/fondo"
     android:orientation="vertical">

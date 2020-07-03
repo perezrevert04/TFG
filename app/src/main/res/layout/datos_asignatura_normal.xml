@@ -7,7 +7,7 @@
     android:id="@+id/relativeLayout5"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="clases.DatosAsignaturaNormal" >
+    tools:context=".presentation.teacher.report.DatosAsignaturaNormal" >
 
     <Button
         android:id="@+id/buttonStart"

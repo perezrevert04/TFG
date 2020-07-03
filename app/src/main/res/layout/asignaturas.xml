@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="clases.Asignaturas"
+    tools:context=".presentation.teacher.management.subjects.Asignaturas"
     android:background="@drawable/fondo"
     tools:ignore="MissingDefaultResource">
 
