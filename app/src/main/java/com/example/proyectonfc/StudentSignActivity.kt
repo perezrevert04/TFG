@@ -52,6 +52,8 @@ class StudentSignActivity : AppCompatActivity() {
             }
 
             discover.start()
+        } else {
+            authenticating = false
         }
     }
 
