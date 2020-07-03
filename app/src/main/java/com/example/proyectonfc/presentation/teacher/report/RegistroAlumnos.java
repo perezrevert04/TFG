@@ -28,10 +28,10 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
-import com.example.proyectonfc.logic.biometric.Biometry;
-import com.example.proyectonfc.logic.nearby.Advertise;
-import com.example.proyectonfc.logic.nearby.NearbyCode;
-import com.example.proyectonfc.logic.nfc.Nfc;
+import com.example.proyectonfc.util.biometric.Biometry;
+import com.example.proyectonfc.util.nearby.Advertise;
+import com.example.proyectonfc.util.nearby.NearbyCode;
+import com.example.proyectonfc.util.nfc.Nfc;
 import com.example.proyectonfc.presentation.MainActivity;
 import com.google.android.gms.nearby.connection.Payload;
 import com.google.android.gms.nearby.connection.PayloadCallback;

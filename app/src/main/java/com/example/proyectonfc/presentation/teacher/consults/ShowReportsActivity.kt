@@ -11,8 +11,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
-import com.example.proyectonfc.logic.Report
-import com.example.proyectonfc.logic.ReportFilter
+import com.example.proyectonfc.model.Report
+import com.example.proyectonfc.model.ReportFilter
 import kotlinx.android.synthetic.main.activity_show_reports.*
 import org.jetbrains.anko.toast
 

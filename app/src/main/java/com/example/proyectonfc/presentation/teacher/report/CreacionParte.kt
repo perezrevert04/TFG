@@ -13,9 +13,9 @@ import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
 import com.example.proyectonfc.clases.AddComment
 import com.example.proyectonfc.db.DataBase
-import com.example.proyectonfc.logic.Person
-import com.example.proyectonfc.logic.Report
-import com.example.proyectonfc.logic.biometric.Biometry
+import com.example.proyectonfc.model.Person
+import com.example.proyectonfc.model.Report
+import com.example.proyectonfc.util.biometric.Biometry
 import com.lowagie.text.*
 import com.lowagie.text.pdf.PdfPTable
 import com.lowagie.text.pdf.PdfWriter

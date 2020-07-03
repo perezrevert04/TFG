@@ -1,7 +1,6 @@
 package com.example.proyectonfc.presentation.teacher.management.subjects;
 
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -13,9 +12,6 @@ import android.widget.Toast;
 
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
-import com.example.proyectonfc.util.Asignatura;
-
-import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
 

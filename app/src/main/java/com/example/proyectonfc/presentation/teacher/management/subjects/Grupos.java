@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
-import com.example.proyectonfc.util.Grupo;
+import com.example.proyectonfc.model.Grupo;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;

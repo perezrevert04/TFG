@@ -5,11 +5,10 @@ import android.content.Context
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
-import com.example.proyectonfc.logic.Person
-import com.example.proyectonfc.logic.Report
-import com.example.proyectonfc.logic.ReportFilter
-import com.example.proyectonfc.logic.Role
+import com.example.proyectonfc.model.Person
+import com.example.proyectonfc.model.Report
+import com.example.proyectonfc.model.ReportFilter
+import com.example.proyectonfc.model.Role
 
 const val TABLE_LINKED_PERSON = "TABLE_LINKED_PERSON"
 const val TABLE_REPORT = "TABLE_REPORT"

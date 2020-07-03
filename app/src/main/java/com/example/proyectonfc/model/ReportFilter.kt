@@ -1,4 +1,4 @@
-package com.example.proyectonfc.logic
+package com.example.proyectonfc.model
 
 import java.io.Serializable
 

@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
-import com.example.proyectonfc.util.Asignatura;
+import com.example.proyectonfc.model.Asignatura;
 
 import java.util.ArrayList;
 

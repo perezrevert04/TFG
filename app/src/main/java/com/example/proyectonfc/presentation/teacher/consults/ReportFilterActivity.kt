@@ -6,7 +6,7 @@ import android.app.DatePickerDialog.OnDateSetListener
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.R
-import com.example.proyectonfc.logic.ReportFilter
+import com.example.proyectonfc.model.ReportFilter
 import kotlinx.android.synthetic.main.activity_report_filter.*
 import java.text.SimpleDateFormat
 import java.util.*

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.R
-import com.example.proyectonfc.logic.Report
+import com.example.proyectonfc.model.Report
 import kotlinx.android.synthetic.main.activity_creacion_parte.textViewClassroom
 import kotlinx.android.synthetic.main.activity_creacion_parte.textViewGroup
 import kotlinx.android.synthetic.main.activity_creacion_parte.textViewTeacher

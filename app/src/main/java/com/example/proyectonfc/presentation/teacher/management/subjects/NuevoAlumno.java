@@ -20,9 +20,9 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
-import com.example.proyectonfc.logic.nfc.Nfc;
-import com.example.proyectonfc.util.CaptureActivityPortrait;
-import com.example.proyectonfc.util.CardInfo;
+import com.example.proyectonfc.util.nfc.Nfc;
+import com.example.proyectonfc.presentation.CaptureActivityPortrait;
+import com.example.proyectonfc.model.CardInfo;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 

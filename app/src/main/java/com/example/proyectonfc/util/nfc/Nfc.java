@@ -1,4 +1,4 @@
-package com.example.proyectonfc.logic.nfc;
+package com.example.proyectonfc.util.nfc;
 
 import android.nfc.Tag;
 

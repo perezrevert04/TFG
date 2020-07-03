@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
 import com.example.proyectonfc.presentation.MainActivity
-import com.example.proyectonfc.logic.Person
-import com.example.proyectonfc.logic.biometric.Biometry
+import com.example.proyectonfc.model.Person
+import com.example.proyectonfc.util.biometric.Biometry
 import kotlinx.android.synthetic.main.activity_link_biometric_prompt.*
 import org.jetbrains.anko.toast
 

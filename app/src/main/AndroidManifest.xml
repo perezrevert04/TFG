@@ -99,7 +99,7 @@
             android:parentActivityName=".presentation.teacher.report.RegistroAlumnos"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".util.CaptureActivityPortrait"
+            android:name=".presentation.CaptureActivityPortrait"
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
             android:windowSoftInputMode="stateAlwaysHidden" />

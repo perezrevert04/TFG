@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
-import com.example.proyectonfc.util.Alumno;
+import com.example.proyectonfc.model.Alumno;
 
 import java.util.ArrayList;
 import java.util.List;

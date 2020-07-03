@@ -1,4 +1,4 @@
-package com.example.proyectonfc.logic.biometric
+package com.example.proyectonfc.util.biometric
 
 import android.content.Context
 import android.widget.Toast

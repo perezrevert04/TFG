@@ -10,8 +10,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.proyectonfc.R;
-import com.example.proyectonfc.logic.Person;
-import com.example.proyectonfc.logic.nfc.Nfc;
+import com.example.proyectonfc.model.Person;
+import com.example.proyectonfc.util.nfc.Nfc;
 
 public class LinkCardNfcActivity extends AppCompatActivity {
 

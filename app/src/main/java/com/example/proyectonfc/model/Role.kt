@@ -1,4 +1,4 @@
-package com.example.proyectonfc.logic
+package com.example.proyectonfc.model
 
 const val ST = "ALUMNE/A"
 const val TE = "PROFESSOR/A"

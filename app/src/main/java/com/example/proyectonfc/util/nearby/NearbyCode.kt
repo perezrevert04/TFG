@@ -1,4 +1,4 @@
-package com.example.proyectonfc.logic.nearby
+package com.example.proyectonfc.util.nearby
 
 enum class NearbyCode(val code: Int, val msg: String) {
     UNKNOWN(0, "Se ha producido un error desconocido..."),

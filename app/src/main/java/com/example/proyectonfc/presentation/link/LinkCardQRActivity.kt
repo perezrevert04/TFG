@@ -8,11 +8,11 @@ import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.proyectonfc.logic.Person
-import com.example.proyectonfc.logic.Role
+import com.example.proyectonfc.model.Person
+import com.example.proyectonfc.model.Role
 import com.example.proyectonfc.presentation.link.LinkBiometricPromptActivity
 import com.example.proyectonfc.presentation.link.LinkCardNfcActivity
-import com.example.proyectonfc.util.CaptureActivityPortrait
+import com.example.proyectonfc.presentation.CaptureActivityPortrait
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_link_card_qr.*
 import org.jetbrains.anko.toast

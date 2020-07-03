@@ -1,20 +1,20 @@
-package com.example.proyectonfc.util;
+package com.example.proyectonfc.model;
 
 import java.io.Serializable;
 
-public class Usuario implements Serializable {
+public class Asignatura implements Serializable {
 
     private Integer id;
     private String nombre;
-    private String telefono;
 
-    public Usuario(Integer id, String nombre, String telefono) {
+
+    public Asignatura(Integer id, String nombre) {
         this.id = id;
         this.nombre = nombre;
-        this.telefono = telefono;
+
     }
 
-    public Usuario(){
+    public Asignatura(){
 
     }
 
@@ -34,11 +34,5 @@ public class Usuario implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getTelefono() {
-        return telefono;
-    }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
 }

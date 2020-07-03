@@ -7,9 +7,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.R
-import com.example.proyectonfc.logic.biometric.Biometry
-import com.example.proyectonfc.logic.nearby.Discover
-import com.example.proyectonfc.logic.nearby.NearbyCode
+import com.example.proyectonfc.util.biometric.Biometry
+import com.example.proyectonfc.util.nearby.Discover
+import com.example.proyectonfc.util.nearby.NearbyCode
 import com.google.android.gms.nearby.connection.Payload
 import com.google.android.gms.nearby.connection.PayloadCallback
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate

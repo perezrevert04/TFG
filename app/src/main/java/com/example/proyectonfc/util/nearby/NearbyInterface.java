@@ -1,4 +1,4 @@
-package com.example.proyectonfc.logic.nearby;
+package com.example.proyectonfc.util.nearby;
 
 interface NearbyInterface {
 
