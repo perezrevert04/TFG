@@ -34,18 +34,9 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SplashScreenActivity::class.java)
             startActivity(intent)
             finish()
-        }
-//
-
-//        val intent = Intent(this, NearbyTestActivity::class.java)
-//        startActivity(intent)
-//        finish()
-        else {
+        } else {
             handlePermissions()
         }
-        
-        
-        
         
         // TODO: Si es un estudiante derivar a main student activity
 //        val intent = Intent(this, MainStudentActivity::class.java)
@@ -69,7 +60,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handlePermissions() {
-        /* TODO: Solicitar permisos de almacenamiento y ubicación */
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), WES_PERMISSION_REQUEST_CODE)
         } else if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
