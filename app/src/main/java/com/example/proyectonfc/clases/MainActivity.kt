@@ -16,9 +16,11 @@ import androidx.core.app.ActivityCompat
 import com.example.proyectonfc.R
 import com.example.proyectonfc.ShowReportsActivity
 import com.example.proyectonfc.SplashScreenActivity
+import com.example.proyectonfc.logic.MainStudentActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
-const val PERMISSION_REQUEST_CODE = 1000
+const val WES_PERMISSION_REQUEST_CODE = 1
+const val AFL_PERMISSION_REQUEST_CODE = 2
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,20 +35,22 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-//       // Si es un estudiante derivar a main student activity
-//            val intent = Intent(this, MainStudentActivity::class.java)
-//            startActivity(intent)
-//            finish()
 //
 
 //        val intent = Intent(this, NearbyTestActivity::class.java)
 //        startActivity(intent)
 //        finish()
-
-
-        else if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST_CODE)
+        else {
+            handlePermissions()
         }
+        
+        
+        
+        
+        // TODO: Si es un estudiante derivar a main student activity
+//        val intent = Intent(this, MainStudentActivity::class.java)
+//        startActivity(intent)
+//        finish()
 
         buttonStart.setOnClickListener { v: View ->
             val intent = Intent(v.context, AsignaturasProfesor::class.java)
@@ -63,6 +67,23 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+    private fun handlePermissions() {
+        /* TODO: Solicitar permisos de almacenamiento y ubicación */
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), WES_PERMISSION_REQUEST_CODE)
+        } else if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), AFL_PERMISSION_REQUEST_CODE)
+        }
+    }
+
+//    private fun handleWriteExternalStoragePermission(): Boolean {
+//        val bool = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+//
+//        if (bool) ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), WES_PERMISSION_REQUEST_CODE)
+//
+//        return bool
+//    }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         return if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -87,28 +108,34 @@ class MainActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
-            PERMISSION_REQUEST_CODE -> if (grantResults.isNotEmpty() && grantResults[0] === PackageManager.PERMISSION_GRANTED) {
-
-            } else {
-                val builder = AlertDialog.Builder(this)
-                builder.setTitle("Permitir acceso")
-                builder.setMessage("Esta aplicación utiliza el sistema de almacenamiento del dispositivo para realizar algunas de sus funciones.")
-                builder.setCancelable(false)
-
-                builder.setPositiveButton("Ok!") { _, _ ->
-
-                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                    Uri.parse("package:$packageName"))
-                    intent.addCategory(Intent.CATEGORY_DEFAULT)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
-                    finish()
-
-                }
-
-                val alertDialog: AlertDialog = builder.create()
-                alertDialog.show()
+            WES_PERMISSION_REQUEST_CODE -> if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                showAlert("Permitir acceso", "Esta aplicación utiliza el sistema de almacenamiento del dispositivo para realizar algunas de sus funciones.")
+            } else if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), AFL_PERMISSION_REQUEST_CODE)
+            }
+            AFL_PERMISSION_REQUEST_CODE -> if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                showAlert("Permitir acceso", "Esta aplicación utiliza la ubicación para poder realizar el fichaje de smartphone a smartphone.")
             }
         }
+    }
+
+    private fun goToAppPermissions() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:$packageName"))
+        intent.addCategory(Intent.CATEGORY_DEFAULT)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+        finish()
+    }
+
+    private fun showAlert(title: String, subtitle: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(title)
+        builder.setMessage(subtitle)
+        builder.setCancelable(false)
+
+        builder.setPositiveButton("Ok!") { _, _ -> goToAppPermissions() }
+
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.show()
     }
 }
