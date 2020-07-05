@@ -6,8 +6,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
-import com.example.proyectonfc.presentation.MainActivity
 import com.example.proyectonfc.model.Person
+import com.example.proyectonfc.presentation.SplashScreenActivity
 import com.example.proyectonfc.util.biometric.Biometry
 import kotlinx.android.synthetic.main.activity_link_biometric_prompt.*
 import org.jetbrains.anko.toast
@@ -40,8 +40,8 @@ class LinkBiometricPromptActivity : AppCompatActivity() {
 
         buttonLink.setOnClickListener {
             if (database.addLinkedPerson(person)) {
-                toast("Vinculado con éxito")
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, SplashScreenActivity::class.java))
+                toast("Vinculado con éxito. ¡Bienvenido!")
             }
             else {
                 toast("Se ha producido un error: inténtalo de nuevo más tarde")

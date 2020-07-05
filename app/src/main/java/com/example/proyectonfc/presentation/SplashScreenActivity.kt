@@ -18,9 +18,7 @@ const val DELAY_MILLIS: Long = 2000
 
 class SplashScreenActivity : AppCompatActivity() {
 
-    companion object {
-        var notVisited = true // Para asegurar que sólo se carga una vez el splash
-    }
+    companion object { var notVisited = true /* Para asegurar que sólo se carga una vez el splash */ }
 
     private val database by lazy { (application as Global).database }
 
@@ -58,8 +56,6 @@ class SplashScreenActivity : AppCompatActivity() {
 
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        return false
-    }
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean { return false }
 
 }
