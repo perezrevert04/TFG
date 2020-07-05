@@ -24,14 +24,8 @@ class MainActivity : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_main)
 
-        if (SplashScreenActivity.notVisited) {
-            val intent = Intent(this, SplashScreenActivity::class.java)
-            startActivity(intent)
-            finish()
-        } else {
-            permissions = ManagePermissions(this)
-            permissions.handle()
-        }
+        permissions = ManagePermissions(this)
+        permissions.handle()
 
         buttonStart.setOnClickListener { v: View ->
             val intent = Intent(v.context, AsignaturasProfesor::class.java)

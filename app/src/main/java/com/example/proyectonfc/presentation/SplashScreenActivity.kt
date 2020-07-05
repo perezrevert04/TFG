@@ -18,8 +18,6 @@ const val DELAY_MILLIS: Long = 2000
 
 class SplashScreenActivity : AppCompatActivity() {
 
-    companion object { var notVisited = true /* Para asegurar que sólo se carga una vez el splash */ }
-
     private val database by lazy { (application as Global).database }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,8 +33,6 @@ class SplashScreenActivity : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
-
-        notVisited = false
 
         Handler().postDelayed({
 
