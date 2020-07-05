@@ -41,7 +41,7 @@ public class EditarAsignatura extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.editar_asignatura);
 
-    dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
+    dataBase = new DataBase(getApplicationContext());
     asignatura = getIntent().getStringExtra( "ASIGNATURA");
     consultarListaAsignaturas();
 

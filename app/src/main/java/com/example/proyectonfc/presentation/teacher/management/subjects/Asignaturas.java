@@ -21,7 +21,7 @@ public class Asignaturas extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.asignaturas);
-        dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
+        dataBase = new DataBase(getApplicationContext());
 
         buttonDatosAsignatura= (Button) findViewById(R.id.buttonDatosAsignatura);
         buttonDatosAsignatura.setOnClickListener(v -> {

@@ -39,7 +39,7 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datos_asignatura_normal);
 
-        dataBase = new DataBase(getApplicationContext(), "DB5.db", null, 1);
+        dataBase = new DataBase(getApplicationContext());
 
         textViewDegree = (TextView) findViewById(R.id.textViewDegree);
         textViewSubject = (TextView) findViewById(R.id.textViewSubject);

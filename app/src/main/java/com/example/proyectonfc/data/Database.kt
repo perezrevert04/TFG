@@ -10,17 +10,19 @@ import com.example.proyectonfc.model.Report
 import com.example.proyectonfc.model.ReportFilter
 import com.example.proyectonfc.model.Role
 
+const val DATABASE_NAME = "DATABASE_UPV.db"
+const val DATABASE_VERSION = 1
 const val TABLE_LINKED_PERSON = "TABLE_LINKED_PERSON"
 const val TABLE_REPORT = "TABLE_REPORT"
 
-class Database(context: Context) : SQLiteOpenHelper(context, "shopping_notes", null, 1), DatabaseDAO {
+class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION), DatabaseDAO {
 
     override fun onCreate(db: SQLiteDatabase) {
         createLinkedPersonTable(db)
         createReportTable(db)
     }
 
-    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) { }
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) { }
 
     override fun addLinkedPerson(person: Person): Boolean {
         if (deviceIsLinked()) return false;

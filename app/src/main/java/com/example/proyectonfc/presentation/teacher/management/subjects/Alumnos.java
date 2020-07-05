@@ -36,7 +36,6 @@ public class Alumnos extends AppCompatActivity {
     private String asignatura;
     private String alumno;
     private String dni;
-    private String nombreAlumno;
     ArrayList<String> listaAlumnos;
     ArrayList<Alumno> alumnosList;
 
@@ -45,12 +44,11 @@ public class Alumnos extends AppCompatActivity {
         super.onResume();
 
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
-        dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
-        Alumnos = (ListView) findViewById(R.id.listaAlumnos);
+        dataBase = new DataBase(getApplicationContext());
+        Alumnos = findViewById(R.id.listaAlumnos);
 
         consultarListaAlumnos();
-        ArrayAdapter<CharSequence> adaptador=new ArrayAdapter
-                (this,android.R.layout.simple_list_item_1, (List) listaAlumnos);
+        ArrayAdapter<CharSequence> adaptador=new ArrayAdapter(this,android.R.layout.simple_list_item_1, (List) listaAlumnos);
         Alumnos.setAdapter(adaptador);
     }
 
@@ -87,7 +85,7 @@ public class Alumnos extends AppCompatActivity {
         setContentView(R.layout.alumnos);
 
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
-        dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
+        dataBase = new DataBase(getApplicationContext());
         Alumnos = (ListView) findViewById(R.id.listaAlumnos);
 
         consultarListaAlumnos();
