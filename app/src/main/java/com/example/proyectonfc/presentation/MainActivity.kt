@@ -8,8 +8,7 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.R
-import com.example.proyectonfc.presentation.teacher.consults.ShowReportsActivity
-import com.example.proyectonfc.presentation.teacher.management.subjects.Configuracion
+import com.example.proyectonfc.presentation.teacher.management.ManagementActivity
 import com.example.proyectonfc.presentation.teacher.report.AsignaturasProfesor
 import com.example.proyectonfc.use_cases.ManagePermissions
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,13 +31,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        buttonManageSubjects.setOnClickListener { v: View ->
-            val intent = Intent(v.context, Configuracion::class.java)
-            startActivity(intent)
-        }
-
-        buttonConsultParts.setOnClickListener { v: View ->
-            val intent = Intent(v.context, ShowReportsActivity::class.java)
+        buttonTeacherData.setOnClickListener { v: View ->
+            val intent = Intent(v.context, ManagementActivity::class.java)
             startActivity(intent)
         }
     }

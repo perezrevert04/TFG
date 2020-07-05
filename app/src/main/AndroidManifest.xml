@@ -27,11 +27,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".presentation.student.ManageStudentDataActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
+            android:name=".presentation.teacher.management.ManagementActivity"
             android:label="Mis datos"
-            android:parentActivityName=".presentation.student.MainStudentActivity"/>
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.MainActivity"/>
+        <activity
+            android:name=".presentation.student.ManageStudentDataActivity"
+            android:label="Mis datos"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.student.MainStudentActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.student.StudentSignActivity"
             android:launchMode="singleTop"
@@ -66,7 +71,7 @@
             android:name=".presentation.teacher.consults.ShowReportsActivity"
             android:label="Consultar partes"
             android:launchMode="singleTop"
-            android:parentActivityName=".presentation.MainActivity"
+            android:parentActivityName=".presentation.teacher.management.ManagementActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.link.RequirementsToLinkActivity"
@@ -183,18 +188,18 @@
             android:name=".presentation.teacher.management.subjects.Configuracion"
             android:label="Asignaturas"
             android:launchMode="singleTop"
-            android:parentActivityName=".presentation.MainActivity"
+            android:parentActivityName=".presentation.teacher.management.ManagementActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".presentation.SplashScreenActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
