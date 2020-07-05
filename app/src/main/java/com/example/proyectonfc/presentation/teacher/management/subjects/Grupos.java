@@ -71,7 +71,7 @@ public class Grupos extends AppCompatActivity {
         setContentView(R.layout.grupos);
 
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
-        dataBase = new DataBase(getApplicationContext(), "DB5.db", null, 1);
+        dataBase = new DataBase(getApplicationContext());
         Grupos = (ListView) findViewById(R.id.listaGrupos);
 
         consultarListaGrupos();

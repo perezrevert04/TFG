@@ -54,7 +54,7 @@ public class NuevoAlumno extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         text = (TextView) findViewById(R.id.text);
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
-        dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
+        dataBase = new DataBase(getApplicationContext());
 
 
         btnAgregar = (Button) findViewById(R.id.btnAgregar);

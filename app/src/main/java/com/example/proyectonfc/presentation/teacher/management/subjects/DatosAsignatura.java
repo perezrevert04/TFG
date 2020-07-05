@@ -54,7 +54,7 @@ public class DatosAsignatura extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datos_asignatura);
 
-        dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
+        dataBase = new DataBase(getApplicationContext());
 
 
 

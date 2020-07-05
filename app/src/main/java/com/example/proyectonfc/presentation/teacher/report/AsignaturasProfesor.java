@@ -25,7 +25,7 @@ public class AsignaturasProfesor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.asignaturas_profesor);
 
-        dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
+        dataBase = new DataBase(getApplicationContext());
         ListView asignaturas = (ListView) findViewById(R.id.listaAsignaturas);
 
         consultarListaAsignaturas();

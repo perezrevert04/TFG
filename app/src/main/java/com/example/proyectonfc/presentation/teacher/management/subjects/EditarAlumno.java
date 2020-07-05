@@ -35,7 +35,7 @@ public class EditarAlumno extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editar_alumno);
 
-        dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
+        dataBase = new DataBase(getApplicationContext());
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
         dniAlumno = getIntent().getStringExtra( "DNIALUMNO");
         identificadorAlumno = getIntent().getStringExtra( "IDENTIFICADORALUMNO");

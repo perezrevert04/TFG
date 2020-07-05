@@ -240,7 +240,7 @@ public class RegistroAlumnos extends AppCompatActivity {
     }
 
     private void dumpTagData(String studentId) {
-        final DataBase dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
+        final DataBase dataBase = new DataBase(getApplicationContext());
 
         SQLiteDatabase db=dataBase.getReadableDatabase();
 
@@ -285,7 +285,7 @@ public class RegistroAlumnos extends AppCompatActivity {
 
     private NearbyCode add(String identifier) {
         NearbyCode code;
-        final DataBase dataBase = new DataBase(getApplicationContext(), "DB6.db", null, 1);
+        final DataBase dataBase = new DataBase(getApplicationContext());
 
         SQLiteDatabase db = dataBase.getReadableDatabase();
         //select * from usuarios
