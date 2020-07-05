@@ -10,15 +10,13 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
+import com.example.proyectonfc.model.Role
 import com.example.proyectonfc.presentation.link.RequirementsToLinkActivity
+import com.example.proyectonfc.presentation.student.MainStudentActivity
 
 const val DELAY_MILLIS: Long = 2000
 
 class SplashScreenActivity : AppCompatActivity() {
-
-    companion object {
-        var notVisited = true // Para asegurar que sólo se carga una vez el splash
-    }
 
     private val database by lazy { (application as Global).database }
 
@@ -36,12 +34,12 @@ class SplashScreenActivity : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
 
-        notVisited = false
-
         Handler().postDelayed({
 
             val cl = if (!database.deviceIsLinked()) {
                 RequirementsToLinkActivity::class.java
+            } else if (database.getLinkedPerson().role == Role.STUDENT) {
+                MainStudentActivity::class.java
             } else {
                 MainActivity::class.java
             }
@@ -54,8 +52,6 @@ class SplashScreenActivity : AppCompatActivity() {
 
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        return false
-    }
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean { return false }
 
 }

@@ -244,7 +244,6 @@ class CreacionParte : AppCompatActivity() {
 
     private fun crearFichero(filename: String): File {
         val path = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "ParteFirmasUPV").path
-        Log.d("AppLog", path)
         File(path).mkdir()
         return File(path, filename)
     }
