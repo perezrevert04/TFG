@@ -101,7 +101,7 @@ public class Configuracion extends AppCompatActivity {
 
         asignaturas.setOnItemClickListener( (adapterView, view, position, id) -> {
             asignatura = listaAsignaturas.get(position);
-            Intent intent = new Intent(view.getContext(), Asignaturas.class);
+            Intent intent = new Intent(view.getContext(), SubjectDataActivity.class);
             intent.putExtra("ASIGNATURA", asignatura);
             startActivity(intent);
         });

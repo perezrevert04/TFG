@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.proyectonfc.model.Subject;
+
 public class DataBase extends SQLiteOpenHelper {
 
     private static final String NOMBRE_DB = "DB6.db";
@@ -115,10 +117,10 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
-    public void ActualizarAsignatura(String identificador, String nombre, String titulacion, String curso, String gestora, String idioma, String duracion) {
+    public void updateSubject(Subject subject) {
         SQLiteDatabase db = getWritableDatabase();
-        if(db!=null) {
-            db.execSQL("UPDATE ASIGNATURA SET nombre='"+nombre+"', titulacion='"+titulacion+"', curso='"+curso+"', er_gestora='"+gestora+"', idioma='"+idioma+"', duracion='"+duracion+"' WHERE id='"+identificador+"'");
+        if (db != null) {
+            db.execSQL("UPDATE ASIGNATURA SET nombre='"+subject.getName()+"', titulacion='"+subject.getDegree()+"', curso='"+subject.getSchoolYear()+"', er_gestora='"+subject.getDepartment()+"', idioma='"+subject.getLanguage()+"', duracion='"+subject.getDuration()+"' WHERE id='"+subject.getCode()+"'");
             db.close();
         }
     }

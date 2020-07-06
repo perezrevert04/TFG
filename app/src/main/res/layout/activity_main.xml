@@ -10,29 +10,17 @@
 
 
     <Button
-        android:id="@+id/buttonConsultParts"
+        android:id="@+id/buttonTeacherData"
         style="@style/AppTheme.SecondaryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="20dp"
-        android:text="CONSULTAR PARTES"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:text="GESTIÓN"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/buttonManageSubjects"
-        style="@style/AppTheme.SecondaryButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="GESTIONAR ASIGNATURAS"
-        app:layout_constraintBottom_toTopOf="@+id/buttonConsultParts"
-        app:layout_constraintEnd_toEndOf="@+id/buttonConsultParts"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonConsultParts" />
 
     <Button
         android:id="@+id/buttonStart"
@@ -41,10 +29,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:text="INICIAR PARTE"
-        app:layout_constraintBottom_toTopOf="@+id/buttonManageSubjects"
-        app:layout_constraintEnd_toEndOf="@+id/buttonManageSubjects"
+        app:layout_constraintBottom_toTopOf="@+id/buttonTeacherData"
+        app:layout_constraintEnd_toEndOf="@+id/buttonTeacherData"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonManageSubjects" />
+        app:layout_constraintStart_toStartOf="@+id/buttonTeacherData" />
 
     <ImageView
         android:id="@+id/imageView5"
