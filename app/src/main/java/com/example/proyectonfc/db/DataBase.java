@@ -73,18 +73,6 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
-    public void insertarAlumno(String asignatura) {
-        SQLiteDatabase db = getWritableDatabase();
-
-        if(db!=null) {
-            db.execSQL("INSERT INTO ALUMNO (ID, DNI, NOMBRE) VALUES('"+asignatura+"1111111111','11111111','Alumno1') ");
-            db.execSQL("INSERT INTO ALUMNO (ID, DNI, NOMBRE) VALUES('"+asignatura+"2222222222','22222222','Alumno2') ");
-            db.execSQL("INSERT INTO ALUMNO (ID, DNI, NOMBRE) VALUES('"+asignatura+"3333333333','33333333','Alumno3') ");
-            db.execSQL("INSERT INTO ALUMNO (ID, DNI, NOMBRE) VALUES('"+asignatura+"4444444444','44444444','Alumno4') ");
-            db.close();
-        }
-    }
-
     public void borrarAlumno(String identificador, String nombre, String dni) {
         SQLiteDatabase db = getWritableDatabase();
         if(db!=null) {

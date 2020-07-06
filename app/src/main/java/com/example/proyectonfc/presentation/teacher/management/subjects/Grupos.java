@@ -166,7 +166,7 @@ public class Grupos extends AppCompatActivity {
         SQLiteDatabase db=dataBase.getReadableDatabase();
 
         Grupo grupo;
-        gruposList =new ArrayList<Grupo>();
+        gruposList =new ArrayList<>();
         //select * from usuarios
         Cursor cursor=db.rawQuery("SELECT * FROM GRUPO WHERE id LIKE"+"'"+asignatura+"%' ORDER by grupo", null);
 

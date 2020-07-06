@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Asignaturas"
+        android:text="Ver asignaturas"
         app:layout_constraintBottom_toTopOf="@+id/buttonConsultParts"
         app:layout_constraintEnd_toEndOf="@+id/buttonConsultParts"
         app:layout_constraintStart_toStartOf="@+id/buttonConsultParts" />
