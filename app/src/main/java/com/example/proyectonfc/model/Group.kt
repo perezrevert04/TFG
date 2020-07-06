@@ -6,5 +6,6 @@ class Group (
         var code: String,
         var name: String,
         var classroom: String,
-        var hour: String
+        var hour: String,
+        var end: String
 ) : Serializable

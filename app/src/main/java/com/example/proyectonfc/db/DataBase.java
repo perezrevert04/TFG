@@ -146,7 +146,7 @@ public class DataBase extends SQLiteOpenHelper {
     public void updateGroup(Group group) {
         SQLiteDatabase db = getWritableDatabase();
         if(db != null) {
-            db.execSQL("UPDATE GRUPO SET h_entrada='"+group.getHour()+"', aula='"+group.getClassroom()+"' WHERE id = '"+group.getCode()+"'");
+            db.execSQL("UPDATE GRUPO SET h_entrada='"+group.getHour()+"', h_salida='"+group.getEnd()+"', aula='"+group.getClassroom()+"' WHERE id = '"+group.getCode()+"'");
             db.close();
         }
     }

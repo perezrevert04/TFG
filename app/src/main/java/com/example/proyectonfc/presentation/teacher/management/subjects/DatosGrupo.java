@@ -1,6 +1,5 @@
 package com.example.proyectonfc.presentation.teacher.management.subjects;
 
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -26,8 +25,6 @@ public class DatosGrupo extends AppCompatActivity {
     private String h_salida;
     private String aula;
 
-    private TextView textIdentificador;
-    private TextView textGrupo;
     private TextView textNombreGrupo;
     private TextView textHEntrada;
     private TextView textHSalida;
@@ -52,7 +49,6 @@ public class DatosGrupo extends AppCompatActivity {
 
         dataBase = new DataBase(getApplicationContext());
 
-        //Intent intent = new Intent(DatosAsignatura.this.getApplicationContext(), DatosAsignatura.class);
         Nombregrupo = getIntent().getStringExtra( "GRUPO");
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
 
@@ -71,8 +67,6 @@ public class DatosGrupo extends AppCompatActivity {
     private void consultarListaGrupos() {
         SQLiteDatabase db=dataBase.getReadableDatabase();
 
-
-
         //select * from usuarios
         Cursor cursor=db.rawQuery("SELECT * FROM GRUPO WHERE id LIKE"+"'"+asignatura+"%' AND grupo = '"+Nombregrupo+"'", null);
 
@@ -84,21 +78,21 @@ public class DatosGrupo extends AppCompatActivity {
             h_salida = cursor.getString(3);
             aula = cursor.getString(4);
 
-            group = new Group(identificador, grupo, aula, h_entrada);
-
+            group = new Group(identificador, grupo, aula, h_entrada, h_salida);
         }
 
-        textIdentificador = (TextView) findViewById(R.id.textIdentificador);
-        textIdentificador.setText(identificador);
+        setTitle(identificador);
+
         textNombreGrupo = (TextView) findViewById(R.id.textNombreGrupo);
         textNombreGrupo.setText(nombreGrupo);
-        textGrupo = (TextView) findViewById(R.id.textGrupo);
-        textGrupo.setText(grupo);
-        textHEntrada = (TextView) findViewById(R.id.textHEntrada);
+
+        textHEntrada = (TextView) findViewById(R.id.textViewGroupHour);
         textHEntrada.setText(h_entrada);
-        textHSalida = (TextView) findViewById(R.id.textHSalida);
+
+        textHSalida = (TextView) findViewById(R.id.textViewGroupHourEnd);
         textHSalida.setText(h_salida);
-        textAula = (TextView) findViewById(R.id.textAula);
+
+        textAula = (TextView) findViewById(R.id.textViewGroupClassroom);
         textAula.setText(aula);
 
 

@@ -21,10 +21,12 @@ class EditGroupActivity : AppCompatActivity() {
         title = group.code
         textViewGroupName.text = group.name
         editTextGroupHour.setText(group.hour)
+        editTextGroupEnd.setText(group.end)
         editTextGroupClassroom.setText(group.classroom)
 
         buttonUpdateGroup.setOnClickListener {
             group.hour = editTextGroupHour.text.toString()
+            group.end = editTextGroupEnd.text.toString()
             group.classroom = editTextGroupClassroom.text.toString()
 
             DataBase(applicationContext).updateGroup(group)
