@@ -33,6 +33,7 @@ class StudentSignActivity : AppCompatActivity() {
         activeList.setOnItemClickListener { _: AdapterView<*>?, _: View, pos: Int, _: Long ->
             val keys = ArrayList<String>(discover.map.keys)
             authenticating = true
+            /* TODO: Canviar identificador por el del linked person */
             biometry.authenticate { discover.sendPayload(keys[pos], "3967203186") }
         }
     }
