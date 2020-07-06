@@ -1,4 +1,4 @@
-package com.example.proyectonfc.presentation.teacher.consults
+package com.example.proyectonfc.presentation.teacher.management.consults
 
 import android.app.Activity
 import android.content.Intent

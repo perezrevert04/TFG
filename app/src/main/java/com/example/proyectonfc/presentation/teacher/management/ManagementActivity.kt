@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
 import com.example.proyectonfc.model.Person
-import com.example.proyectonfc.presentation.teacher.consults.ShowReportsActivity
+import com.example.proyectonfc.presentation.teacher.management.consults.ShowReportsActivity
 import com.example.proyectonfc.presentation.teacher.management.subjects.Configuracion
 import kotlinx.android.synthetic.main.activity_management.*
 

@@ -27,10 +27,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".presentation.teacher.management.subjects.SubjectDataActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.teacher.management.subjects.Configuracion" />
+        <activity
             android:name=".presentation.teacher.management.ManagementActivity"
             android:label="Mis datos"
             android:launchMode="singleTop"
-            android:parentActivityName=".presentation.MainActivity"/>
+            android:parentActivityName=".presentation.MainActivity" />
         <activity
             android:name=".presentation.student.ManageStudentDataActivity"
             android:label="Mis datos"
@@ -59,16 +63,16 @@
             android:parentActivityName=".presentation.teacher.report.CreacionParte"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".presentation.teacher.consults.ReportDataActivity"
-            android:parentActivityName=".presentation.teacher.consults.ShowReportsActivity"
+            android:name=".presentation.teacher.management.consults.ReportDataActivity"
+            android:parentActivityName=".presentation.teacher.management.consults.ShowReportsActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
-            android:name=".presentation.teacher.consults.ReportFilterActivity"
+            android:name=".presentation.teacher.management.consults.ReportFilterActivity"
             android:label="Filtrar"
-            android:parentActivityName=".presentation.teacher.consults.ShowReportsActivity"
+            android:parentActivityName=".presentation.teacher.management.consults.ShowReportsActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
-            android:name=".presentation.teacher.consults.ShowReportsActivity"
+            android:name=".presentation.teacher.management.consults.ShowReportsActivity"
             android:label="Consultar partes"
             android:launchMode="singleTop"
             android:parentActivityName=".presentation.teacher.management.ManagementActivity"
@@ -123,7 +127,7 @@
             android:name=".presentation.teacher.management.subjects.Grupos"
             android:label="Grupos Asignatura"
             android:launchMode="singleTop"
-            android:parentActivityName=".presentation.teacher.management.subjects.Asignaturas"
+            android:parentActivityName=".presentation.teacher.management.subjects.SubjectDataActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.report.RegistroAlumnos"
@@ -164,25 +168,13 @@
             android:name=".presentation.teacher.management.subjects.Alumnos"
             android:label="Alumnos Asignatura"
             android:launchMode="singleTop"
-            android:parentActivityName=".presentation.teacher.management.subjects.Asignaturas"
+            android:parentActivityName=".presentation.teacher.management.subjects.SubjectDataActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.management.subjects.EditarAsignatura"
             android:label="Editar Asignatura"
             android:launchMode="singleTop"
-            android:parentActivityName=".presentation.teacher.management.subjects.DatosAsignatura"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".presentation.teacher.management.subjects.DatosAsignatura"
-            android:label="Datos Asignatura"
-            android:launchMode="singleTop"
-            android:parentActivityName=".presentation.teacher.management.subjects.Asignaturas"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".presentation.teacher.management.subjects.Asignaturas"
-            android:label="Menú asignaturas"
-            android:launchMode="singleTop"
-            android:parentActivityName=".presentation.teacher.management.subjects.Configuracion"
+            android:parentActivityName=".presentation.teacher.management.subjects.SubjectDataActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.management.subjects.Configuracion"
