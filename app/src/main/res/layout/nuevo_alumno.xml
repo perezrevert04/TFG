@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".presentation.teacher.management.subjects.NuevoAlumno"
     tools:ignore="MissingDefaultResource"
-    android:background="@drawable/fondo"
     android:orientation="vertical">
 
     <Button
