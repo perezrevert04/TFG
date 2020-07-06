@@ -12,14 +12,14 @@ import kotlinx.android.synthetic.main.activity_subject_data.*
 class SubjectDataActivity : AppCompatActivity() {
 
     lateinit var subject: Subject
+    lateinit var code: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_subject_data)
 
-        val code: String = intent.getStringExtra("ASIGNATURA")
+        code = intent.getStringExtra("ASIGNATURA")
         title = code
-        getSubject(code)
 
         buttonEditSubject.setOnClickListener {
             val intent = Intent(it.context, EditSubjectActivity::class.java)
@@ -39,6 +39,11 @@ class SubjectDataActivity : AppCompatActivity() {
             intent.putExtra("ASIGNATURA", code)
             startActivity(intent)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getSubject(code)
     }
 
     private fun getSubject(code: String) {

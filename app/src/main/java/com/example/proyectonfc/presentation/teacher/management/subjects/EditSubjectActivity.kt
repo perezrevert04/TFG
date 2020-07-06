@@ -3,8 +3,10 @@ package com.example.proyectonfc.presentation.teacher.management.subjects
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.R
+import com.example.proyectonfc.db.DataBase
 import com.example.proyectonfc.model.Subject
 import kotlinx.android.synthetic.main.activity_edit_subject.*
+import org.jetbrains.anko.toast
 
 class EditSubjectActivity : AppCompatActivity() {
 
@@ -24,5 +26,21 @@ class EditSubjectActivity : AppCompatActivity() {
         editTextDepartment.setText(subject.department)
         editTextLanguage.setText(subject.language)
         editTextDuration.setText(subject.duration)
+
+        buttonSaveSubjectData.setOnClickListener {
+            val updated = Subject(
+                    code = subject.code,
+                    name = editTextSubjectName.text.toString(),
+                    degree = editTextDegree.text.toString(),
+                    schoolYear = editTextSchoolYear.text.toString(),
+                    department = editTextDepartment.text.toString(),
+                    language = editTextLanguage.text.toString(),
+                    duration = editTextDuration.text.toString()
+            )
+
+            DataBase(applicationContext).updateSubject(updated)
+            toast("¡Asignatura actualizada!")
+            onBackPressed()
+        }
     }
 }
