@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.proyectonfc.model.Group;
 import com.example.proyectonfc.model.Subject;
 
 public class DataBase extends SQLiteOpenHelper {
@@ -142,10 +143,10 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
-    public void ActualizarGrupo(String identificador, String entrada, String salida, String aula) {
+    public void updateGroup(Group group) {
         SQLiteDatabase db = getWritableDatabase();
-        if(db!=null) {
-            db.execSQL("UPDATE GRUPO SET h_entrada='"+entrada+"', h_salida='"+salida+"', aula='"+aula+"' WHERE id = '"+identificador+"'");
+        if(db != null) {
+            db.execSQL("UPDATE GRUPO SET h_entrada='"+group.getHour()+"', h_salida='"+group.getEnd()+"', aula='"+group.getClassroom()+"' WHERE id = '"+group.getCode()+"'");
             db.close();
         }
     }
