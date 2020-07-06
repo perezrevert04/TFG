@@ -27,6 +27,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".presentation.teacher.management.subjects.EditSubjectActivity"
+            android:parentActivityName=".presentation.teacher.management.subjects.SubjectDataActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".presentation.teacher.management.subjects.SubjectDataActivity"
             android:launchMode="singleTop"
             android:parentActivityName=".presentation.teacher.management.subjects.Configuracion" />
@@ -167,12 +171,6 @@
         <activity
             android:name=".presentation.teacher.management.subjects.Alumnos"
             android:label="Alumnos Asignatura"
-            android:launchMode="singleTop"
-            android:parentActivityName=".presentation.teacher.management.subjects.SubjectDataActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".presentation.teacher.management.subjects.EditarAsignatura"
-            android:label="Editar Asignatura"
             android:launchMode="singleTop"
             android:parentActivityName=".presentation.teacher.management.subjects.SubjectDataActivity"
             android:screenOrientation="portrait" />
