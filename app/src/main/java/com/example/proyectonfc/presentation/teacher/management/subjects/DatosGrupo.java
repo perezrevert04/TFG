@@ -5,25 +5,20 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
-import com.example.proyectonfc.model.Asignatura;
-
-import java.util.ArrayList;
-
-import androidx.appcompat.app.AppCompatActivity;
+import com.example.proyectonfc.model.Group;
 
 public class DatosGrupo extends AppCompatActivity {
 
 
     DataBase dataBase;
     Button buttonEditar;
-    ArrayList<String> listaAsignaturas;
-    ArrayList<Asignatura> asignaturasList;
     private String identificador;
     private String nombreGrupo;
     private String grupo;
@@ -31,7 +26,6 @@ public class DatosGrupo extends AppCompatActivity {
     private String h_salida;
     private String aula;
 
-    private TextView text;
     private TextView textIdentificador;
     private TextView textGrupo;
     private TextView textNombreGrupo;
@@ -42,6 +36,7 @@ public class DatosGrupo extends AppCompatActivity {
 
     private String asignatura;
 
+    private Group group;
 
     @Override
     public void onResume() {
@@ -64,15 +59,11 @@ public class DatosGrupo extends AppCompatActivity {
         consultarListaGrupos();
 
         buttonEditar = (Button) findViewById(R.id.buttonEditar);
-        buttonEditar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        buttonEditar.setOnClickListener(v -> {
 
-                Intent intent = new Intent(v.getContext(), EditarGrupo.class);
-                intent.putExtra("IDENTIFICADORGRUPO", asignatura+"-"+Nombregrupo );
-                startActivityForResult(intent, 0);
-            }
-
+            Intent intent = new Intent(v.getContext(), EditGroupActivity.class);
+            intent.putExtra("Group", group);
+            startActivity(intent);
         });
 
     }
@@ -93,7 +84,7 @@ public class DatosGrupo extends AppCompatActivity {
             h_salida = cursor.getString(3);
             aula = cursor.getString(4);
 
-
+            group = new Group(identificador, grupo, aula, h_entrada);
 
         }
 

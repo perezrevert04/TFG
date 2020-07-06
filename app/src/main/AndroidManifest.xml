@@ -27,9 +27,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".presentation.teacher.management.subjects.EditGroupActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".presentation.teacher.management.subjects.DatosGrupo"/>
+        <activity
             android:name=".presentation.teacher.management.subjects.EditSubjectActivity"
             android:parentActivityName=".presentation.teacher.management.subjects.SubjectDataActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.management.subjects.SubjectDataActivity"
             android:launchMode="singleTop"
@@ -116,12 +121,6 @@
             android:stateNotNeeded="true"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".presentation.teacher.management.subjects.EditarGrupo"
-            android:label="Editar Datos Grupo"
-            android:launchMode="singleTop"
-            android:parentActivityName=".presentation.teacher.management.subjects.DatosGrupo"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".presentation.teacher.management.subjects.DatosGrupo"
             android:label="Datos Grupo"
             android:launchMode="singleTop"
@@ -129,7 +128,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.management.subjects.Grupos"
-            android:label="Grupos Asignatura"
             android:launchMode="singleTop"
             android:parentActivityName=".presentation.teacher.management.subjects.SubjectDataActivity"
             android:screenOrientation="portrait" />

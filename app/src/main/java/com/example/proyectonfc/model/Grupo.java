@@ -10,19 +10,15 @@ public class Grupo implements Serializable {
     private String h_salida;
     private String aula;
 
+//    public Grupo(Integer id, String grupo, String h_entrada, String h_salida, String aula) {
+//        this.id = id;
+//        this.grupo = grupo;
+//        this.h_entrada = h_entrada;
+//        this.h_salida = h_salida;
+//        this.aula = aula;
+//    }
 
-    public Grupo(Integer id, String grupo, String h_entrada, String h_salida, String aula) {
-        this.id = id;
-        this.grupo = grupo;
-        this.h_entrada = h_entrada;
-        this.h_salida = h_salida;
-        this.aula = aula;
-
-    }
-
-    public Grupo(){
-
-    }
+    public Grupo() { }
 
     public Integer getId() {
         return id;

@@ -1,7 +1,5 @@
 package com.example.proyectonfc.presentation.teacher.management.subjects;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
 import com.example.proyectonfc.model.Grupo;
-import com.example.proyectonfc.presentation.MainActivity;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -59,6 +56,7 @@ public class Grupos extends AppCompatActivity {
         setContentView(R.layout.grupos);
 
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
+        setTitle("Grupos de " + asignatura);
         dataBase = new DataBase(getApplicationContext());
         Grupos = (ListView) findViewById(R.id.listaGrupos);
 
@@ -90,29 +88,6 @@ public class Grupos extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
         }
-
-//        buttonBorrar = (Button) findViewById(R.id.buttonBorrar);
-//        buttonBorrar.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), Grupos.class);
-//                intent.putExtra("ASIGNATURA", asignatura );
-//                if(grupoSeleccionado != null){
-//                    dataBase.borrarGrupo(asignatura, grupo);
-//                    finish();
-//                    startActivity(getIntent());
-//                }else{
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(Grupos.this);
-//                    builder.setTitle("No ha seleccionado ningún Grupo");
-//                    builder.setMessage("¡Debe de seleccionar algún Grupo!");
-//                    builder.setNeutralButton("¡Entendido!", null);
-//                    AlertDialog dialog = builder.create();
-//                    dialog.show();
-//                }
-//
-//            }
-//
-//        });
 
         Grupos.setOnItemClickListener( (adapterView, view, position, id) -> {
             Intent intent = new Intent(view.getContext(), DatosGrupo.class);
