@@ -28,11 +28,6 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="PrimaryButton">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:backgroundTint">@color/colorSecondary</item>
-    </style>
-
     <style name="AppTheme.PrimaryButton" parent="Widget.AppCompat.Button.Colored">
         <item name="android:background">@drawable/rounded_shape</item>
     </style>
