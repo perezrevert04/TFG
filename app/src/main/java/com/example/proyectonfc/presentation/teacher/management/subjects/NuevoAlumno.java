@@ -71,13 +71,13 @@ public class NuevoAlumno extends AppCompatActivity {
                     dialog.show();
                 } else {
                     dataBase.agregarAlumno(asignatura + studentId, dni, nombre);
-                    Toast.makeText(getApplicationContext(), "ALUMNO AGREGADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
-                    intent.putExtra("ASIGNATURA", asignatura );
+                    Toast.makeText(getApplicationContext(), "¡Alumno añadido!", Toast.LENGTH_SHORT).show();
+                    onBackPressed();
                 }
             }catch (Exception e){
                 AlertDialog.Builder builder = new AlertDialog.Builder(NuevoAlumno.this);
-                builder.setTitle("El alumno con Identificador: " + studentId + " ya está dado de alta.");
-                builder.setMessage("");
+                builder.setTitle("Duplicidad");
+                builder.setMessage("El alumno con Identificador " + studentId + " ya está dado de alta.");
                 builder.setNeutralButton("¡Entendido!", (dialog, which) -> onBackPressed());
                 AlertDialog dialog = builder.create();
                 dialog.show();
