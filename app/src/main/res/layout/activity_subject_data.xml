@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.teacher.management.subjects.SubjectDataActivity">
+
+    <Button
+        android:id="@+id/buttonEditSubject"
+        style="@style/AppTheme.PrimaryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Editar"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSubjectStudents"
+        app:layout_constraintEnd_toEndOf="@+id/buttonSubjectStudents"
+        app:layout_constraintStart_toStartOf="@+id/buttonSubjectStudents" />
+
+    <Button
+        android:id="@+id/buttonSubjectGroups"
+        style="@style/AppTheme.SecondaryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:text="Ver grupos"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonSubjectStudents"
+        style="@style/AppTheme.SecondaryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Ver alumnos"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSubjectGroups"
+        app:layout_constraintEnd_toEndOf="@+id/buttonSubjectGroups"
+        app:layout_constraintStart_toStartOf="@+id/buttonSubjectGroups" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonEditSubject"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".presentation.student.ManageTeacherDataActivity">
+
+            <View
+                android:id="@+id/view16"
+                style="@style/Divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/textViewSubjectDegree"
+                app:layout_constraintStart_toStartOf="@+id/textView41"
+                app:layout_constraintTop_toBottomOf="@+id/textViewSubjectDegree" />
+
+            <View
+                android:id="@+id/view17"
+                style="@style/Divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/textViewSubjectName"
+                app:layout_constraintStart_toStartOf="@+id/textView42"
+                app:layout_constraintTop_toBottomOf="@+id/textViewSubjectName" />
+
+            <View
+                android:id="@+id/view18"
+                style="@style/Divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/textViewSchoolYear"
+                app:layout_constraintStart_toStartOf="@+id/textView45"
+                app:layout_constraintTop_toBottomOf="@+id/textViewSchoolYear" />
+
+            <View
+                android:id="@+id/view19"
+                style="@style/Divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/textViewDepartment"
+                app:layout_constraintStart_toStartOf="@+id/textView46"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDepartment" />
+
+            <View
+                android:id="@+id/view12"
+                style="@style/Divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/textViewDepartment"
+                app:layout_constraintStart_toStartOf="@+id/textView46"
+                app:layout_constraintTop_toBottomOf="@+id/textViewLanguage" />
+
+            <TextView
+                android:id="@+id/textViewSubjectDegree"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="Nombre titulación"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView41"
+                app:layout_constraintTop_toTopOf="@+id/textView41" />
+
+            <TextView
+                android:id="@+id/textViewSubjectName"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Nombre de la asignatura"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="@+id/view16"
+                app:layout_constraintStart_toEndOf="@+id/textView42"
+                app:layout_constraintTop_toTopOf="@+id/textView42" />
+
+            <TextView
+                android:id="@+id/textViewSchoolYear"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="YYYY/YY"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="@+id/view17"
+                app:layout_constraintStart_toEndOf="@+id/textView45"
+                app:layout_constraintTop_toTopOf="@+id/textView45" />
+
+            <TextView
+                android:id="@+id/textViewDepartment"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Departamento de cosas"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="@+id/view18"
+                app:layout_constraintStart_toEndOf="@+id/textView46"
+                app:layout_constraintTop_toTopOf="@+id/textView46" />
+
+            <TextView
+                android:id="@+id/textViewLanguage"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Euskera"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="@+id/view19"
+                app:layout_constraintStart_toEndOf="@+id/textView47"
+                app:layout_constraintTop_toTopOf="@+id/textView47" />
+
+            <TextView
+                android:id="@+id/textViewDuration"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="60"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="@+id/view12"
+                app:layout_constraintStart_toEndOf="@+id/textView39"
+                app:layout_constraintTop_toTopOf="@+id/textView39" />
+
+            <TextView
+                android:id="@+id/textView41"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Titulación:"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewSubjectCode" />
+
+            <TextView
+                android:id="@+id/textView42"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Nombre:"
+                app:layout_constraintStart_toStartOf="@+id/view16"
+                app:layout_constraintTop_toBottomOf="@+id/view16" />
+
+            <TextView
+                android:id="@+id/textView45"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Curso:"
+                app:layout_constraintStart_toStartOf="@+id/view16"
+                app:layout_constraintTop_toBottomOf="@+id/view17" />
+
+            <TextView
+                android:id="@+id/textView46"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Gestora:"
+                app:layout_constraintStart_toStartOf="@+id/view18"
+                app:layout_constraintTop_toBottomOf="@+id/view18" />
+
+            <TextView
+                android:id="@+id/textView47"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Idioma:"
+                app:layout_constraintStart_toStartOf="@+id/view18"
+                app:layout_constraintTop_toBottomOf="@+id/view19" />
+
+            <TextView
+                android:id="@+id/textViewSubjectCode"
+                style="@style/Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="CODE"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView39"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Duración:"
+                app:layout_constraintStart_toStartOf="@+id/view12"
+                app:layout_constraintTop_toBottomOf="@+id/view12" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

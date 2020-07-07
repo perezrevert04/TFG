@@ -9,15 +9,13 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!-- Required for Nearby Connections -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- Required for Nearby Connections -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- Required for Nearby Connections -->
 
     <application
         android:name=".Global"
@@ -29,171 +27,165 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".StudentSignActivity"
-            android:launchMode="singleTask"
+            android:name=".presentation.teacher.management.subjects.EditGroupActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:parentActivityName=".logic.MainStudentActivity"/>
+            android:parentActivityName=".presentation.teacher.management.subjects.DatosGrupo"/>
         <activity
-            android:name=".logic.MainStudentActivity"
-            android:launchMode="singleTask"
+            android:name=".presentation.teacher.management.subjects.EditSubjectActivity"
+            android:parentActivityName=".presentation.teacher.management.subjects.SubjectDataActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".presentation.teacher.management.subjects.SubjectDataActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.teacher.management.subjects.Configuracion" />
+        <activity
+            android:name=".presentation.teacher.management.ManagementActivity"
+            android:label="Mis datos"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.MainActivity" />
+        <activity
+            android:name=".presentation.student.ManageStudentDataActivity"
+            android:label="Mis datos"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.student.MainStudentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".presentation.student.StudentSignActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.student.MainStudentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".presentation.student.MainStudentActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".LinkCardNfcActivity"
+            android:name=".presentation.link.LinkCardNfcActivity"
             android:label="Vincular carnet"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:parentActivityName=".LinkCardQRActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AttendanceActivity"
-            android:launchMode="singleTask"
-            android:parentActivityName=".CreacionParte"
+            android:name=".presentation.teacher.report.AttendanceActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.teacher.report.CreacionParte"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ReportDataActivity"
-            android:parentActivityName=".ShowReportsActivity"
+            android:name=".presentation.teacher.management.consults.ReportDataActivity"
+            android:parentActivityName=".presentation.teacher.management.consults.ShowReportsActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
-            android:name=".ReportFilterActivity"
+            android:name=".presentation.teacher.management.consults.ReportFilterActivity"
             android:label="Filtrar"
-            android:parentActivityName=".ShowReportsActivity"
+            android:parentActivityName=".presentation.teacher.management.consults.ShowReportsActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
-            android:name=".ShowReportsActivity"
+            android:name=".presentation.teacher.management.consults.ShowReportsActivity"
             android:label="Consultar partes"
-            android:launchMode="singleTask"
-            android:parentActivityName=".clases.MainActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.teacher.management.ManagementActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SplashScreenActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".clases.RequirementsToLinkActivity"
+            android:name=".presentation.link.RequirementsToLinkActivity"
             android:label="Vincular carnet"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".LinkBiometricPromptActivity"
+            android:name=".presentation.link.LinkBiometricPromptActivity"
             android:label="Vincular carnet"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:parentActivityName=".LinkCardQRActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".LinkCardQRActivity"
             android:label="Vincular carnet"
-            android:launchMode="singleTask"
-            android:parentActivityName=".clases.RequirementsToLinkActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.link.RequirementsToLinkActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".clases.AddComment"
             android:label="Observaciones"
-            android:launchMode="singleTask"
-            android:parentActivityName=".CreacionParte"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.teacher.report.CreacionParte"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CreacionParte"
+            android:name=".presentation.teacher.report.CreacionParte"
             android:label="Datos del parte"
-            android:launchMode="singleTask"
-            android:parentActivityName=".clases.RegistroAlumnos"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.teacher.report.RegistroAlumnos"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".util.CaptureActivityPortrait"
+            android:name=".presentation.CaptureActivityPortrait"
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".clases.EditarGrupo"
-            android:label="Editar Datos Grupo"
-            android:launchMode="singleTask"
-            android:parentActivityName=".clases.DatosGrupo"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".clases.DatosGrupo"
+            android:name=".presentation.teacher.management.subjects.DatosGrupo"
             android:label="Datos Grupo"
-            android:launchMode="singleTask"
-            android:parentActivityName=".clases.Grupos"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.teacher.management.subjects.Grupos"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".clases.Grupos"
-            android:label="Grupos Asignatura"
-            android:launchMode="singleTask"
-            android:parentActivityName=".clases.Asignaturas"
+            android:name=".presentation.teacher.management.subjects.Grupos"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.teacher.management.subjects.SubjectDataActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".clases.EnviarCorreo"
-            android:label="Enviar Correo"
-            android:parentActivityName=".clases.RegistroAlumnos"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".clases.RegistroAlumnos"
+            android:name=".presentation.teacher.report.RegistroAlumnos"
             android:label="Registro Alumnos"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".clases.DatosAsignaturaNormal"
+            android:name=".presentation.teacher.report.DatosAsignaturaNormal"
             android:label="Datos de la clase"
-            android:launchMode="singleTask"
-            android:parentActivityName=".clases.AsignaturasProfesor"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.teacher.report.AsignaturasProfesor"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".clases.AsignaturasProfesor"
+            android:name=".presentation.teacher.report.AsignaturasProfesor"
             android:label="Seleccionar asignatura"
-            android:launchMode="singleTask"
-            android:parentActivityName=".clases.MainActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".clases.NuevoAlumno"
+            android:name=".presentation.teacher.management.subjects.NuevoAlumno"
             android:label="Nuevo Alumno"
-            android:launchMode="singleTask"
-            android:parentActivityName=".clases.Alumnos"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.teacher.management.subjects.Alumnos"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".clases.EditarAlumno"
+            android:name=".presentation.teacher.management.subjects.EditarAlumno"
             android:label="Editar Alumno"
-            android:launchMode="singleTask"
-            android:parentActivityName=".clases.DatosAlumno"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.teacher.management.subjects.DatosAlumno"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".clases.DatosAlumno"
+            android:name=".presentation.teacher.management.subjects.DatosAlumno"
             android:label="Datos Alumno"
-            android:launchMode="singleTask"
-            android:parentActivityName=".clases.Alumnos"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.teacher.management.subjects.Alumnos"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".clases.Alumnos"
+            android:name=".presentation.teacher.management.subjects.Alumnos"
             android:label="Alumnos Asignatura"
-            android:parentActivityName=".clases.Asignaturas"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.teacher.management.subjects.SubjectDataActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".clases.EditarAsignatura"
-            android:label="Editar Asignatura"
-            android:parentActivityName=".clases.DatosAsignatura"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".clases.DatosAsignatura"
-            android:label="Datos Asignatura"
-            android:parentActivityName=".clases.Asignaturas"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".clases.Asignaturas"
-            android:label="Menú Asignaturas"
-            android:parentActivityName=".clases.Configuracion"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".clases.Configuracion"
+            android:name=".presentation.teacher.management.subjects.Configuracion"
             android:label="Asignaturas"
-            android:launchMode="singleTask"
-            android:parentActivityName=".clases.MainActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".presentation.teacher.management.ManagementActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".clases.MainActivity"
-            android:launchMode="singleTask"
+            android:name=".presentation.MainActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".presentation.SplashScreenActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>

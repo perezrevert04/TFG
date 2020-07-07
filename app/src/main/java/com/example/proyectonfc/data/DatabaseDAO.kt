@@ -1,8 +1,8 @@
 package com.example.proyectonfc.data
 
-import com.example.proyectonfc.logic.Person
-import com.example.proyectonfc.logic.Report
-import com.example.proyectonfc.logic.ReportFilter
+import com.example.proyectonfc.model.Person
+import com.example.proyectonfc.model.Report
+import com.example.proyectonfc.model.ReportFilter
 
 interface DatabaseDAO {
 

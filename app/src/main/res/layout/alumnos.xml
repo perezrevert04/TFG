@@ -1,127 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout8"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondo"
-    tools:context=".Alumnos">
+    tools:context=".Alumnos" >
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddStudent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/colorSecondary"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_add_24" />
+
+    <ListView
+        android:id="@+id/listaAlumnos"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/corners2"
-        android:backgroundTint="#70FFFFFF"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:text="Alumno seleccionado: "
+        android:layout_height="0dp"
+        android:background="#70FFFFFF"
         android:textColor="#31588B"
-        android:fontFamily="arial"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/alumnoSeleccionado"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:textColor="#31588B"
-        android:layout_marginLeft="170dp"
-        android:layout_marginTop="20dp" />
-
-    <androidx.appcompat.widget.Toolbar
-        android:layout_marginTop="70dp"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        app:elevation="4dp"
-        android:background="@drawable/corners2"
-        android:backgroundTint="#70FFFFFF"
-        android:minHeight="?attr/actionBarSize"
-        android:radius="20dp"
-        android:theme="?attr/actionBarTheme"
-        android:layout_centerHorizontal="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ALUMNOS"
         android:textSize="22sp"
-        android:textColor="#31588B"
         android:textStyle="bold"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/corners"
-        android:layout_marginTop="70dp"
-        android:gravity="center" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:orientation="vertical">
-
-        <ListView
-            android:id="@+id/listaAlumnos"
-            android:layout_width="match_parent"
-            android:layout_height="330dp"
-            android:layout_marginTop="130dp"
-            android:background="#70FFFFFF"
-            android:textColor="#31588B"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <Button
-                    android:id="@+id/buttonBorrar"
-                    android:layout_width="150dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/boton_redondo"
-                    android:textColor="#31588B"
-                    android:text="Borrar"
-                    android:textSize="21dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="20dp"
-                android:layout_height="wrap_content">
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true">
-
-                <Button
-                    android:id="@+id/buttonVer"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/boton_redondo"
-                    android:textColor="#31588B"
-                    android:text="Ver"
-                    android:textSize="21dp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-
-</RelativeLayout>
+    </ListView>
+</androidx.constraintlayout.widget.ConstraintLayout>
