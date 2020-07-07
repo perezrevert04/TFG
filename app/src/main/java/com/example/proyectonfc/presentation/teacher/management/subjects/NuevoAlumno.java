@@ -11,6 +11,7 @@ import android.nfc.Tag;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,9 +21,9 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
-import com.example.proyectonfc.util.nfc.Nfc;
-import com.example.proyectonfc.presentation.CaptureActivityPortrait;
 import com.example.proyectonfc.model.CardInfo;
+import com.example.proyectonfc.presentation.CaptureActivityPortrait;
+import com.example.proyectonfc.util.nfc.Nfc;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -33,7 +34,7 @@ import java.io.IOException;
 
 public class NuevoAlumno extends AppCompatActivity {
 
-    Button btnAgregar;
+    Button buttonAddStudent;
 
     private TextView tvResult = null;
     private CardInfo ci = null;
@@ -52,13 +53,13 @@ public class NuevoAlumno extends AppCompatActivity {
         setContentView(R.layout.nuevo_alumno);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        text = (TextView) findViewById(R.id.text);
+        text = findViewById(R.id.text);
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
         dataBase = new DataBase(getApplicationContext());
 
 
-        btnAgregar = (Button) findViewById(R.id.btnAgregar);
-        btnAgregar.setOnClickListener(v -> {
+        buttonAddStudent = findViewById(R.id.buttonAddStudent);
+        buttonAddStudent.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), Alumnos.class);
             try {
                 if (studentId == null || nombre == null) {
@@ -68,7 +69,7 @@ public class NuevoAlumno extends AppCompatActivity {
                     builder.setNeutralButton("¡Entendido!", null);
                     AlertDialog dialog = builder.create();
                     dialog.show();
-                }else {
+                } else {
                     dataBase.agregarAlumno(asignatura + studentId, dni, nombre);
                     Toast.makeText(getApplicationContext(), "ALUMNO AGREGADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
                     intent.putExtra("ASIGNATURA", asignatura );
@@ -77,12 +78,7 @@ public class NuevoAlumno extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(NuevoAlumno.this);
                 builder.setTitle("El alumno con Identificador: " + studentId + " ya está dado de alta.");
                 builder.setMessage("");
-                builder.setNeutralButton("¡Entendido!", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        onBackPressed();
-                    }
-                });
+                builder.setNeutralButton("¡Entendido!", (dialog, which) -> onBackPressed());
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }
@@ -177,7 +173,13 @@ public class NuevoAlumno extends AppCompatActivity {
 
             }
 
-            runOnUiThread(() -> tvResult.setText(builder.toString()));
+            runOnUiThread(() -> {
+                ImageView qrCode = findViewById(R.id.imageView6);
+                qrCode.setVisibility(View.INVISIBLE);
+                ImageView checkQr = findViewById(R.id.imageViewCheckQR);
+                checkQr.setVisibility(View.VISIBLE);
+                tvResult.setText(builder.toString());
+            });
         }).start();
     }
 
@@ -214,9 +216,14 @@ public class NuevoAlumno extends AppCompatActivity {
         String action = intent.getAction();
 
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action) || NfcAdapter.ACTION_TECH_DISCOVERED.equals(action) || NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
-            Tag tag = (Tag) intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             studentId = Nfc.tagToString(tag);
             text.setText(studentId);
+
+            ImageView qrCode = findViewById(R.id.imageView10);
+            qrCode.setVisibility(View.INVISIBLE);
+            ImageView checkNfc = findViewById(R.id.imageViewCheckNfc);
+            checkNfc.setVisibility(View.VISIBLE);
         }
     }
 
