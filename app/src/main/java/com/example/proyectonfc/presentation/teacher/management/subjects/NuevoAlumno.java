@@ -174,7 +174,7 @@ public class NuevoAlumno extends AppCompatActivity {
             }
 
             runOnUiThread(() -> {
-                ImageView qrCode = findViewById(R.id.imageView6);
+                ImageView qrCode = findViewById(R.id.imageView10);
                 qrCode.setVisibility(View.INVISIBLE);
                 ImageView checkQr = findViewById(R.id.imageViewCheckQR);
                 checkQr.setVisibility(View.VISIBLE);
@@ -220,8 +220,8 @@ public class NuevoAlumno extends AppCompatActivity {
             studentId = Nfc.tagToString(tag);
             text.setText(studentId);
 
-            ImageView qrCode = findViewById(R.id.imageView10);
-            qrCode.setVisibility(View.INVISIBLE);
+            ImageView nfc = findViewById(R.id.imageView6);
+            nfc.setVisibility(View.INVISIBLE);
             ImageView checkNfc = findViewById(R.id.imageViewCheckNfc);
             checkNfc.setVisibility(View.VISIBLE);
         }

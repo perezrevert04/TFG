@@ -79,7 +79,7 @@
         app:srcCompat="@drawable/ic_qr_code_scanner_24px" />
 
     <ImageView
-        android:id="@+id/imageViewCheckQR"
+        android:id="@+id/imageViewCheckNfc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
@@ -89,7 +89,7 @@
         app:srcCompat="@drawable/ic_baseline_check_box_48" />
 
     <ImageView
-        android:id="@+id/imageViewCheckNfc"
+        android:id="@+id/imageViewCheckQR"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
