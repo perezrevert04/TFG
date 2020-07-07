@@ -38,11 +38,13 @@
         <activity
             android:name=".presentation.teacher.management.subjects.SubjectDataActivity"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:parentActivityName=".presentation.teacher.management.subjects.Configuracion" />
         <activity
             android:name=".presentation.teacher.management.ManagementActivity"
             android:label="Mis datos"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:parentActivityName=".presentation.MainActivity" />
         <activity
             android:name=".presentation.student.ManageStudentDataActivity"
@@ -73,11 +75,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.management.consults.ReportDataActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".presentation.teacher.management.consults.ShowReportsActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
             android:name=".presentation.teacher.management.consults.ReportFilterActivity"
             android:label="Filtrar"
+            android:screenOrientation="portrait"
             android:parentActivityName=".presentation.teacher.management.consults.ShowReportsActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
