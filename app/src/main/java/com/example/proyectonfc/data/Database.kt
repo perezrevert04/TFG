@@ -68,7 +68,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     }
 
     override fun removeLinkedPerson(): Boolean {
-        TODO("Not yet implemented")
+        return writableDatabase.delete(TABLE_LINKED_PERSON, null, null) > 0
     }
 
     override fun addReport(report: Report): Boolean {

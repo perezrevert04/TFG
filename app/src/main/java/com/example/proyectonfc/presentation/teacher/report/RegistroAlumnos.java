@@ -102,12 +102,11 @@ public class RegistroAlumnos extends AppCompatActivity {
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        /* Todo: descomentar estas líneas */
-//        if (nfcAdapter == null) {
-//            Toast.makeText(this, "No NFC", Toast.LENGTH_SHORT).show();
-//            finish();
-//            return;
-//        }
+        if (nfcAdapter == null) {
+            Toast.makeText(this, "No NFC", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),0);
 
