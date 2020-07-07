@@ -1,6 +1,5 @@
 package com.example.proyectonfc.presentation.teacher.management.subjects;
 
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,29 +8,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
-import com.example.proyectonfc.model.Asignatura;
-
-import java.util.ArrayList;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class DatosAlumno extends AppCompatActivity {
 
     private Button buttonEditar;
     DataBase dataBase;
-    ArrayList<String> listaAsignaturas;
-    ArrayList<Asignatura> asignaturasList;
     private String identificador;
     private String dni;
-    private String nombre;
     private String alumno;
 
     private TextView textAlumno;
     private TextView textIdentificador;
     private TextView textDni;
-    private TextView textNombre;
 
     private String asignatura;
     private String dniAlumno;
@@ -49,39 +41,26 @@ public class DatosAlumno extends AppCompatActivity {
 
         dataBase = new DataBase(getApplicationContext());
 
-
-
-        //Intent intent = new Intent(DatosAsignatura.this.getApplicationContext(), DatosAsignatura.class);
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
         dniAlumno = getIntent().getStringExtra( "DNIALUMNO");
 
+        setTitle("Alumno de " + asignatura);
+
         consultarListaAlumnos();
 
-
-
-
-
-        buttonEditar = (Button) findViewById(R.id.buttonEditar);
-        buttonEditar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(v.getContext(), EditarAlumno.class);
-                intent.putExtra("ASIGNATURA", asignatura );
-                intent.putExtra("DNIALUMNO", dniAlumno );
-                intent.putExtra("IDENTIFICADORALUMNO", identificador );
-                startActivityForResult(intent, 0);
-            }
-
+        buttonEditar = findViewById(R.id.buttonEditStudent);
+        buttonEditar.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), EditarAlumno.class);
+            intent.putExtra("ASIGNATURA", asignatura );
+            intent.putExtra("DNIALUMNO", dniAlumno );
+            intent.putExtra("IDENTIFICADORALUMNO", identificador );
+            startActivity(intent);
         });
-
 
     }
 
     private void consultarListaAlumnos() {
         SQLiteDatabase db=dataBase.getReadableDatabase();
-
-
 
         //select * from usuarios
         Cursor cursor=db.rawQuery("SELECT * FROM ALUMNO WHERE dni = "+"'"+dniAlumno+"'", null);
@@ -89,22 +68,16 @@ public class DatosAlumno extends AppCompatActivity {
         while (cursor.moveToNext()){
             identificador = cursor.getString(0);
             dni = cursor.getString(1);
-            nombre = cursor.getString(2);
             alumno = cursor.getString(2);
-
         }
 
-        textIdentificador = (TextView) findViewById(R.id.textIdentificador);
+        textIdentificador = findViewById(R.id.textViewStudentId);
         textIdentificador.setText(identificador);
-        textDni = (TextView) findViewById(R.id.textDni);
+        textDni = findViewById(R.id.textViewStudentDni);
         textDni.setText(dni);
-        textNombre = (TextView) findViewById(R.id.textNombre);
-        textNombre.setText(nombre);
-        textAlumno = (TextView) findViewById(R.id.textAlumno);
+        textAlumno = findViewById(R.id.textView60);
         textAlumno.setText(alumno);
 
-
     }
-
 
 }
