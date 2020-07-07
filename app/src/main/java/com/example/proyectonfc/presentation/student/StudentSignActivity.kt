@@ -6,7 +6,9 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
+import com.example.proyectonfc.model.Person
 import com.example.proyectonfc.util.biometric.Biometry
 import com.example.proyectonfc.util.nearby.Discover
 import com.example.proyectonfc.util.nearby.NearbyCode
@@ -24,6 +26,8 @@ class StudentSignActivity : AppCompatActivity() {
 
     private var authenticating = false
 
+    private val linked: Person by lazy { (application as Global).linked }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_sign)
@@ -33,8 +37,7 @@ class StudentSignActivity : AppCompatActivity() {
         activeList.setOnItemClickListener { _: AdapterView<*>?, _: View, pos: Int, _: Long ->
             val keys = ArrayList<String>(discover.map.keys)
             authenticating = true
-            /* TODO: Canviar identificador por el del linked person */
-            biometry.authenticate { discover.sendPayload(keys[pos], "3967203186") }
+            biometry.authenticate { discover.sendPayload(keys[pos], linked.identifier) }
         }
     }
 
