@@ -26,6 +26,7 @@ public class Alumnos extends AppCompatActivity {
     private String dni;
     ArrayList<String> listaAlumnos;
     ArrayList<Alumno> alumnosList;
+    ArrayList<String> identifiers;
 
     @Override
     public void onResume() {
@@ -61,7 +62,7 @@ public class Alumnos extends AppCompatActivity {
             Intent intent = new Intent(view.getContext(), DatosAlumno.class);
             consultarDniAlumno();
             intent.putExtra("ASIGNATURA", asignatura );
-            intent.putExtra("DNIALUMNO", dni );
+            intent.putExtra("StudentId", identifiers.get(position) );
             startActivity(intent);
         });
 
@@ -87,10 +88,11 @@ public class Alumnos extends AppCompatActivity {
     }
 
     private void consultarListaAlumnos() {
-        SQLiteDatabase db=dataBase.getReadableDatabase();
+        SQLiteDatabase db = dataBase.getReadableDatabase();
 
         Alumno alumno;
-        alumnosList =new ArrayList<>();
+        alumnosList = new ArrayList<>();
+        identifiers = new ArrayList<>();
         //select * from usuarios
 
         Cursor cursor=db.rawQuery("SELECT * FROM ALUMNO WHERE id LIKE"+"'"+asignatura+"%' " + "ORDER BY nombre", null);
@@ -100,6 +102,7 @@ public class Alumnos extends AppCompatActivity {
             alumno.setNombre(cursor.getString(2));
 
             alumnosList.add(alumno);
+            identifiers.add(cursor.getString(0));
         }
 
         obtenerLista();
@@ -120,7 +123,6 @@ public class Alumnos extends AppCompatActivity {
 
         while (cursor.moveToNext()){
             alumno2 = new Alumno();
-            alumno2.setDni(cursor.getString(1));
         }
 
         dni = alumno2.getDni();

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -18,7 +17,6 @@ public class DatosAlumno extends AppCompatActivity {
     private Button buttonEditar;
     DataBase dataBase;
     private String identificador;
-    private String dni;
     private String alumno;
 
     private TextView textAlumno;
@@ -26,7 +24,9 @@ public class DatosAlumno extends AppCompatActivity {
     private TextView textDni;
 
     private String asignatura;
+    private String studentId;
     private String dniAlumno;
+
 
     @Override
     public void onResume() {
@@ -42,7 +42,7 @@ public class DatosAlumno extends AppCompatActivity {
         dataBase = new DataBase(getApplicationContext());
 
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
-        dniAlumno = getIntent().getStringExtra( "DNIALUMNO");
+        studentId = getIntent().getStringExtra( "StudentId");
 
         setTitle("Alumno de " + asignatura);
 
@@ -54,27 +54,28 @@ public class DatosAlumno extends AppCompatActivity {
             intent.putExtra("ASIGNATURA", asignatura );
             intent.putExtra("DNIALUMNO", dniAlumno );
             intent.putExtra("IDENTIFICADORALUMNO", identificador );
+            intent.putExtra("StudentId", studentId );
             startActivity(intent);
         });
 
     }
 
     private void consultarListaAlumnos() {
-        SQLiteDatabase db=dataBase.getReadableDatabase();
+        SQLiteDatabase db = dataBase.getReadableDatabase();
 
         //select * from usuarios
-        Cursor cursor=db.rawQuery("SELECT * FROM ALUMNO WHERE dni = "+"'"+dniAlumno+"'", null);
+        Cursor cursor=db.rawQuery("SELECT * FROM ALUMNO WHERE id = "+"'"+studentId+"'", null);
 
         while (cursor.moveToNext()){
             identificador = cursor.getString(0);
-            dni = cursor.getString(1);
+            dniAlumno = cursor.getString(1);
             alumno = cursor.getString(2);
         }
 
         textIdentificador = findViewById(R.id.textViewStudentId);
         textIdentificador.setText(identificador);
         textDni = findViewById(R.id.textViewStudentDni);
-        textDni.setText(dni);
+        textDni.setText(dniAlumno);
         textAlumno = findViewById(R.id.textView60);
         textAlumno.setText(alumno);
 
