@@ -55,7 +55,7 @@ public class Advertise implements NearbyInterface {
     public void start() {
         mConnectionsClient = Nearby.getConnectionsClient(context);
 
-        AdvertisingOptions advertisingOptions = new AdvertisingOptions.Builder().setStrategy( Strategy.P2P_STAR ).build();
+        AdvertisingOptions advertisingOptions = new AdvertisingOptions.Builder().setStrategy( NearbyInterface.STRATEGY ).build();
 
         mConnectionsClient
                 .startAdvertising(nickname, serviceId, connectionLifecycleCallback, advertisingOptions)

@@ -66,7 +66,7 @@ public class Discover implements NearbyInterface {
 
     @Override
     public void start() {
-        DiscoveryOptions discoveryOptions = new DiscoveryOptions.Builder().setStrategy( Strategy.P2P_STAR ).build();
+        DiscoveryOptions discoveryOptions = new DiscoveryOptions.Builder().setStrategy( NearbyInterface.STRATEGY ).build();
         mConnectionsClient
                 .startDiscovery(serviceId, endpointDiscoveryCallback, discoveryOptions)
                 .addOnSuccessListener( (Void unused) -> Log.d(NearbyInterface.LOG, "Buscador iniciado...") )
