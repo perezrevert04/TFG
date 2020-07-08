@@ -23,7 +23,6 @@ public class Alumnos extends AppCompatActivity {
     private ListView Alumnos;
     private String asignatura;
     private String alumno;
-    private String dni;
     ArrayList<String> listaAlumnos;
     ArrayList<Alumno> alumnosList;
     ArrayList<String> identifiers;
@@ -60,7 +59,6 @@ public class Alumnos extends AppCompatActivity {
             alumno = listaAlumnos.get(position);
 
             Intent intent = new Intent(view.getContext(), DatosAlumno.class);
-            consultarDniAlumno();
             intent.putExtra("ASIGNATURA", asignatura );
             intent.putExtra("StudentId", identifiers.get(position) );
             startActivity(intent);
@@ -75,9 +73,7 @@ public class Alumnos extends AppCompatActivity {
             builder.setNegativeButton("No", null);
 
             builder.setPositiveButton("Sí", (dialog, which) -> {
-                listaAlumnos.remove(position);
-                consultarDniAlumno();
-                dataBase.borrarAlumno(asignatura, alumno, dni);
+                dataBase.deleteStudent(identifiers.get(position));
                 updateAdapter();
             });
 
@@ -111,22 +107,6 @@ public class Alumnos extends AppCompatActivity {
     private void obtenerLista() {
         listaAlumnos = new ArrayList<>();
         for(int i=0; i < alumnosList.size(); i ++) listaAlumnos.add(alumnosList.get(i).getNombre());
-    }
-
-    private void consultarDniAlumno() {
-        SQLiteDatabase db=dataBase.getReadableDatabase();
-
-        Alumno alumno2 = null;
-
-        //select * from usuarios
-        Cursor cursor=db.rawQuery("SELECT * FROM ALUMNO WHERE id LIKE"+"'"+asignatura+"%' AND nombre = '"+alumno+"'", null);
-
-        while (cursor.moveToNext()){
-            alumno2 = new Alumno();
-        }
-
-        dni = alumno2.getDni();
-
     }
 
     private void updateAdapter() {

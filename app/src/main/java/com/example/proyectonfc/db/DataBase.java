@@ -73,10 +73,10 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
-    public void borrarAlumno(String identificador, String nombre, String dni) {
+    public void deleteStudent(String id) {
         SQLiteDatabase db = getWritableDatabase();
         if(db!=null) {
-            db.execSQL("DELETE FROM ALUMNO WHERE id LIKE '"+identificador+"%' AND nombre ='"+nombre+"' AND dni='"+dni+"'");
+            db.execSQL("DELETE FROM ALUMNO WHERE id = '"+id+"' ");
             db.close();
         }
     }
