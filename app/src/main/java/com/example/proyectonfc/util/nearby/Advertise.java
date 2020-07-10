@@ -107,10 +107,8 @@ public class Advertise implements NearbyInterface {
     }
 
     @Override
-    public void sendPayload(String endpointId, String msg) {
-        byte[] bytes = msg.getBytes(StandardCharsets.UTF_8);
+    public void sendPayload(String endpointId, byte[] bytes) {
         mConnectionsClient.sendPayload(endpointId, Payload.fromBytes(bytes));
-
         Log.d(NearbyInterface.LOG, "Sending payload");
     }
 }

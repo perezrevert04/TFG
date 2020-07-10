@@ -12,6 +12,7 @@ import com.example.proyectonfc.model.Person
 import com.example.proyectonfc.util.biometric.Biometry
 import com.example.proyectonfc.util.nearby.Discover
 import com.example.proyectonfc.util.nearby.NearbyCode
+import com.example.proyectonfc.util.nearby.NearbyCouple
 import com.google.android.gms.nearby.connection.Payload
 import com.google.android.gms.nearby.connection.PayloadCallback
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate
@@ -20,6 +21,9 @@ import org.jetbrains.anko.toast
 import java.nio.charset.StandardCharsets
 
 class StudentSignActivity : AppCompatActivity() {
+
+    // Para garantizar que desde este dispositivo sólo se da de alta un alumno
+    private val androidId: String by lazy { (application as Global).androidId }
 
     private lateinit var discover: Discover
     private lateinit var biometry: Biometry
@@ -37,7 +41,9 @@ class StudentSignActivity : AppCompatActivity() {
         activeList.setOnItemClickListener { _: AdapterView<*>?, _: View, pos: Int, _: Long ->
             val keys = ArrayList<String>(discover.map.keys)
             authenticating = true
-            biometry.authenticate { discover.sendPayload(keys[pos], linked.identifier) }
+
+            val couple = NearbyCouple(androidId, linked.identifier)
+            biometry.authenticate { discover.sendPayload(keys[pos], couple.serialize()) }
         }
     }
 
