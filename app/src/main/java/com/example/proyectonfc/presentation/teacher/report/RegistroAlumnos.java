@@ -31,6 +31,7 @@ import com.example.proyectonfc.db.DataBase;
 import com.example.proyectonfc.util.biometric.Biometry;
 import com.example.proyectonfc.util.nearby.Advertise;
 import com.example.proyectonfc.util.nearby.NearbyCode;
+import com.example.proyectonfc.util.nearby.NearbyCouple;
 import com.example.proyectonfc.util.nfc.Nfc;
 import com.example.proyectonfc.presentation.MainActivity;
 import com.google.android.gms.nearby.connection.Payload;
@@ -40,6 +41,7 @@ import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class RegistroAlumnos extends AppCompatActivity {
@@ -65,12 +67,16 @@ public class RegistroAlumnos extends AppCompatActivity {
 
     private boolean open = true;
 
+    private List<String> androidIds;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registro_alumnos);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
+
+        androidIds = new ArrayList<>();
 
         biometry = new Biometry(this, "Autenticación", "Identifíquese para cancelar el parte.");
 
@@ -271,9 +277,9 @@ public class RegistroAlumnos extends AppCompatActivity {
         public void onPayloadReceived(@NonNull String endpointId, @NonNull Payload payload) {
             // This always gets the full data of the payload. Will be null if it's not a BYTES payload. You can check the payload type with payload.getType().
             byte[] receivedBytes = payload.asBytes();
-            String identifier = new String(receivedBytes, StandardCharsets.UTF_8);
-            NearbyCode code = add(identifier);
-            advertise.sendPayload(endpointId, code.getMsg());
+            NearbyCouple couple = NearbyCouple.Companion.getCouple(receivedBytes);
+            NearbyCode code = add(couple);
+            advertise.sendPayload(endpointId, code.getMsg().getBytes(StandardCharsets.UTF_8));
         }
 
         @Override
@@ -282,8 +288,10 @@ public class RegistroAlumnos extends AppCompatActivity {
         }
     };
 
-    private NearbyCode add(String identifier) {
+    private NearbyCode add(NearbyCouple couple) {
         NearbyCode code;
+        String identifier = couple.getMsg();
+        String androidId = couple.getAndroidId();
         final DataBase dataBase = new DataBase(getApplicationContext());
 
         SQLiteDatabase db = dataBase.getReadableDatabase();
@@ -296,7 +304,10 @@ public class RegistroAlumnos extends AppCompatActivity {
             code = NearbyCode.UNREGISTERED;
         } else if (listaIdentificadores.contains(identifier)) {
             code = NearbyCode.DUPLICATED;
+        } else if (androidIds.contains(androidId)) {
+            code = NearbyCode.ANDROID_ID;
         } else {
+            androidIds.add(androidId);
             listaIdentificadores.add(identifier);
             code = NearbyCode.SUCCESS;
             text.setText(identifier);

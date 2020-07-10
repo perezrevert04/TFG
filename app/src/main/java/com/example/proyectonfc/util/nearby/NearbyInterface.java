@@ -9,6 +9,6 @@ interface NearbyInterface {
 
     void start();
     void stop();
-    void sendPayload(String endpointId, String msg);
+    void sendPayload(String endpointId, byte[] msg);
 
 }
