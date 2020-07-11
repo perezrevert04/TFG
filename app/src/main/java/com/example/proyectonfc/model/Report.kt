@@ -3,7 +3,7 @@ package com.example.proyectonfc.model
 import java.io.Serializable
 
 class Report(
-        var id: Int = 0,
+        var id: String = "",
         var teacher: String = "",
         var subjectCode: String = "",
         var subjectName: String = "",

@@ -248,7 +248,7 @@ class CreacionParte : AppCompatActivity() {
         return File(path, filename)
     }
 
-    private fun createReport() {
+    private fun createReport(): String {
         val report = Report()
         report.teacher = "${person.name} (${person.dni})"
         report.subjectCode = asignatura
@@ -261,7 +261,10 @@ class CreacionParte : AppCompatActivity() {
         report.attendance = listaIdentificadores.size
         report.comments = comments
 
-        database.addReport(report)
+        val id = database.addReport(report)
+        report.id = id
+
+        return id
     }
 
 }

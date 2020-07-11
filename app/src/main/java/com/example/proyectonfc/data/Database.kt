@@ -71,8 +71,11 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return writableDatabase.delete(TABLE_LINKED_PERSON, null, null) > 0
     }
 
-    override fun addReport(report: Report): Boolean {
+    override fun addReport(report: Report): String {
+        val id: String = System.currentTimeMillis().toString()
+
         val values = ContentValues().apply {
+            put("id", id)
             put("teacher", report.teacher)
             put("subject_code", report.subjectCode)
             put("subject_name", report.subjectName)
@@ -85,7 +88,10 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             put("comments", report.comments)
         }
 
-        return writableDatabase.insert(TABLE_REPORT, null, values) > -1
+        writableDatabase.insert(TABLE_REPORT, null, values)
+
+        return id
+
     }
 
     override fun getReportById(id: String): Report {
@@ -93,7 +99,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         cursor.moveToFirst()
 
         val report = Report()
-        report.id = cursor.getInt(0)
+        report.id = cursor.getString(0)
         report.teacher = cursor.getString(1)
         report.subjectCode = cursor.getString(2)
         report.subjectName = cursor.getString(3)
@@ -119,7 +125,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         while (cursor.moveToNext()) {
             report = Report()
 
-            report.id = cursor.getInt(0)
+            report.id = cursor.getString(0)
             report.teacher = cursor.getString(1)
             report.subjectCode = cursor.getString(2)
             report.subjectName = cursor.getString(3)
@@ -154,7 +160,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         while (cursor.moveToNext()) {
             report = Report()
 
-            report.id = cursor.getInt(0)
+            report.id = cursor.getString(0)
             report.teacher = cursor.getString(1)
             report.subjectCode = cursor.getString(2)
             report.subjectName = cursor.getString(3)
@@ -195,7 +201,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     private fun createReportTable(db: SQLiteDatabase) {
         db.execSQL(
                 "CREATE TABLE $TABLE_REPORT (" +
-                        "_id INTEGER PRIMARY KEY AUTOINCREMENT , " +
+                        "id TEXT PRIMARY KEY , " +
                         "teacher TEXT , " +
                         "subject_code TEXT , " +
                         "subject_name TEXT , " +
