@@ -46,6 +46,7 @@ class Report(
             [${subject.code}]
             ${subject.name}
             (${group}, ${classroom})
+            $date
             
             """.trimIndent()
     }

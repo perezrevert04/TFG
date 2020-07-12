@@ -13,8 +13,10 @@ import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
 import com.example.proyectonfc.clases.AddComment
 import com.example.proyectonfc.db.DataBase
+import com.example.proyectonfc.logic.ReportManager
 import com.example.proyectonfc.model.Person
 import com.example.proyectonfc.model.Report
+import com.example.proyectonfc.model.Student
 import com.example.proyectonfc.util.biometric.Biometry
 import com.lowagie.text.*
 import com.lowagie.text.pdf.PdfPTable
@@ -24,8 +26,6 @@ import kotlinx.android.synthetic.main.activity_creacion_parte.*
 import org.jetbrains.anko.toast
 import java.io.File
 import java.io.FileOutputStream
-import java.text.SimpleDateFormat
-import java.util.*
 
 class CreacionParte : AppCompatActivity() {
 
@@ -39,11 +39,14 @@ class CreacionParte : AppCompatActivity() {
     private lateinit var report: Report
     private lateinit var person: Person
 
+    private lateinit var manager: ReportManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_creacion_parte)
 
         biometry = Biometry(this, title = "Autenticación", subtitle = "Identifíquese para generar el pdf.")
+        manager = ReportManager(this, database)
         getData()
 
         buttonAddComment.setOnClickListener {
@@ -222,7 +225,10 @@ class CreacionParte : AppCompatActivity() {
     }
 
     private fun saveReport() {
-        database.addReport(report)
+        val list = arrayListOf<Student>()
+        list.add(Student(id = "1", dni = "20458644", name = "Carles Perez Revert"))
+        list.add(Student(id = "2", dni = "23414324", name = "Juan Ignacio Delgado Alemany"))
+        manager.saveReport(report, list)
 
         /* TODO: Generar listado de asistencia en XML */
     }
