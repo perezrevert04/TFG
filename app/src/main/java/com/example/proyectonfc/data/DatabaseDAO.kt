@@ -11,10 +11,10 @@ interface DatabaseDAO {
     fun getLinkedPerson(): Person                                 // Obtiene los datos de la persona vinculada con el dispositivo
     fun removeLinkedPerson(): Boolean                             // Elimina a la persona vinculada con el dispositivo
 
-    fun addReport(report: Report): String                         // Añade un nuevo parte de firmas
+    fun addReport(report: Report): Boolean                        // Añade un nuevo parte de firmas
     fun getReportById(id: String): Report                         // Obtiene el parte de firmas con el identificador id
     fun getAllReports(): ArrayList<Report>                        // Obtiene todos los partes de firmas
     fun filterReports(filter: ReportFilter): ArrayList<Report>    // Filtra los partes de firmas
-    fun removeReport(id: String): Boolean                            // Elimina el parte de firmas con el identificador id
+    fun removeReport(id: String): Boolean                         // Elimina el parte de firmas con el identificador id
 
 }

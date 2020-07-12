@@ -32,23 +32,12 @@ class CreacionParte : AppCompatActivity() {
     companion object { const val REQ_CODE = 1213 }
 
     private val database by lazy { (application as Global).database }
-    private lateinit var person: Person
-
-    lateinit var listaIdentificadores: MutableList<String>
-
-    lateinit var asignatura: String
-    lateinit var nombre: String
-    lateinit var titulacion: String
-    lateinit var grupo: String
-    lateinit var curso: String
-    lateinit var gestoria: String
-    lateinit var idioma: String
-    lateinit var duracion: String
-    lateinit var horaInicio: String
-    lateinit var aula: String
-    var comments = ""
 
     private lateinit var biometry: Biometry
+
+    private lateinit var listaIdentificadores: MutableList<String>
+    private lateinit var report: Report
+    private lateinit var person: Person
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +48,7 @@ class CreacionParte : AppCompatActivity() {
 
         buttonAddComment.setOnClickListener {
             val intent = Intent(this, AddComment::class.java)
-            intent.putExtra("comments", comments)
+            intent.putExtra("comments", report.comments)
             startActivityForResult(intent, 1234)
         }
 
@@ -79,7 +68,7 @@ class CreacionParte : AppCompatActivity() {
                 val array: ArrayList<String> = arrayListOf()
                 val database = DataBase(applicationContext)
                 listaIdentificadores.forEach {
-                    database.consultarAlumno(asignatura, it)
+                    database.consultarAlumno(report.subject.code, it)
                     array.add("\n" + database.listDni + " - " + database.listNombre + "\n")
                 }
                 database.close()
@@ -96,53 +85,39 @@ class CreacionParte : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1234 && resultCode == Activity.RESULT_OK) {
-            comments = data?.extras?.getString("comments") ?: ""
-            textViewComments.text = comments
-            textViewEmptyComments.visibility = if (comments.isEmpty()) View.VISIBLE else View.INVISIBLE
+            report.comments = data?.extras?.getString("comments") ?: ""
+            textViewComments.text = report.comments
+            textViewEmptyComments.visibility = if (report.comments.isEmpty()) View.VISIBLE else View.INVISIBLE
         }
     }
 
     private fun getData() {
+
+        report = intent.getSerializableExtra("ReportObject") as Report
         person = database.getLinkedPerson()
-
-        val sdf = SimpleDateFormat("dd/MM/yyyy")
-        textViewFecha.text = sdf.format( Date() )
-
         listaIdentificadores = intent.getStringArrayListExtra("listaIdentificadores")
-        textViewCount.text = listaIdentificadores.size.toString()
 
-        asignatura = intent.getStringExtra("asignatura")
-        nombre = intent.getStringExtra("nombre")
-        textViewSubject.text = "$asignatura: $nombre"
+        val subject = "${report.subject.code}: ${report.subject.name}"
+        val teacher = "${person.name} (${person.dni})"
 
-        textViewTeacher.text = "${person.name} (${person.dni})"
+        textViewFecha.text = report.date
+        textViewCount.text = report.attendance.toString()
+        textViewSubject.text = subject
+        textViewTeacher.text = teacher
+        textViewGroup.text = report.group
+        textViewClassroom.text = report.classroom
+        textViewHour.text = report.hour
+        textViewDuration.text = report.subject.duration
 
-        grupo = intent.getStringExtra("grupo")
-        textViewGroup.text = grupo
-
-        aula = intent.getStringExtra("aula")
-        textViewClassroom.text = aula
-
-        horaInicio = intent.getStringExtra("horaInicio")
-        textViewHour.text = horaInicio
-
-        duracion = intent.getStringExtra("duracion")
-        textViewDuration.text = duracion
-
-        titulacion = intent.getStringExtra("titulacion")
-        curso = intent.getStringExtra("curso")
-        gestoria = intent.getStringExtra("gestoria")
-        idioma = intent.getStringExtra("idioma")
     }
 
     private fun finalizarParte() {
+        saveReport()
+
         try {
-            val sdf = SimpleDateFormat("dd/MM/yyyy")
-            val date = sdf.format(Date())
+            val filename = report.getPdfName()
 
-            val filename = asignatura + "_" + grupo + "_" + date.replace('/', '-') + "_" + horaInicio + "_" + aula + ".pdf"
-
-            generarPdf(filename, sdf.format(Date()))
+            generarPdf(filename, report.date)
 
             val retIntent = Intent()
             retIntent.putExtra("filename", filename)
@@ -177,8 +152,7 @@ class CreacionParte : AppCompatActivity() {
             documento.open()
 
 
-            val font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20f,
-                    Font.BOLD, Color.BLACK)
+            val font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20f, Font.BOLD, Color.BLACK)
             documento.add(Paragraph("     SEGUIMIENTO DE LAS ACTIVIDADES DOCENTES\n\n\n", font))
 
             // Añadimos un titulo con la fuente por defecto.
@@ -187,22 +161,22 @@ class CreacionParte : AppCompatActivity() {
 
             val tablaA = PdfPTable(1)
             tablaA.widthPercentage = 100.00f
-            tablaA.addCell("\nEspacio: $aula\n\n")
+            tablaA.addCell("\nEspacio: ${report.classroom}\n\n")
             documento.add(tablaA)
 
 
             val tablaB = PdfPTable(2)
             tablaB.widthPercentage = 100.00f
-            tablaB.addCell("\nAsignatura: $asignatura-$nombre \nTitulación: $titulacion\nGrupo: $grupo\n\n")
+            tablaB.addCell("\nAsignatura: ${report.subject.code}-${report.subject.name} \nTitulación: ${report.subject.degree}\nGrupo: ${report.group}\n\n")
             tablaB.addCell("\nProfesor: ${person.name}\nDNI: ${person.dni}\n\n")
             val tablaC = PdfPTable(3)
             tablaC.widthPercentage = 100.00f
-            tablaC.addCell("\nCurso/Sem.: $curso\nER Gestora: $gestoria\nIdioma: $idioma\n\n")
-            tablaC.addCell("\nFecha: $date\nHora: $horaInicio\nDuración: $duracion\n\n")
+            tablaC.addCell("\nCurso/Sem.: ${report.subject.schoolYear}\nER Gestora: ${report.subject.department}\nIdioma: ${report.subject.language}\n\n")
+            tablaC.addCell("\nFecha: $date\nHora: ${report.hour}\nDuración: ${report.subject.duration}\n\n")
             tablaC.addCell("Firma: \n\n\n")
             val tablaD = PdfPTable(1)
             tablaD.widthPercentage = 100.00f
-            tablaD.addCell("\nObservaciones: $comments\n\n\n")
+            tablaD.addCell("\nObservaciones: ${report.comments}\n\n\n")
 
             documento.add(tablaB)
             documento.add(tablaC)
@@ -214,9 +188,9 @@ class CreacionParte : AppCompatActivity() {
             // Insertamos una tabla.
             val tabla1 = PdfPTable(3)
             tabla1.widthPercentage = 100.00f
-            tabla1.addCell("IDENTIFICADOR ")
+            tabla1.addCell("Identificador")
             tabla1.addCell("DNI")
-            tabla1.addCell("NOMBRE")
+            tabla1.addCell("Nombre")
 
 
             val tabla2 = PdfPTable(3)
@@ -224,7 +198,7 @@ class CreacionParte : AppCompatActivity() {
 
             val database = DataBase(applicationContext)
             listaIdentificadores.forEach {
-                database.consultarAlumno(asignatura, it)
+                database.consultarAlumno(report.subject.code, it)
                 tabla2.addCell(it)
                 tabla2.addCell(database.listDni)
                 tabla2.addCell(database.listNombre)
@@ -237,7 +211,6 @@ class CreacionParte : AppCompatActivity() {
             toast("No se ha podido crear el archivo pdf")
             Log.e("AppLog", "No se ha podido crear el pdf \n ${e.message}")
         } finally {
-            createReport()
             documento.close()
         }
     }
@@ -248,23 +221,10 @@ class CreacionParte : AppCompatActivity() {
         return File(path, filename)
     }
 
-    private fun createReport(): String {
-        val report = Report()
-        report.teacher = "${person.name} (${person.dni})"
-        report.subjectCode = asignatura
-        report.subjectName = nombre
-        report.group = grupo
-        report.classroom = aula
-        report.date = textViewFecha.text.toString()
-        report.hour = horaInicio
-        report.duration = duracion
-        report.attendance = listaIdentificadores.size
-        report.comments = comments
+    private fun saveReport() {
+        database.addReport(report)
 
-        val id = database.addReport(report)
-        report.id = id
-
-        return id
+        /* TODO: Generar listado de asistencia en XML */
     }
 
 }

@@ -72,7 +72,7 @@ class ShowReportsActivity : AppCompatActivity() {
     private fun showAlert(position: Int) {
         val report = allReports[position]
         val builder = AlertDialog.Builder(this)
-        builder.setTitle( report.subjectCode ).setMessage( "$report\n\n¿Desea eliminar los datos de este parte?" )
+        builder.setTitle( report.subject.code ).setMessage( "$report\n\n¿Desea eliminar los datos de este parte?" )
 
         builder.setNegativeButton("Cancelar") { _, _ -> }
         builder.setPositiveButton("Eliminar") { _, _ ->

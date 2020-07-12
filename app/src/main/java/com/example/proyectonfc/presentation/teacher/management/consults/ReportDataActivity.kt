@@ -29,15 +29,17 @@ class ReportDataActivity : AppCompatActivity() {
     private fun getExtras() {
         val report = intent.getSerializableExtra(EXTRA_REPORT) as Report
 
-        val subject = report.subjectCode + ": " + report.subjectName
-        textViewSubject.text = subject
-        textViewTeacher.text = report.teacher
-        textViewGroup.text = report.group
-        textViewClassroom.text = report.classroom
-        textViewDate.text = report.date
-        textViewHour.text = report.hour
-        textViewDurationRepData.text = report.duration
-        textViewAttendance.text = report.attendance.toString()
-        textViewComments.text = report.comments
+        /* TODO: Arreglar este desaguisado */
+
+//        val subject = report.subjectCode + ": " + report.subjectName
+//        textViewSubject.text = subject
+//        textViewTeacher.text = report.teacher
+//        textViewGroup.text = report.group
+//        textViewClassroom.text = report.classroom
+//        textViewDate.text = report.date
+//        textViewHour.text = report.hour
+//        textViewDurationRepData.text = report.duration
+//        textViewAttendance.text = report.attendance.toString()
+//        textViewComments.text = report.comments
     }
 }

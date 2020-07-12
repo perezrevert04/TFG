@@ -15,6 +15,7 @@ import com.example.proyectonfc.Global;
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
 import com.example.proyectonfc.model.Group;
+import com.example.proyectonfc.model.Report;
 import com.example.proyectonfc.model.Subject;
 
 import java.text.SimpleDateFormat;
@@ -70,8 +71,9 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
             group.setHour( editTextHour.getText().toString() );
             group.setClassroom( editTextClassroom.getText().toString() );
 
-            intent.putExtra("SubjectObject", subject);
-            intent.putExtra("GroupObject", group);
+            Report report = new Report(subject, group);
+
+            intent.putExtra("ReportObject", report);
 
             startActivity(intent);
         });

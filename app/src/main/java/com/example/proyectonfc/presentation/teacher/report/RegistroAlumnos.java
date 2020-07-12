@@ -28,7 +28,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
-import com.example.proyectonfc.model.Group;
+import com.example.proyectonfc.model.Report;
 import com.example.proyectonfc.model.Subject;
 import com.example.proyectonfc.presentation.MainActivity;
 import com.example.proyectonfc.util.biometric.Biometry;
@@ -62,7 +62,7 @@ public class RegistroAlumnos extends AppCompatActivity {
     private List<String> androidIds;
 
     private Subject subject;
-    private Group group;
+    private Report report;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +77,10 @@ public class RegistroAlumnos extends AppCompatActivity {
 
         text = findViewById(R.id.text);
 
-        subject = (Subject) getIntent().getSerializableExtra("SubjectObject");
-        group = (Group) getIntent().getSerializableExtra("GroupObject");
+        report = (Report) getIntent().getSerializableExtra("ReportObject");
+        subject = report.getSubject();
 
-        String nickname = "\n[" + subject.getCode() + "]\n" + subject.getName() + "\n(" + group.getName() + ", " + group.getClassroom() + ")\n";
+        String nickname = report.toString();
         advertise = new Advertise(this, nickname, getApplicationContext().getPackageName(), payloadCallback);
 
         ProgressBar progressBar = findViewById(R.id.progressBar2);
@@ -113,20 +113,8 @@ public class RegistroAlumnos extends AppCompatActivity {
         open = false;
 
         Intent intent = new Intent(this, CreacionParte.class);
-
         intent.putExtra("listaIdentificadores", listaIdentificadores);
-
-        intent.putExtra("asignatura", subject.getCode());
-        intent.putExtra("nombre", subject.getName());
-        intent.putExtra("titulacion", subject.getDegree());
-        intent.putExtra("grupo", group.getName());
-        intent.putExtra("curso", subject.getSchoolYear());
-        intent.putExtra("gestoria", subject.getDepartment());
-        intent.putExtra("idioma", subject.getLanguage());
-        intent.putExtra("duracion", subject.getDuration());
-        intent.putExtra("horaInicio", group.getHour());
-        intent.putExtra("aula", group.getClassroom());
-
+        intent.putExtra("ReportObject", report);
         startActivityForResult(intent, CreacionParte.REQ_CODE);
     }
 
@@ -203,6 +191,8 @@ public class RegistroAlumnos extends AppCompatActivity {
         open = true;
     }
 
+    /* TODO: ¿¿¿ Se pueden dar condiciones de carrera entre NFC y Nearby ??? */
+
     /*** INICIO LECTOR NFC ***/
 
     @Override
@@ -245,6 +235,7 @@ public class RegistroAlumnos extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), NearbyCode.DUPLICATED.getMsg(), Toast.LENGTH_SHORT).show();
             } else {
                 listaIdentificadores.add(studentId);
+                report.increaseAttendance();
                 text.setText(studentId);
                 Toast.makeText(getApplicationContext(), NearbyCode.SUCCESS.getMsg(), Toast.LENGTH_SHORT).show();
             }
@@ -296,6 +287,7 @@ public class RegistroAlumnos extends AppCompatActivity {
         } else {
             androidIds.add(androidId);
             listaIdentificadores.add(identifier);
+            report.increaseAttendance();
             code = NearbyCode.SUCCESS;
             text.setText(identifier);
         }
