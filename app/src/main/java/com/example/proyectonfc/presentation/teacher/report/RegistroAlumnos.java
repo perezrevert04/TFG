@@ -7,12 +7,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.StrictMode;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -26,19 +23,23 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.proyectonfc.Global;
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
+import com.example.proyectonfc.logic.PdfManager;
+import com.example.proyectonfc.model.Person;
+import com.example.proyectonfc.model.Report;
+import com.example.proyectonfc.model.Subject;
+import com.example.proyectonfc.presentation.MainActivity;
 import com.example.proyectonfc.util.biometric.Biometry;
 import com.example.proyectonfc.util.nearby.Advertise;
 import com.example.proyectonfc.util.nearby.NearbyCode;
 import com.example.proyectonfc.util.nearby.NearbyCouple;
 import com.example.proyectonfc.util.nfc.Nfc;
-import com.example.proyectonfc.presentation.MainActivity;
 import com.google.android.gms.nearby.connection.Payload;
 import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 
-import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,25 +50,19 @@ public class RegistroAlumnos extends AppCompatActivity {
     private Advertise advertise;
 
     private ArrayList<String> listaIdentificadores = new ArrayList<>();
+
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
     private TextView text;
-    private String asignatura;
-    private String nombre;
-    private String titulacion;
-    private String grupo;
-    private String curso;
-    private String gestoria;
-    private String idioma;
-    private String duracion;
-    private String horaInicio;
-    private String aula;
 
     private Biometry biometry;
 
     private boolean open = true;
 
     private List<String> androidIds;
+
+    private Subject subject;
+    private Report report;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,18 +77,10 @@ public class RegistroAlumnos extends AppCompatActivity {
 
         text = findViewById(R.id.text);
 
-        asignatura = getIntent().getStringExtra( "ASIGNATURA");
-        nombre = getIntent().getStringExtra( "NOMBRE");
-        titulacion = getIntent().getStringExtra( "TITULACION");
-        grupo = getIntent().getStringExtra( "GRUPO");
-        curso = getIntent().getStringExtra( "CURSO");
-        gestoria = getIntent().getStringExtra( "GESTORA");
-        idioma = getIntent().getStringExtra( "IDIOMA");
-        duracion = getIntent().getStringExtra( "DURACION");
-        horaInicio = getIntent().getStringExtra( "HORAINICIO");
-        aula = getIntent().getStringExtra( "AULA");
+        report = (Report) getIntent().getSerializableExtra("ReportObject");
+        subject = report.getSubject();
 
-        String nickname = "\n[" + asignatura + "]\n" + nombre + "\n(" + grupo + ", " + aula + ")\n";
+        String nickname = report.toString();
         advertise = new Advertise(this, nickname, getApplicationContext().getPackageName(), payloadCallback);
 
         ProgressBar progressBar = findViewById(R.id.progressBar2);
@@ -126,20 +113,8 @@ public class RegistroAlumnos extends AppCompatActivity {
         open = false;
 
         Intent intent = new Intent(this, CreacionParte.class);
-
         intent.putExtra("listaIdentificadores", listaIdentificadores);
-
-        intent.putExtra("asignatura", asignatura);
-        intent.putExtra("nombre", nombre);
-        intent.putExtra("titulacion", titulacion);
-        intent.putExtra("grupo", grupo);
-        intent.putExtra("curso", curso);
-        intent.putExtra("gestoria", gestoria);
-        intent.putExtra("idioma", idioma);
-        intent.putExtra("duracion", duracion);
-        intent.putExtra("horaInicio", horaInicio);
-        intent.putExtra("aula", aula);
-
+        intent.putExtra("ReportObject", report);
         startActivityForResult(intent, CreacionParte.REQ_CODE);
     }
 
@@ -155,23 +130,11 @@ public class RegistroAlumnos extends AppCompatActivity {
             finish();
 
             if (data != null) {
-                String filename = data.getStringExtra("filename");
-                openFile(filename);
+                Person teacher = ((Global) getApplication()).getLinked();
+                PdfManager pdfManager = new PdfManager(report, teacher);
+                pdfManager.open(this);
             }
         }
-    }
-
-    private void openFile(String filename) {
-        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-        StrictMode.setVmPolicy(builder.build());
-
-        String path = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "ParteFirmasUPV").getPath();
-        File fileIn = new File(path + "/" + filename);
-        Uri uri = Uri.fromFile(fileIn);
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(uri, "application/pdf");
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
     }
 
     @Override
@@ -216,6 +179,8 @@ public class RegistroAlumnos extends AppCompatActivity {
         open = true;
     }
 
+    /* TODO: ¿¿¿ Se pueden dar condiciones de carrera entre NFC y Nearby ??? */
+
     /*** INICIO LECTOR NFC ***/
 
     @Override
@@ -250,7 +215,7 @@ public class RegistroAlumnos extends AppCompatActivity {
         SQLiteDatabase db=dataBase.getReadableDatabase();
 
         //select * from usuarios
-        Cursor cursor=db.rawQuery("SELECT * FROM ALUMNO WHERE id = '" + asignatura+studentId + "'", null);
+        Cursor cursor=db.rawQuery("SELECT * FROM ALUMNO WHERE id = '" + subject.getCode()+studentId + "'", null);
 
         if (cursor.getCount() == 1) {
 
@@ -258,6 +223,7 @@ public class RegistroAlumnos extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), NearbyCode.DUPLICATED.getMsg(), Toast.LENGTH_SHORT).show();
             } else {
                 listaIdentificadores.add(studentId);
+                report.increaseAttendance();
                 text.setText(studentId);
                 Toast.makeText(getApplicationContext(), NearbyCode.SUCCESS.getMsg(), Toast.LENGTH_SHORT).show();
             }
@@ -296,7 +262,7 @@ public class RegistroAlumnos extends AppCompatActivity {
 
         SQLiteDatabase db = dataBase.getReadableDatabase();
         //select * from usuarios
-        Cursor cursor = db.rawQuery("SELECT * FROM ALUMNO WHERE id = '" + asignatura+identifier + "'", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM ALUMNO WHERE id = '" + subject.getCode()+identifier + "'", null);
 
         if (!open) {
             code = NearbyCode.CLOSING;
@@ -309,12 +275,14 @@ public class RegistroAlumnos extends AppCompatActivity {
         } else {
             androidIds.add(androidId);
             listaIdentificadores.add(identifier);
+            report.increaseAttendance();
             code = NearbyCode.SUCCESS;
             text.setText(identifier);
         }
 
         return code;
     }
+
     /*** FIN NEARBY ADVERTISE ***/
 
 }

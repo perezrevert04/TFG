@@ -6,193 +6,319 @@
     android:layout_height="match_parent"
     tools:context=".presentation.teacher.management.consults.ReportDataActivity">
 
-    <TextView
-        android:id="@+id/textViewSubject"
-        style="@style/Title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="TextView"
-        android:textAlignment="center"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonGeneratePdf"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/textView15"
-        style="@style/Label"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Profesor:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSubject" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textViewTeacher"
-        style="@style/Value"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        android:textAlignment="textEnd"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView15"
-        app:layout_constraintTop_toTopOf="@+id/textView15" />
+            <View
+                android:id="@+id/view3"
+                style="@style/Divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/textViewTeacher"
+                app:layout_constraintStart_toStartOf="@+id/textView19"
+                app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
-    <TextView
-        android:id="@+id/textViewGroup"
-        style="@style/Value"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textAlignment="textEnd"
-        app:layout_constraintEnd_toEndOf="@+id/textViewTeacher"
-        app:layout_constraintStart_toEndOf="@+id/textView20"
-        app:layout_constraintTop_toTopOf="@+id/textView20" />
+            <View
+                android:id="@+id/view4"
+                style="@style/Divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/textViewTeacher"
+                app:layout_constraintStart_toStartOf="@+id/textView19"
+                app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
-    <TextView
-        android:id="@+id/textViewClassroom"
-        style="@style/Value"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textAlignment="textEnd"
-        app:layout_constraintEnd_toEndOf="@+id/textViewGroup"
-        app:layout_constraintStart_toEndOf="@+id/textView23"
-        app:layout_constraintTop_toTopOf="@+id/textView23" />
+            <View
+                android:id="@+id/view5"
+                style="@style/Divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/textViewTeacher"
+                app:layout_constraintStart_toStartOf="@+id/textView19"
+                app:layout_constraintTop_toBottomOf="@+id/textView28" />
 
-    <TextView
-        android:id="@+id/textViewDate"
-        style="@style/Value"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textAlignment="textEnd"
-        app:layout_constraintEnd_toEndOf="@+id/textViewClassroom"
-        app:layout_constraintStart_toEndOf="@+id/textView26"
-        app:layout_constraintTop_toTopOf="@+id/textView26" />
+            <View
+                android:id="@+id/view6"
+                style="@style/Divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/textViewTeacher"
+                app:layout_constraintStart_toStartOf="@+id/textView19"
+                app:layout_constraintTop_toBottomOf="@+id/textView31" />
 
-    <TextView
-        android:id="@+id/textViewHour"
-        style="@style/Value"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textAlignment="textEnd"
-        app:layout_constraintEnd_toEndOf="@+id/textViewDate"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView29"
-        app:layout_constraintTop_toTopOf="@+id/textView29" />
+            <View
+                android:id="@+id/view7"
+                style="@style/Divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/textViewTeacher"
+                app:layout_constraintStart_toStartOf="@+id/textView19"
+                app:layout_constraintTop_toBottomOf="@+id/textView35" />
 
-    <TextView
-        android:id="@+id/textViewDurationRepData"
-        style="@style/Value"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textAlignment="textEnd"
-        app:layout_constraintEnd_toEndOf="@+id/textViewHour"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textViewDuration"
-        app:layout_constraintTop_toTopOf="@+id/textViewDuration" />
+            <View
+                android:id="@+id/view8"
+                style="@style/Divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/textViewTeacher"
+                app:layout_constraintStart_toStartOf="@+id/textView19"
+                app:layout_constraintTop_toBottomOf="@+id/textView38" />
 
-    <TextView
-        android:id="@+id/textViewAttendance"
-        style="@style/Value"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textAlignment="textEnd"
-        app:layout_constraintEnd_toEndOf="@+id/textViewDurationRepData"
-        app:layout_constraintStart_toEndOf="@+id/textView34"
-        app:layout_constraintTop_toTopOf="@+id/textView34" />
+            <TextView
+                android:id="@+id/textViewComments"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@+id/view8"
+                app:layout_constraintStart_toStartOf="@+id/textView40"
+                app:layout_constraintTop_toBottomOf="@+id/textView40" />
 
-    <TextView
-        android:id="@+id/textView20"
-        style="@style/Label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Grupo:"
-        app:layout_constraintStart_toStartOf="@+id/textView15"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTeacher" />
+            <TextView
+                android:id="@+id/textViewSubject"
+                style="@style/Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="TextViewSubject"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView23"
-        style="@style/Label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Aula:"
-        app:layout_constraintStart_toStartOf="@+id/textView20"
-        app:layout_constraintTop_toBottomOf="@+id/textViewGroup" />
+            <TextView
+                android:id="@+id/textView19"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:text="Profesor:"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewSubject" />
 
-    <TextView
-        android:id="@+id/textView26"
-        style="@style/Label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Fecha:"
-        app:layout_constraintStart_toStartOf="@+id/textView23"
-        app:layout_constraintTop_toBottomOf="@+id/textViewClassroom" />
+            <TextView
+                android:id="@+id/textViewTeacher"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="textViewTeacher"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView19"
+                app:layout_constraintTop_toTopOf="@+id/textView19" />
 
-    <TextView
-        android:id="@+id/textView29"
-        style="@style/Label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Hora:"
-        app:layout_constraintStart_toStartOf="@+id/textView26"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDate" />
+            <TextView
+                android:id="@+id/textView22"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Grupo: "
+                app:layout_constraintStart_toStartOf="@+id/textView19"
+                app:layout_constraintTop_toBottomOf="@+id/view2" />
 
-    <TextView
-        android:id="@+id/textViewDuration"
-        style="@style/Label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Duración:"
-        app:layout_constraintStart_toStartOf="@+id/textView29"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHour" />
+            <TextView
+                android:id="@+id/textViewGroup"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="textViewGroup"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="@+id/view2"
+                app:layout_constraintStart_toEndOf="@+id/textView22"
+                app:layout_constraintTop_toTopOf="@+id/textView22" />
 
-    <TextView
-        android:id="@+id/textView34"
-        style="@style/Label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Asistencia total:"
-        app:layout_constraintStart_toStartOf="@+id/textViewDuration"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDurationRepData" />
+            <TextView
+                android:id="@+id/textView25"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Aula: "
+                app:layout_constraintStart_toStartOf="@+id/textView22"
+                app:layout_constraintTop_toBottomOf="@+id/view3" />
 
-    <TextView
-        android:id="@+id/textViewComments"
-        style="@style/Value"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewAttendance"
-        app:layout_constraintStart_toStartOf="@+id/textView34"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAttendance" />
+            <TextView
+                android:id="@+id/textViewClassroom"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="TextViewClassroom"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="@+id/view3"
+                app:layout_constraintStart_toEndOf="@+id/textView25"
+                app:layout_constraintTop_toTopOf="@+id/textView25" />
+
+            <TextView
+                android:id="@+id/textView28"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Fecha: "
+                app:layout_constraintStart_toStartOf="@+id/textView25"
+                app:layout_constraintTop_toBottomOf="@+id/view4" />
+
+            <TextView
+                android:id="@+id/textViewDate"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="textViewDate"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="@+id/view4"
+                app:layout_constraintStart_toEndOf="@+id/textView28"
+                app:layout_constraintTop_toTopOf="@+id/textView28" />
+
+            <TextView
+                android:id="@+id/textView31"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Hora: "
+                app:layout_constraintStart_toStartOf="@+id/textView28"
+                app:layout_constraintTop_toBottomOf="@+id/view5" />
+
+            <TextView
+                android:id="@+id/textViewHour"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="TextViewHour"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="@+id/view5"
+                app:layout_constraintStart_toEndOf="@+id/textView31"
+                app:layout_constraintTop_toTopOf="@+id/textView31" />
+
+            <TextView
+                android:id="@+id/textView35"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Duración: "
+                app:layout_constraintStart_toStartOf="@+id/textView31"
+                app:layout_constraintTop_toBottomOf="@+id/view6" />
+
+            <TextView
+                android:id="@+id/textViewDuration"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="textViewDuration"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="@+id/view6"
+                app:layout_constraintStart_toEndOf="@+id/textView35"
+                app:layout_constraintTop_toTopOf="@+id/textView35" />
+
+            <TextView
+                android:id="@+id/textView38"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Asistencia total: "
+                app:layout_constraintStart_toStartOf="@+id/textView35"
+                app:layout_constraintTop_toBottomOf="@+id/view7" />
+
+            <TextView
+                android:id="@+id/textViewCount"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="textViewCount"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="@+id/view7"
+                app:layout_constraintStart_toEndOf="@+id/textView38"
+                app:layout_constraintTop_toTopOf="@+id/textView38" />
+
+            <TextView
+                android:id="@+id/textView40"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Observaciones:"
+                app:layout_constraintStart_toStartOf="@+id/textView38"
+                app:layout_constraintTop_toBottomOf="@+id/view8" />
+
+            <View
+                android:id="@+id/view2"
+                style="@style/Divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/textViewTeacher"
+                app:layout_constraintStart_toStartOf="@+id/textView19"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTeacher" />
+
+            <TextView
+                android:id="@+id/textViewEmptyComments"
+                style="@style/Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Sin observaciones"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="@+id/view8"
+                app:layout_constraintStart_toEndOf="@+id/textView40"
+                app:layout_constraintTop_toTopOf="@+id/textView40" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <Button
-        android:id="@+id/buttonClose"
-        style="@style/AppTheme.MinimalistSecondaryButton"
+        android:id="@+id/buttonShare"
+        style="@style/AppTheme.PrimaryButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Cerrar"
+        android:drawableRight="@drawable/ic_baseline_share_24"
+        android:paddingLeft="48dp"
+        android:paddingRight="24dp"
+        android:text="Compartir"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textViewAttendance"
-        app:layout_constraintStart_toStartOf="@+id/textView34"
-        app:layout_constraintTop_toBottomOf="@+id/textViewComments"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonGeneratePdf"
+        style="@style/AppTheme.SecondaryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:drawableRight="@drawable/ic_baseline_picture_as_pdf_24"
+        android:paddingLeft="48dp"
+        android:paddingRight="24dp"
+        android:text="Generar pdf"
+        app:layout_constraintBottom_toTopOf="@+id/buttonShare"
+        app:layout_constraintEnd_toEndOf="@+id/buttonShare"
+        app:layout_constraintStart_toStartOf="@+id/buttonShare" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,6 @@ interface DatabaseDAO {
     fun getReportById(id: String): Report                         // Obtiene el parte de firmas con el identificador id
     fun getAllReports(): ArrayList<Report>                        // Obtiene todos los partes de firmas
     fun filterReports(filter: ReportFilter): ArrayList<Report>    // Filtra los partes de firmas
-    fun removeReport(id: Int): Boolean                            // Elimina el parte de firmas con el identificador id
+    fun removeReport(id: String): Boolean                         // Elimina el parte de firmas con el identificador id
 
 }

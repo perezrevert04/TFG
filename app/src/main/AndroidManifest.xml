@@ -26,6 +26,17 @@
         android:resizeableActivity="false"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <provider
+            android:name=".GenericFileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+
         <activity
             android:name=".presentation.teacher.management.subjects.EditGroupActivity"
             android:launchMode="singleTop"
@@ -76,8 +87,7 @@
         <activity
             android:name=".presentation.teacher.management.consults.ReportDataActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".presentation.teacher.management.consults.ShowReportsActivity"
-            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+            android:parentActivityName=".presentation.teacher.management.consults.ShowReportsActivity" />
         <activity
             android:name=".presentation.teacher.management.consults.ReportFilterActivity"
             android:label="Filtrar"

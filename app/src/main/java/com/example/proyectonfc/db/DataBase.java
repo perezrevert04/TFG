@@ -6,7 +6,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.proyectonfc.model.Group;
+import com.example.proyectonfc.model.Student;
 import com.example.proyectonfc.model.Subject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DataBase extends SQLiteOpenHelper {
 
@@ -40,6 +46,28 @@ public class DataBase extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
+    public Subject getSubjectById(String code) {
+        Subject subject = new Subject();
+        subject.setCode(code);
+
+        SQLiteDatabase db = getReadableDatabase();
+        if (db != null) {
+            String sql = "SELECT * FROM ASIGNATURA WHERE id = '" + code + "'";
+            Cursor cursor = db.rawQuery(sql, null);
+
+            while (cursor.moveToNext()) {
+                subject.setName( cursor.getString(1) );
+                subject.setDegree( cursor.getString(2) );
+                subject.setSchoolYear( cursor.getString(3) );
+                subject.setDepartment( cursor.getString(4) );
+                subject.setLanguage( cursor.getString(5) );
+                subject.setDuration( cursor.getString(6) );
+            }
+        }
+
+        return subject;
+    }
+
     public void borrarTodoProfesores(String identificador) {
         SQLiteDatabase db = getWritableDatabase();
         if(db!=null) {
@@ -71,6 +99,27 @@ public class DataBase extends SQLiteOpenHelper {
             db.execSQL("INSERT INTO ALUMNO VALUES('"+identificador+"','"+dni+"','"+nombre+"') ");
             db.close();
         }
+    }
+
+    public Map<String, Student> getAllStudents(String code) {
+        Map<String, Student> map = new HashMap<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        if (db != null) {
+            String sql = "SELECT * FROM ALUMNO WHERE id LIKE '" + code + "%'";
+            Cursor cursor = db.rawQuery(sql, null);
+
+            String id, dni, name;
+            while (cursor.moveToNext()) {
+                 id = cursor.getString(0);
+                 dni = cursor.getString(1);
+                 name = cursor.getString(2);
+
+                 map.put(id, new Student(id, dni, name));
+            }
+        }
+
+        return map;
     }
 
     public void deleteStudent(String id) {
