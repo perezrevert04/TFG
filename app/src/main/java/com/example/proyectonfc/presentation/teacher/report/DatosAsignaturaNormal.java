@@ -11,85 +11,84 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.proyectonfc.Global;
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
-import com.example.proyectonfc.presentation.teacher.report.RegistroAlumnos;
+import com.example.proyectonfc.model.Group;
+import com.example.proyectonfc.model.Subject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class DatosAsignaturaNormal extends AppCompatActivity {
 
-    DataBase dataBase;
-    private String nombre;
-    private String asignatura;
+    private DataBase dataBase;
+    private Subject subject;
+    private Group group;
 
-    TextView textViewDegree;
-    TextView textViewSubject;
-    TextView textViewDepartment;
-    TextView textViewSchoolYear;
-    EditText editTextLanguage;
-    EditText editTextGroup;
-    EditText editTextClassroom;
-    EditText editTextHour;
-    EditText editTextDuration;
+    private TextView textViewDegree;
+    private TextView textViewSubject;
+    private TextView textViewDepartment;
+    private TextView textViewSchoolYear;
+    private EditText editTextLanguage;
+    private EditText editTextGroup;
+    private EditText editTextClassroom;
+    private EditText editTextHour;
+    private EditText editTextDuration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datos_asignatura_normal);
 
-        dataBase = new DataBase(getApplicationContext());
+        dataBase = ((Global) getApplication()).getOldDatabase();
 
-        textViewDegree = (TextView) findViewById(R.id.textViewDegree);
-        textViewSubject = (TextView) findViewById(R.id.textViewSubject);
-        textViewDepartment = (TextView) findViewById(R.id.textViewDepartment);
-        textViewSchoolYear = (TextView) findViewById(R.id.textViewSchoolYear);
-        editTextLanguage = (EditText) findViewById(R.id.editTextLanguage);
-        editTextGroup = (EditText) findViewById(R.id.editTextGroup);
-        editTextClassroom = (EditText) findViewById(R.id.editTextClassroom);
-        editTextHour = (EditText) findViewById(R.id.editTextHour);
-        editTextDuration = (EditText) findViewById(R.id.editTextDuration);
+        textViewDegree = findViewById(R.id.textViewDegree);
+        textViewSubject = findViewById(R.id.textViewSubject);
+        textViewDepartment = findViewById(R.id.textViewDepartment);
+        textViewSchoolYear = findViewById(R.id.textViewSchoolYear);
+        editTextLanguage = findViewById(R.id.editTextLanguage);
+        editTextGroup = findViewById(R.id.editTextGroup);
+        editTextClassroom = findViewById(R.id.editTextClassroom);
+        editTextHour = findViewById(R.id.editTextHour);
+        editTextDuration = findViewById(R.id.editTextDuration);
 
-        asignatura = getIntent().getStringExtra( "ASIGNATURA");
+        String code = getIntent().getStringExtra( "ASIGNATURA");
 
-        consultarListaAsignaturas();
+        getSubject(code);
         consultarHoraMenos();
 
-        Button buttonStart = (Button) findViewById(R.id.buttonStart);
-        buttonStart.setOnClickListener(v -> {
+        Button buttonStart = findViewById(R.id.buttonStart);
+        buttonStart.setOnClickListener( v -> {
 
             Intent intent = new Intent(v.getContext(), RegistroAlumnos.class);
-            intent.putExtra("ASIGNATURA", asignatura );
-            intent.putExtra("NOMBRE", nombre );
-            intent.putExtra("TITULACION", textViewDegree.getText().toString() );
-            intent.putExtra("GRUPO", editTextGroup.getText().toString() );
-            intent.putExtra("CURSO", textViewSchoolYear.getText().toString() );
-            intent.putExtra("GESTORA", textViewDepartment.getText().toString() );
-            intent.putExtra("IDIOMA", editTextLanguage.getText().toString() );
-            intent.putExtra("DURACION", editTextDuration.getText().toString() );
-            intent.putExtra("HORAINICIO", editTextHour.getText().toString() );
-            intent.putExtra("AULA", editTextClassroom.getText().toString() );
+
+            subject.setLanguage( editTextLanguage.getText().toString() );
+            subject.setDuration( editTextDuration.getText().toString() );
+
+            group.setName( editTextGroup.getText().toString() );
+            group.setHour( editTextHour.getText().toString() );
+            group.setClassroom( editTextClassroom.getText().toString() );
+
+            intent.putExtra("SubjectObject", subject);
+            intent.putExtra("GroupObject", group);
+
             startActivity(intent);
         });
 
     }
 
-    private void consultarListaAsignaturas() {
-        SQLiteDatabase db=dataBase.getReadableDatabase();
-        //select * from usuarios
-        Cursor cursor=db.rawQuery("SELECT * FROM ASIGNATURA WHERE id="+"'"+asignatura+"'", null);
+    private void getSubject(String code) {
+        subject = dataBase.getSubjectById(code);
 
-        while (cursor.moveToNext()){
-            nombre = cursor.getString(1);
-            textViewDegree.setText(cursor.getString(2));
-            textViewSchoolYear.setText(cursor.getString(3));
-            textViewDepartment.setText(cursor.getString(4));
-            editTextLanguage.setText(cursor.getString(5));
-            editTextDuration.setText(cursor.getString(6));
-        }
+        textViewDegree.setText( subject.getDegree() );
+        textViewSchoolYear.setText( subject.getSchoolYear() );
+        textViewDepartment.setText( subject.getDepartment() );
+        editTextLanguage.setText( subject.getLanguage() );
+        editTextDuration.setText( subject.getDuration() );
 
-        textViewSubject.setText(asignatura + ": " + nombre);
+        String title = code + ": " + subject.getName();
+        textViewSubject.setText(title);
     }
 
 
@@ -109,12 +108,6 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
         //select * from asignatura
         Cursor cursor=db.rawQuery("SELECT * FROM GRUPO WHERE h_entrada BETWEEN "+"'"+horaMas+":00' AND "+"'"+horaIgual+"'", null);
 
-        while (cursor.moveToNext()){
-            editTextGroup.setText(cursor.getString(1));
-            editTextHour.setText(cursor.getString(2));
-            editTextClassroom.setText(cursor.getString(4));
-        }
-
         if (cursor.getCount() == 0) {
             Toast.makeText(getApplicationContext(), "La asignatura no tiene un grupo con este horario", Toast.LENGTH_SHORT).show();
 
@@ -122,6 +115,22 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
             editTextHour.setText("");
             editTextClassroom.setText("");
             editTextDuration.setText("");
+
+            group = new Group();
+        } else {
+            while (cursor.moveToNext()) {
+                group = new Group(
+                        cursor.getString(0), // code
+                        cursor.getString(1), // name
+                        cursor.getString(4), // classroom
+                        cursor.getString(2), // hour
+                        cursor.getString(3)  // end
+                );
+            }
+
+            editTextGroup.setText( group.getName() );
+            editTextHour.setText( group.getHour() );
+            editTextClassroom.setText( group.getClassroom() );
         }
 
 

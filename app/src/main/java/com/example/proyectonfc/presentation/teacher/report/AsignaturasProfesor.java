@@ -26,10 +26,10 @@ public class AsignaturasProfesor extends AppCompatActivity {
         setContentView(R.layout.asignaturas_profesor);
 
         dataBase = new DataBase(getApplicationContext());
-        ListView asignaturas = (ListView) findViewById(R.id.listaAsignaturas);
+        ListView asignaturas = findViewById(R.id.listaAsignaturas);
 
         consultarListaAsignaturas();
-        ArrayAdapter adaptador=new ArrayAdapter(this,android.R.layout.simple_list_item_1, (List) listaAsignaturas);
+        ArrayAdapter adaptador = new ArrayAdapter(this,android.R.layout.simple_list_item_1, listaAsignaturas);
         asignaturas.setAdapter(adaptador);
 
         asignaturas.setOnItemClickListener( (adapterView, view, position, id) -> {

@@ -180,7 +180,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return array
     }
 
-    override fun removeReport(id: Int): Boolean {
+    override fun removeReport(id: String): Boolean {
         return writableDatabase.delete(TABLE_REPORT, "_id = $id", null) > 0
     }
 

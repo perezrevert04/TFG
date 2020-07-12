@@ -40,6 +40,28 @@ public class DataBase extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
+    public Subject getSubjectById(String code) {
+        Subject subject = new Subject();
+        subject.setCode(code);
+
+        SQLiteDatabase db = getReadableDatabase();
+        if (db != null) {
+            String sql = "SELECT * FROM ASIGNATURA WHERE id = '" + code + "'";
+            Cursor cursor = db.rawQuery(sql, null);
+
+            while (cursor.moveToNext()) {
+                subject.setName( cursor.getString(1) );
+                subject.setDegree( cursor.getString(2) );
+                subject.setSchoolYear( cursor.getString(3) );
+                subject.setDepartment( cursor.getString(4) );
+                subject.setLanguage( cursor.getString(5) );
+                subject.setDuration( cursor.getString(6) );
+            }
+        }
+
+        return subject;
+    }
+
     public void borrarTodoProfesores(String identificador) {
         SQLiteDatabase db = getWritableDatabase();
         if(db!=null) {
