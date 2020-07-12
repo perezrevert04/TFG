@@ -41,6 +41,12 @@ class ReportDataActivity : AppCompatActivity() {
             pdf.open(this)
         }
 
+        buttonShare.setOnClickListener {
+            val pdf = PdfManager(report, person, attendanceList)
+            pdf.create()
+            pdf.share(this)
+        }
+
         showInfoInScreen()
     }
 

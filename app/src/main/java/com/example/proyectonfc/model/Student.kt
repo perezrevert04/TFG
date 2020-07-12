@@ -6,6 +6,6 @@ class Student(var id: String, var dni: String, var name: String) : Serializable 
     constructor() : this("", "", "")
 
     override fun toString(): String {
-        return "$id: $name ($dni)"
+        return "$name ($dni)"
     }
 }

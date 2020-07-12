@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Environment
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
+import androidx.core.content.FileProvider
 import com.example.proyectonfc.model.Person
 import com.example.proyectonfc.model.Report
 import com.example.proyectonfc.model.Student
@@ -15,6 +16,7 @@ import com.lowagie.text.pdf.PdfWriter
 import harmony.java.awt.Color
 import java.io.File
 import java.io.FileOutputStream
+
 
 const val FOLDER_NAME = "Parte Firmas UPV"
 const val PDF_HEADER = "Universitat Politècnica de València"
@@ -102,6 +104,19 @@ class PdfManager(val report: Report, val teacher: Person, val list: List<Student
         intent.setDataAndType(uri, "application/pdf")
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         activity.startActivity(intent)
+    }
+
+    fun share(activity: Activity) {
+        val fileIn = createFile(report.getPdfName())
+        val uri = FileProvider.getUriForFile(activity, activity.applicationContext.packageName.toString() + ".provider", fileIn)
+
+        val share = Intent()
+        share.action = Intent.ACTION_SEND
+        share.type = "application/pdf"
+        share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        share.putExtra(Intent.EXTRA_STREAM, uri)
+
+        activity.startActivity(Intent.createChooser(share, "Compartir parte"))
     }
 
     private fun createFile(filename: String): File {
