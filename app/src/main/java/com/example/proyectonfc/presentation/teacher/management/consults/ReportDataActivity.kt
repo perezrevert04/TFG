@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
 import com.example.proyectonfc.db.DataBase
+import com.example.proyectonfc.logic.PdfManager
 import com.example.proyectonfc.logic.ReportManager
 import com.example.proyectonfc.model.Person
 import com.example.proyectonfc.model.Report
@@ -33,6 +34,12 @@ class ReportDataActivity : AppCompatActivity() {
         manager = ReportManager(this, (application as Global).database)
 
         attendanceList = manager.getReportAttendance(report.id) as ArrayList<Student>
+
+        buttonGeneratePdf.setOnClickListener {
+            val pdf = PdfManager(report, person, attendanceList)
+            pdf.create()
+            pdf.open(this)
+        }
 
         showInfoInScreen()
     }

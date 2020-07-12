@@ -133,14 +133,14 @@ class CreacionParte : AppCompatActivity() {
     }
 
     fun generarPdf(filename: String, date: String) {
-        val documento = Document()
+        val document = Document()
 
         try {
 
             //Creación archivo pdf
             val f = crearFichero(filename)
             val ficheroPdf = FileOutputStream(f.absolutePath)
-            PdfWriter.getInstance(documento, ficheroPdf)
+            PdfWriter.getInstance(document, ficheroPdf)
 
             // Incluimos el pie de pagina y una cabecera
             val cabecera = HeaderFooter(Phrase("Parte de firmas Universitat Politècnica de València"), false)
@@ -148,24 +148,24 @@ class CreacionParte : AppCompatActivity() {
             val pie = HeaderFooter(Phrase("Parte de firmas Universitat Politècnica de València"), false)
             pie.setAlignment(Element.ALIGN_CENTER)
 
-            documento.setHeader(cabecera)
-            documento.setFooter(pie)
+            document.setHeader(cabecera)
+            document.setFooter(pie)
 
             // Abrimos el documento.
-            documento.open()
+            document.open()
 
 
             val font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20f, Font.BOLD, Color.BLACK)
-            documento.add(Paragraph("     SEGUIMIENTO DE LAS ACTIVIDADES DOCENTES\n\n\n", font))
+            document.add(Paragraph("     SEGUIMIENTO DE LAS ACTIVIDADES DOCENTES\n\n\n", font))
 
             // Añadimos un titulo con la fuente por defecto.
-            documento.add(Paragraph(""))
+            document.add(Paragraph(""))
 
 
             val tablaA = PdfPTable(1)
             tablaA.widthPercentage = 100.00f
             tablaA.addCell("\nEspacio: ${report.classroom}\n\n")
-            documento.add(tablaA)
+            document.add(tablaA)
 
 
             val tablaB = PdfPTable(2)
@@ -181,11 +181,11 @@ class CreacionParte : AppCompatActivity() {
             tablaD.widthPercentage = 100.00f
             tablaD.addCell("\nObservaciones: ${report.comments}\n\n\n")
 
-            documento.add(tablaB)
-            documento.add(tablaC)
-            documento.add(tablaD)
+            document.add(tablaB)
+            document.add(tablaC)
+            document.add(tablaD)
 
-            documento.add(Paragraph("\n\n\n"))
+            document.add(Paragraph("\n\n\n"))
 
 
             // Insertamos una tabla.
@@ -208,13 +208,13 @@ class CreacionParte : AppCompatActivity() {
             }
             database.close()
 
-            documento.add(tabla1)
-            documento.add(tabla2)
+            document.add(tabla1)
+            document.add(tabla2)
         } catch (e: Exception) {
             toast("No se ha podido crear el archivo pdf")
             Log.e("AppLog", "No se ha podido crear el pdf \n ${e.message}")
         } finally {
-            documento.close()
+            document.close()
         }
     }
 
