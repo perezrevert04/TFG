@@ -153,7 +153,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         val sql = "SELECT * FROM $TABLE_REPORT " +
                 "WHERE (subject_code LiKE '%${filter.subject}%' OR " +
                 "subject_name LiKE '%${filter.subject}%') AND " +
-                "class LiKE '%${filter.group}%' AND " +
+                "group_name LiKE '%${filter.group}%' AND " +
                 "date LIKE '%${filter.date}%'"
 
         val cursor = readableDatabase.rawQuery(sql, null)
@@ -186,7 +186,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     }
 
     override fun removeReport(id: String): Boolean {
-        return writableDatabase.delete(TABLE_REPORT, "_id = $id", null) > 0
+        return writableDatabase.delete(TABLE_REPORT, "id = $id", null) > 0
     }
 
     private fun createLinkedPersonTable(db: SQLiteDatabase) {

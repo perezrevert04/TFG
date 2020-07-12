@@ -61,6 +61,10 @@ public class StorageStudentsAttendance {
         return list;
     }
 
+    public boolean removeAttendance() {
+        return context.deleteFile(filename);
+    }
+
     private void readXml(InputStream input) {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();

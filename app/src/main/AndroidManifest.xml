@@ -76,8 +76,7 @@
         <activity
             android:name=".presentation.teacher.management.consults.ReportDataActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".presentation.teacher.management.consults.ShowReportsActivity"
-            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+            android:parentActivityName=".presentation.teacher.management.consults.ShowReportsActivity" />
         <activity
             android:name=".presentation.teacher.management.consults.ReportFilterActivity"
             android:label="Filtrar"

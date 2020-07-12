@@ -1,13 +1,9 @@
 package com.example.proyectonfc.presentation.teacher.management.consults
 
 import android.os.Bundle
-import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.R
 import com.example.proyectonfc.model.Report
-import kotlinx.android.synthetic.main.activity_creacion_parte.textViewClassroom
-import kotlinx.android.synthetic.main.activity_creacion_parte.textViewGroup
-import kotlinx.android.synthetic.main.activity_creacion_parte.textViewTeacher
 import kotlinx.android.synthetic.main.activity_report_data.*
 
 class ReportDataActivity : AppCompatActivity() {
@@ -18,7 +14,6 @@ class ReportDataActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_report_data)
 
         getExtras()
@@ -28,8 +23,6 @@ class ReportDataActivity : AppCompatActivity() {
 
     private fun getExtras() {
         val report = intent.getSerializableExtra(EXTRA_REPORT) as Report
-
-        /* TODO: Arreglar este desaguisado */
 
 //        val subject = report.subjectCode + ": " + report.subjectName
 //        textViewSubject.text = subject

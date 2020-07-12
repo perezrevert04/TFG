@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
+import com.example.proyectonfc.logic.ReportManager
 import com.example.proyectonfc.model.Report
 import com.example.proyectonfc.model.ReportFilter
 import kotlinx.android.synthetic.main.activity_show_reports.*
@@ -19,21 +20,22 @@ import org.jetbrains.anko.toast
 
 class ShowReportsActivity : AppCompatActivity() {
 
-    private val database by lazy { (application as Global).database }
-
     private var reportsList: MutableList<String> = mutableListOf()
     private lateinit var reports: ListView
     private lateinit var allReports: ArrayList<Report>
 
     private var filter = ReportFilter()
+    private lateinit var manager: ReportManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_reports)
 
-        allReports = database.getAllReports()
+        manager = ReportManager(this, (application as Global).database)
 
-        allReports.forEach { reportsList.add("\n" + it.toString() + "\n") }
+        allReports = manager.getAllReports()
+
+        allReports.forEach { reportsList.add( it.toString() ) }
 
         reports = findViewById<View>(R.id.listView) as ListView
         updateAdapter()
@@ -60,9 +62,9 @@ class ShowReportsActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ReportFilterActivity.REQ_CODE && resultCode == Activity.RESULT_OK) {
             filter = data?.getSerializableExtra(ReportFilterActivity.EXTRA_FILTER) as ReportFilter
-            allReports = database.filterReports(filter)
+            allReports = manager.filterReports(filter)
             reportsList = mutableListOf()
-            allReports.forEach { reportsList.add("\n" + it.toString() + "\n") }
+            allReports.forEach { reportsList.add( it.toString() ) }
             updateAdapter()
 
             toast("Resultados: " + reportsList.size)
@@ -76,7 +78,7 @@ class ShowReportsActivity : AppCompatActivity() {
 
         builder.setNegativeButton("Cancelar") { _, _ -> }
         builder.setPositiveButton("Eliminar") { _, _ ->
-            if (database.removeReport(report.id)) {
+            if (manager.removeReport(report.id)) {
                 allReports.removeAt(position)
                 reportsList.removeAt(position)
                 updateAdapter()
