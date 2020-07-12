@@ -39,9 +39,10 @@ class SplashScreenActivity : AppCompatActivity() {
             val cl = if (!database.deviceIsLinked()) {
                 RequirementsToLinkActivity::class.java
             }
-            else if (database.getLinkedPerson().role == Role.STUDENT) {
-                MainStudentActivity::class.java
-            }
+                /* TODO: Descomentar estas líneas */
+//            else if (database.getLinkedPerson().role == Role.STUDENT) {
+//                MainStudentActivity::class.java
+//            }
             else {
                 MainActivity::class.java
             }

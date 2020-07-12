@@ -225,12 +225,11 @@ class CreacionParte : AppCompatActivity() {
     }
 
     private fun saveReport() {
+        /* TODO: Cambiar listado predefinido por el listado real de los alumnos */
         val list = arrayListOf<Student>()
-        list.add(Student(id = "1", dni = "20458644", name = "Carles Perez Revert"))
-        list.add(Student(id = "2", dni = "23414324", name = "Juan Ignacio Delgado Alemany"))
+        list.add(Student(id = "3967203186", dni = "20458644", name = "Carles Perez Revert"))
+        list.add(Student(id = "1234567890", dni = "23414324", name = "Juan Ignacio Delgado Alemany"))
         manager.saveReport(report, list)
-
-        /* TODO: Generar listado de asistencia en XML */
     }
 
 }

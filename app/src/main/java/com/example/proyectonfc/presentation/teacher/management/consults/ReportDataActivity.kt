@@ -1,12 +1,19 @@
 package com.example.proyectonfc.presentation.teacher.management.consults
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
+import com.example.proyectonfc.db.DataBase
+import com.example.proyectonfc.logic.ReportManager
 import com.example.proyectonfc.model.Person
 import com.example.proyectonfc.model.Report
+import com.example.proyectonfc.model.Student
+import com.example.proyectonfc.presentation.teacher.report.AttendanceActivity
 import kotlinx.android.synthetic.main.activity_report_data.*
 
 class ReportDataActivity : AppCompatActivity() {
@@ -15,20 +22,43 @@ class ReportDataActivity : AppCompatActivity() {
 
     private val person: Person by lazy { (application as Global).linked }
     private lateinit var report: Report
+    private lateinit var manager: ReportManager
+    private lateinit var attendanceList: ArrayList<Student>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_report_data)
 
         report = intent.getSerializableExtra(EXTRA_REPORT) as Report
+        manager = ReportManager(this, (application as Global).database)
+
+        attendanceList = manager.getReportAttendance(report.id) as ArrayList<Student>
 
         showInfoInScreen()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_attendance, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_attendance -> {
+                val intent = Intent(this, AttendanceActivity::class.java)
+                intent.putExtra(AttendanceActivity.ATTENDANCE_LIST, attendanceList)
+                startActivity(intent)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun showInfoInScreen() {
         val title = report.subject.code + ": " + report.subject.name
+        val teacher = person.name + " (${person.dni})"
+
         textViewSubject.text = title
-        val teacher = person.name + "(${person.dni})"
         textViewTeacher.text = teacher
         textViewGroup.text = report.group
         textViewClassroom.text = report.classroom
@@ -41,19 +71,5 @@ class ReportDataActivity : AppCompatActivity() {
             textViewEmptyComments.visibility = View.INVISIBLE
             textViewComments.text = report.comments
         }
-    }
-
-    private fun getExtras() {
-
-//        val subject = report.subjectCode + ": " + report.subjectName
-//        textViewSubject.text = subject
-//        textViewTeacher.text = report.teacher
-//        textViewGroup.text = report.group
-//        textViewClassroom.text = report.classroom
-//        textViewDate.text = report.date
-//        textViewHour.text = report.hour
-//        textViewDurationRepData.text = report.duration
-//        textViewAttendance.text = report.attendance.toString()
-//        textViewComments.text = report.comments
     }
 }
