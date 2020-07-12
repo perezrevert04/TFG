@@ -6,7 +6,6 @@ import com.example.proyectonfc.data.StorageStudentsAttendance
 import com.example.proyectonfc.model.Report
 import com.example.proyectonfc.model.Student
 
-
 class ReportManager(val context: Context, val database: Database) {
 
     fun saveReport(report: Report, students: ArrayList<Student>) {
@@ -14,5 +13,10 @@ class ReportManager(val context: Context, val database: Database) {
         storageXml.saveStudentsList(students)
 
         database.addReport(report)
+    }
+
+    fun getReportAttendance(id: String): List<Student> {
+        val storageXml = StorageStudentsAttendance(context, id)
+        return storageXml.studentsList
     }
 }
