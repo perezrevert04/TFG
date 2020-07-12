@@ -17,16 +17,15 @@ import harmony.java.awt.Color
 import java.io.File
 import java.io.FileOutputStream
 
-
 const val FOLDER_NAME = "Parte Firmas UPV"
 const val PDF_HEADER = "Universitat Politècnica de València"
 
-class PdfManager(val report: Report, val teacher: Person, val list: List<Student>) {
+class PdfManager(val report: Report, val teacher: Person) {
 
     private val font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20f, Font.BOLD, Color.BLACK)
     private val downloadPath by lazy { Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) }
 
-    fun create() {
+    fun create(list: List<Student>) {
         val document = Document()
 
         try {

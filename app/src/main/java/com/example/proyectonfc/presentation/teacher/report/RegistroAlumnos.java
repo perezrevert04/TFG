@@ -7,12 +7,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.StrictMode;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -26,8 +23,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.proyectonfc.Global;
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
+import com.example.proyectonfc.logic.PdfManager;
+import com.example.proyectonfc.model.Person;
 import com.example.proyectonfc.model.Report;
 import com.example.proyectonfc.model.Subject;
 import com.example.proyectonfc.presentation.MainActivity;
@@ -40,7 +40,6 @@ import com.google.android.gms.nearby.connection.Payload;
 import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 
-import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +50,7 @@ public class RegistroAlumnos extends AppCompatActivity {
     private Advertise advertise;
 
     private ArrayList<String> listaIdentificadores = new ArrayList<>();
+
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
     private TextView text;
@@ -130,23 +130,11 @@ public class RegistroAlumnos extends AppCompatActivity {
             finish();
 
             if (data != null) {
-                String filename = data.getStringExtra("filename");
-                openFile(filename);
+                Person teacher = ((Global) getApplication()).getLinked();
+                PdfManager pdfManager = new PdfManager(report, teacher);
+                pdfManager.open(this);
             }
         }
-    }
-
-    private void openFile(String filename) {
-        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-        StrictMode.setVmPolicy(builder.build());
-
-        String path = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "ParteFirmasUPV").getPath();
-        File fileIn = new File(path + "/" + filename);
-        Uri uri = Uri.fromFile(fileIn);
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(uri, "application/pdf");
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
     }
 
     @Override
@@ -294,6 +282,7 @@ public class RegistroAlumnos extends AppCompatActivity {
 
         return code;
     }
+
     /*** FIN NEARBY ADVERTISE ***/
 
 }

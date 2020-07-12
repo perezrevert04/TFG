@@ -13,7 +13,9 @@ import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
 import com.example.proyectonfc.clases.AddComment
 import com.example.proyectonfc.db.DataBase
+import com.example.proyectonfc.logic.PdfManager
 import com.example.proyectonfc.logic.ReportManager
+import com.example.proyectonfc.logic.StudentManager
 import com.example.proyectonfc.model.Person
 import com.example.proyectonfc.model.Report
 import com.example.proyectonfc.model.Student
@@ -38,6 +40,9 @@ class CreacionParte : AppCompatActivity() {
     private lateinit var listaIdentificadores: MutableList<String>
     private lateinit var report: Report
     private lateinit var person: Person
+
+    private lateinit var allStudents: Map<String, Student>
+    private lateinit var attendanceList: ArrayList<Student>
 
     private lateinit var manager: ReportManager
 
@@ -68,16 +73,8 @@ class CreacionParte : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_attendance -> {
-                val array: ArrayList<String> = arrayListOf()
-                val database = DataBase(applicationContext)
-                listaIdentificadores.forEach {
-                    database.consultarAlumno(report.subject.code, it)
-                    array.add("\n" + database.listDni + " - " + database.listNombre + "\n")
-                }
-                database.close()
-
                 val intent = Intent(this, AttendanceActivity::class.java)
-                intent.putExtra(AttendanceActivity.ATTENDANCE_LIST, array)
+                intent.putExtra(AttendanceActivity.ATTENDANCE_LIST, attendanceList)
                 startActivity(intent)
                 true
             }
@@ -98,7 +95,16 @@ class CreacionParte : AppCompatActivity() {
 
         report = intent.getSerializableExtra("ReportObject") as Report
         person = database.getLinkedPerson()
+
+        val studentManager = StudentManager((application as Global).oldDatabase)
+        allStudents = studentManager.getAllStudents(report.subject.code)
         listaIdentificadores = intent.getStringArrayListExtra("listaIdentificadores")
+
+        attendanceList = arrayListOf()
+        listaIdentificadores.forEach {
+            val student: Student? = allStudents[report.subject.code + it]
+            if (student != null) attendanceList.add(student)
+        }
 
         val subject = "${report.subject.code}: ${report.subject.name}"
         val teacher = "${person.name} (${person.dni})"
@@ -120,7 +126,8 @@ class CreacionParte : AppCompatActivity() {
         try {
             val filename = report.getPdfName()
 
-            generarPdf(filename, report.date)
+            val pdfManager = PdfManager(report, person)
+            pdfManager.create(attendanceList)
 
             val retIntent = Intent()
             retIntent.putExtra("filename", filename)
@@ -132,104 +139,8 @@ class CreacionParte : AppCompatActivity() {
         }
     }
 
-    fun generarPdf(filename: String, date: String) {
-        val document = Document()
-
-        try {
-
-            //Creación archivo pdf
-            val f = crearFichero(filename)
-            val ficheroPdf = FileOutputStream(f.absolutePath)
-            PdfWriter.getInstance(document, ficheroPdf)
-
-            // Incluimos el pie de pagina y una cabecera
-            val cabecera = HeaderFooter(Phrase("Parte de firmas Universitat Politècnica de València"), false)
-            cabecera.setAlignment(Element.ALIGN_CENTER)
-            val pie = HeaderFooter(Phrase("Parte de firmas Universitat Politècnica de València"), false)
-            pie.setAlignment(Element.ALIGN_CENTER)
-
-            document.setHeader(cabecera)
-            document.setFooter(pie)
-
-            // Abrimos el documento.
-            document.open()
-
-
-            val font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20f, Font.BOLD, Color.BLACK)
-            document.add(Paragraph("     SEGUIMIENTO DE LAS ACTIVIDADES DOCENTES\n\n\n", font))
-
-            // Añadimos un titulo con la fuente por defecto.
-            document.add(Paragraph(""))
-
-
-            val tablaA = PdfPTable(1)
-            tablaA.widthPercentage = 100.00f
-            tablaA.addCell("\nEspacio: ${report.classroom}\n\n")
-            document.add(tablaA)
-
-
-            val tablaB = PdfPTable(2)
-            tablaB.widthPercentage = 100.00f
-            tablaB.addCell("\nAsignatura: ${report.subject.code}-${report.subject.name} \nTitulación: ${report.subject.degree}\nGrupo: ${report.group}\n\n")
-            tablaB.addCell("\nProfesor: ${person.name}\nDNI: ${person.dni}\n\n")
-            val tablaC = PdfPTable(3)
-            tablaC.widthPercentage = 100.00f
-            tablaC.addCell("\nCurso/Sem.: ${report.subject.schoolYear}\nER Gestora: ${report.subject.department}\nIdioma: ${report.subject.language}\n\n")
-            tablaC.addCell("\nFecha: $date\nHora: ${report.hour}\nDuración: ${report.subject.duration}\n\n")
-            tablaC.addCell("Firma: \n\n\n")
-            val tablaD = PdfPTable(1)
-            tablaD.widthPercentage = 100.00f
-            tablaD.addCell("\nObservaciones: ${report.comments}\n\n\n")
-
-            document.add(tablaB)
-            document.add(tablaC)
-            document.add(tablaD)
-
-            document.add(Paragraph("\n\n\n"))
-
-
-            // Insertamos una tabla.
-            val tabla1 = PdfPTable(3)
-            tabla1.widthPercentage = 100.00f
-            tabla1.addCell("Identificador")
-            tabla1.addCell("DNI")
-            tabla1.addCell("Nombre")
-
-
-            val tabla2 = PdfPTable(3)
-            tabla2.widthPercentage = 100.00f
-
-            val database = DataBase(applicationContext)
-            listaIdentificadores.forEach {
-                database.consultarAlumno(report.subject.code, it)
-                tabla2.addCell(it)
-                tabla2.addCell(database.listDni)
-                tabla2.addCell(database.listNombre)
-            }
-            database.close()
-
-            document.add(tabla1)
-            document.add(tabla2)
-        } catch (e: Exception) {
-            toast("No se ha podido crear el archivo pdf")
-            Log.e("AppLog", "No se ha podido crear el pdf \n ${e.message}")
-        } finally {
-            document.close()
-        }
-    }
-
-    private fun crearFichero(filename: String): File {
-        val path = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "ParteFirmasUPV").path
-        File(path).mkdir()
-        return File(path, filename)
-    }
-
     private fun saveReport() {
-        /* TODO: Cambiar listado predefinido por el listado real de los alumnos */
-        val list = arrayListOf<Student>()
-        list.add(Student(id = "3967203186", dni = "20458644", name = "Carles Perez Revert"))
-        list.add(Student(id = "1234567890", dni = "23414324", name = "Juan Ignacio Delgado Alemany"))
-        manager.saveReport(report, list)
+        manager.saveReport(report, attendanceList)
     }
 
 }

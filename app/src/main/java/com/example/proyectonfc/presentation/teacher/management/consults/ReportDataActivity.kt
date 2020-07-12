@@ -36,14 +36,14 @@ class ReportDataActivity : AppCompatActivity() {
         attendanceList = manager.getReportAttendance(report.id) as ArrayList<Student>
 
         buttonGeneratePdf.setOnClickListener {
-            val pdf = PdfManager(report, person, attendanceList)
-            pdf.create()
+            val pdf = PdfManager(report, person)
+            pdf.create(attendanceList)
             pdf.open(this)
         }
 
         buttonShare.setOnClickListener {
-            val pdf = PdfManager(report, person, attendanceList)
-            pdf.create()
+            val pdf = PdfManager(report, person)
+            pdf.create(attendanceList)
             pdf.share(this)
         }
 
