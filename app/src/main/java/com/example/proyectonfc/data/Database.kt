@@ -82,7 +82,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             put("subject_language", report.subject.language)
             put("subject_duration", report.subject.duration)
             put("classroom", report.classroom)
-            put("group", report.group)
+            put("group_name", report.group)
             put("hour", report.hour)
         }
 
@@ -218,7 +218,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                         "subject_language TEXT , " +
                         "subject_duration TEXT , " +
                         "classroom TEXT , " +
-                        "group TEXT ," +
+                        "group_name TEXT ," +
                         "hour TEXT " +
                         ")"
         )
