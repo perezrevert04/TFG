@@ -183,7 +183,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.management.subjects.Configuracion"
-            android:label="Asignaturas"
+            android:label="Mis asignaturas"
             android:launchMode="singleTop"
             android:parentActivityName=".presentation.teacher.management.ManagementActivity"
             android:screenOrientation="portrait" />

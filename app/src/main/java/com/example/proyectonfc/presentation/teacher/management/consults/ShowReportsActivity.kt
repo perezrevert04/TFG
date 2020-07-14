@@ -3,6 +3,8 @@ package com.example.proyectonfc.presentation.teacher.management.consults
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -11,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
+import com.example.proyectonfc.gestures.CommandVoiceActivity
 import com.example.proyectonfc.logic.ReportManager
 import com.example.proyectonfc.model.Report
 import com.example.proyectonfc.model.ReportFilter
@@ -55,6 +58,23 @@ class ShowReportsActivity : AppCompatActivity() {
             val intent = Intent(this, ReportFilterActivity::class.java)
             intent.putExtra(ReportFilterActivity.EXTRA_FILTER, filter)
             startActivityForResult(intent, ReportFilterActivity.REQ_CODE)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_voice, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.command_voice -> {
+            val intent = Intent(this, CommandVoiceActivity::class.java)
+            this.startActivity(intent)
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
         }
     }
 

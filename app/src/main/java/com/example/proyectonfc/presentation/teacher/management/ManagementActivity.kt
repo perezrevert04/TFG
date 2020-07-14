@@ -2,12 +2,13 @@ package com.example.proyectonfc.presentation.teacher.management
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MotionEvent
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
-import com.example.proyectonfc.gestures.CommonGesturesHandler
+import com.example.proyectonfc.gestures.CommandVoiceActivity
 import com.example.proyectonfc.model.Person
 import com.example.proyectonfc.presentation.teacher.management.consults.ShowReportsActivity
 import com.example.proyectonfc.presentation.teacher.management.subjects.Configuracion
@@ -16,7 +17,6 @@ import kotlinx.android.synthetic.main.activity_management.*
 class ManagementActivity : AppCompatActivity() {
 
     private val linked: Person by lazy { (application as Global).linked }
-    private val commonGesturesHandler = CommonGesturesHandler(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,11 +29,6 @@ class ManagementActivity : AppCompatActivity() {
         textViewTeacherValidity.text = linked.validity
         textViewTeacherStatus.text = linked.status
 
-        scroll_view_activity_management.setOnTouchListener { _: View?, event: MotionEvent ->
-            commonGesturesHandler.onTouchEvent(this, event)
-            super.onTouchEvent(event)
-        }
-
         buttonManageSubjects.setOnClickListener { v: View ->
             val intent = Intent(v.context, Configuracion::class.java)
             startActivity(intent)
@@ -44,4 +39,22 @@ class ManagementActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_voice, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.command_voice -> {
+            val intent = Intent(this, CommandVoiceActivity::class.java)
+            this.startActivity(intent)
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
+    }
+
 }

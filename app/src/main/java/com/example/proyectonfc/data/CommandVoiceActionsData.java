@@ -1,26 +1,29 @@
 package com.example.proyectonfc.data;
 
-import com.example.proyectonfc.model.Asignatura;
+import android.util.Log;
+
 import com.example.proyectonfc.presentation.MainActivity;
 import com.example.proyectonfc.presentation.teacher.management.ManagementActivity;
 import com.example.proyectonfc.presentation.teacher.management.consults.ShowReportsActivity;
 import com.example.proyectonfc.presentation.teacher.management.subjects.Configuracion;
 import com.example.proyectonfc.presentation.teacher.report.AsignaturasProfesor;
 
-import org.apache.commons.text.similarity.LevenshteinDistance;
+import org.apache.commons.text.similarity.JaroWinklerSimilarity;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommandVoiceActionsData {
 
-    private Map<String, Class> actions;
+    private static final double MIN_MATCH = 0.75;
+    private Map<String, Class<?>> actions;
 
     public CommandVoiceActionsData() {
         actions = new HashMap<>();
 
         // Ir a la pantalla principal
-        actions.put("irainicio", MainActivity.class);
+        actions.put("pantallaprincipal", MainActivity.class);
+        actions.put("inicio", MainActivity.class);
 
         // Iniciar parte
         actions.put("iniciarparte", AsignaturasProfesor.class);
@@ -35,36 +38,38 @@ public class CommandVoiceActionsData {
         actions.put("vermisasignaturas", Configuracion.class);
     }
 
-    public Class processData(String data) {
+    public Class<?> processData(String data) {
         String key = data.replace(" ", "").toLowerCase();
-        Class cl = actions.get(key);
+        Class<?> cl = actions.get(key);
 
         if (cl == null) cl = getMoreSimilar(key);
 
         return cl;
     }
 
-    private Class getMoreSimilar(String key) {
-        Class cl = null;
-        int match = 10;
+    private Class<?> getMoreSimilar(String key) {
+        Class<?> cl = null;
+        double match = MIN_MATCH;
 
-        int res;
-        for (Map.Entry<String, Class> entry : actions.entrySet()) {
+        double res;
+
+        Log.d("AppLog", "\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        for (Map.Entry<String, Class<?>> entry : actions.entrySet()) {
             res = compareDistance(key, entry.getKey());
 
-            if (res < match) {
+            if (res > match) {
                 match = res;
                 cl = actions.get( entry.getKey() );
             }
         }
 
-        return match < 10 ? cl : null;
+        return match > MIN_MATCH ? cl : null;
     }
 
 
-    private int compareDistance(String s1, String s2) {
-        LevenshteinDistance distance = LevenshteinDistance.getDefaultInstance();
-        return distance.apply(s1, s2);
+    private double compareDistance(String s1, String s2) {
+        JaroWinklerSimilarity jw = new JaroWinklerSimilarity();
+        return jw.apply(s1, s2);
     }
 
 }

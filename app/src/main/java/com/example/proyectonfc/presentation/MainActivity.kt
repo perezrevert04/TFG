@@ -2,21 +2,20 @@ package com.example.proyectonfc.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.*
+import android.view.KeyEvent
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.R
-import com.example.proyectonfc.gestures.CommonGesturesHandler
 import com.example.proyectonfc.presentation.teacher.management.ManagementActivity
 import com.example.proyectonfc.presentation.teacher.report.AsignaturasProfesor
 import com.example.proyectonfc.use_cases.ManagePermissions
 import kotlinx.android.synthetic.main.activity_main.*
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var permissions: ManagePermissions
-    private val commonGesturesHandler = CommonGesturesHandler(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +38,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        Log.d("AppLog", event.toString())
         return if (keyCode == KeyEvent.KEYCODE_BACK) {
             false
         } else {
@@ -62,10 +60,5 @@ class MainActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         this.permissions.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        commonGesturesHandler.onTouchEvent(this, event, false)
-        return super.onTouchEvent(event)
     }
 }

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.proyectonfc.Global;
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
+import com.example.proyectonfc.gestures.CommandVoiceActivity;
 import com.example.proyectonfc.model.Group;
 import com.example.proyectonfc.model.Report;
 import com.example.proyectonfc.model.Subject;
@@ -78,6 +81,24 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
             startActivity(intent);
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_voice, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.command_voice:
+                Intent intent = new Intent(this, CommandVoiceActivity.class);
+                this.startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void getSubject(String code) {

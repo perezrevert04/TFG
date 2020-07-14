@@ -16,6 +16,7 @@ import com.example.proyectonfc.model.Report
 import com.example.proyectonfc.model.Student
 import com.example.proyectonfc.presentation.teacher.report.AttendanceActivity
 import kotlinx.android.synthetic.main.activity_report_data.*
+import org.jetbrains.anko.toast
 
 class ReportDataActivity : AppCompatActivity() {
 
@@ -42,6 +43,7 @@ class ReportDataActivity : AppCompatActivity() {
         }
 
         buttonShare.setOnClickListener {
+            toast("Cargando...")
             val pdf = PdfManager(report, person)
             pdf.create(attendanceList)
             pdf.share(this)
