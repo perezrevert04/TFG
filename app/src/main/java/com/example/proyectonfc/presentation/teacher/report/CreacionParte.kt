@@ -3,16 +3,12 @@ package com.example.proyectonfc.presentation.teacher.report
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
-import com.example.proyectonfc.clases.AddComment
-import com.example.proyectonfc.db.DataBase
 import com.example.proyectonfc.logic.PdfManager
 import com.example.proyectonfc.logic.ReportManager
 import com.example.proyectonfc.logic.StudentManager
@@ -20,14 +16,8 @@ import com.example.proyectonfc.model.Person
 import com.example.proyectonfc.model.Report
 import com.example.proyectonfc.model.Student
 import com.example.proyectonfc.util.biometric.Biometry
-import com.lowagie.text.*
-import com.lowagie.text.pdf.PdfPTable
-import com.lowagie.text.pdf.PdfWriter
-import harmony.java.awt.Color
 import kotlinx.android.synthetic.main.activity_creacion_parte.*
 import org.jetbrains.anko.toast
-import java.io.File
-import java.io.FileOutputStream
 
 class CreacionParte : AppCompatActivity() {
 

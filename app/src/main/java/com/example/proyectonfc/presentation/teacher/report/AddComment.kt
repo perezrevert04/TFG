@@ -1,4 +1,4 @@
-package com.example.proyectonfc.clases
+package com.example.proyectonfc.presentation.teacher.report
 
 import android.app.Activity
 import android.content.ActivityNotFoundException

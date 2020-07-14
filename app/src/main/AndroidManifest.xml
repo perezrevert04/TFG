@@ -112,7 +112,7 @@
             android:parentActivityName=".presentation.link.RequirementsToLinkActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".clases.AddComment"
+            android:name=".presentation.teacher.report.AddComment"
             android:label="Observaciones"
             android:launchMode="singleTop"
             android:parentActivityName=".presentation.teacher.report.CreacionParte"

@@ -8,10 +8,13 @@ import android.util.Log
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.R
+import com.example.proyectonfc.data.CommandVoiceActionsData
 import org.jetbrains.anko.toast
 import java.util.*
 
 class CommandVoiceActivity : AppCompatActivity() {
+
+    private val commandVoiceData = CommandVoiceActionsData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +41,16 @@ class CommandVoiceActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1234 && resultCode == RESULT_OK && null != data) {
-            toast(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)[0])
+            val array = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            val string = array[0]
+            val cl = commandVoiceData.processData(string)
+
+            if (cl != null) {
+                val intent = Intent(this, cl)
+                startActivity(intent)
+            } else {
+                toast("Lo siento, no te he entendido... \uD83D\uDE25")
+            }
         }
 
         finish()
