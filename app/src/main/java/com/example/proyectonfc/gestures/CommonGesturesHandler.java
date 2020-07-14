@@ -86,7 +86,7 @@ public class CommonGesturesHandler {
     }
 
     private void openCommandVoice() {
-        CommandVoice voice = new CommandVoice(this.context);
-        voice.startCommandVoice();
+        Intent intent = new Intent(context, CommandVoiceActivity.class);
+        context.startActivity(intent);
     }
 }

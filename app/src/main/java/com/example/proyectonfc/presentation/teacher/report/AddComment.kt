@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_add_comment.*
 import org.jetbrains.anko.toast
 import java.util.*
 
-const val REQ_CODE = 100
+private const val REQ_CODE = 100
 
 class AddComment : AppCompatActivity() {
 
