@@ -39,7 +39,8 @@ class AddComment : AppCompatActivity() {
                 startActivityForResult(intent, REQ_CODE)
             } catch (a: ActivityNotFoundException) {
                 toast("Lo sentimos, tu dispositivo no soporta esta versión")
-            } }
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
