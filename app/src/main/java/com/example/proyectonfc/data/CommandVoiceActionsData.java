@@ -1,5 +1,6 @@
 package com.example.proyectonfc.data;
 
+import com.example.proyectonfc.model.Asignatura;
 import com.example.proyectonfc.presentation.MainActivity;
 import com.example.proyectonfc.presentation.teacher.management.ManagementActivity;
 import com.example.proyectonfc.presentation.teacher.management.consults.ShowReportsActivity;
