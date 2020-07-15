@@ -114,7 +114,7 @@ class CreacionParte : AppCompatActivity() {
                     toast("Ver asistencia")
                 }
                 else -> {
-                    toast("Lo siento, no te he entendido... \uD83D\uDE25")
+                    toast("Esta orden no está disponible en esta pantalla...")
                 }
             }
 

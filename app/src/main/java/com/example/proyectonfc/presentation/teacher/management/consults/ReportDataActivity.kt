@@ -2,19 +2,23 @@ package com.example.proyectonfc.presentation.teacher.management.consults
 
 import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
+import com.example.proyectonfc.data.CommandVoiceActionsData
 import com.example.proyectonfc.logic.PdfManager
 import com.example.proyectonfc.logic.ReportManager
 import com.example.proyectonfc.model.Person
 import com.example.proyectonfc.model.Report
 import com.example.proyectonfc.model.Student
 import com.example.proyectonfc.presentation.teacher.report.AttendanceActivity
+import com.example.proyectonfc.use_cases.CommandVoice
 import kotlinx.android.synthetic.main.activity_report_data.*
+import org.apache.commons.text.similarity.JaroWinklerSimilarity
 import org.jetbrains.anko.toast
 
 class ReportDataActivity : AppCompatActivity() {
@@ -25,8 +29,6 @@ class ReportDataActivity : AppCompatActivity() {
     private lateinit var report: Report
     private lateinit var manager: ReportManager
     private lateinit var attendanceList: ArrayList<Student>
-
-    /* TODO: Gestionar comandos por voz */
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +62,10 @@ class ReportDataActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.command_voice -> {
+                CommandVoice.launchVoice(this, "Dame una orden.")
+                true
+            }
             R.id.action_attendance -> {
                 val intent = Intent(this, AttendanceActivity::class.java)
                 intent.putExtra(AttendanceActivity.ATTENDANCE_LIST, attendanceList)
@@ -67,6 +73,46 @@ class ReportDataActivity : AppCompatActivity() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == CommandVoice.COMMAND_VOICE_CODE && resultCode == RESULT_OK && null != data) {
+            val array = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            val string = array[0]
+
+            /* TODO: REFECTORIZAR ESTO (EXTRAER CLASE) */
+            val jw = JaroWinklerSimilarity()
+
+            when {
+                jw.apply(string, "compartir") > 0.8 -> {
+                    buttonShare.performClick()
+                    toast("Compartir")
+                }
+                jw.apply(string, "generar pdf") > 0.8 -> {
+                    buttonGeneratePdf.performClick()
+                    toast("Generar PDF")
+                }
+                jw.apply(string, "ver asistencia") > 0.8 -> {
+                    val intent = Intent(this, AttendanceActivity::class.java)
+                    intent.putExtra(AttendanceActivity.ATTENDANCE_LIST, attendanceList)
+                    startActivity(intent)
+                    toast("Ver asistencia")
+                }
+                else -> {
+                    val cl = CommandVoiceActionsData().processData(string)
+
+                    if (cl != null) {
+                        val intent = Intent(this, cl)
+                        startActivity(intent)
+                    } else {
+                        toast("Lo siento, no te he entendido... \uD83D\uDE25")
+                    }
+                }
+            }
+
         }
     }
 
