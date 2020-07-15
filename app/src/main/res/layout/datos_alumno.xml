@@ -5,7 +5,7 @@
     android:id="@+id/relativeLayout10"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DatosProfesor">
+    tools:context=".presentation.teacher.management.subjects.DatosAlumno">
 
     <View
         android:id="@+id/view15"
@@ -26,6 +26,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:drawableEnd="@drawable/ic_baseline_edit_24"
+        android:paddingStart="@dimen/btn_drawable_padding_start"
+        android:paddingEnd="@dimen/btn_drawable_padding_end"
         android:text="Editar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
