@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.proyectonfc">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.proyectonfc">
 
     <uses-feature android:name="android.hardware.nfc" />
 
@@ -8,8 +9,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!-- Required for Nearby Connections -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- Required for Nearby Connections -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -21,27 +21,21 @@
         android:name=".Global"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="Parte de firmas UPV"
         android:resizeableActivity="false"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <provider
-            android:name=".GenericFileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
-        </provider>
-
+        <activity
+            android:name=".use_cases.CommandVoiceActivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Dialog"/>
         <activity
             android:name=".presentation.teacher.management.subjects.EditGroupActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".presentation.teacher.management.subjects.DatosGrupo"/>
+            android:parentActivityName=".presentation.teacher.management.subjects.DatosGrupo"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.management.subjects.EditSubjectActivity"
             android:parentActivityName=".presentation.teacher.management.subjects.SubjectDataActivity"
@@ -49,14 +43,14 @@
         <activity
             android:name=".presentation.teacher.management.subjects.SubjectDataActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".presentation.teacher.management.subjects.Configuracion" />
+            android:parentActivityName=".presentation.teacher.management.subjects.Configuracion"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.management.ManagementActivity"
             android:label="Mis datos"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".presentation.MainActivity" />
+            android:parentActivityName=".presentation.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.student.ManageStudentDataActivity"
             android:label="Mis datos"
@@ -86,14 +80,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.management.consults.ReportDataActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".presentation.teacher.management.consults.ShowReportsActivity" />
+            android:parentActivityName=".presentation.teacher.management.consults.ShowReportsActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.management.consults.ReportFilterActivity"
             android:label="Filtrar"
-            android:screenOrientation="portrait"
             android:parentActivityName=".presentation.teacher.management.consults.ShowReportsActivity"
-            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Dialog" />
         <activity
             android:name=".presentation.teacher.management.consults.ShowReportsActivity"
             android:label="Consultar partes"
@@ -118,7 +112,7 @@
             android:parentActivityName=".presentation.link.RequirementsToLinkActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".clases.AddComment"
+            android:name=".presentation.teacher.report.AddComment"
             android:label="Observaciones"
             android:launchMode="singleTop"
             android:parentActivityName=".presentation.teacher.report.CreacionParte"
@@ -149,7 +143,8 @@
             android:name=".presentation.teacher.report.RegistroAlumnos"
             android:label="Registro Alumnos"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:parentActivityName=".presentation.teacher.report.AsignaturasProfesor"/>
         <activity
             android:name=".presentation.teacher.report.DatosAsignaturaNormal"
             android:label="Datos de la clase"
@@ -164,7 +159,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.management.subjects.NuevoAlumno"
-            android:label="Nuevo Alumno"
+            android:label="Nuevo alumno"
             android:launchMode="singleTop"
             android:parentActivityName=".presentation.teacher.management.subjects.Alumnos"
             android:screenOrientation="portrait" />
@@ -188,15 +183,15 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.management.subjects.Configuracion"
-            android:label="Asignaturas"
+            android:label="Mis asignaturas"
             android:launchMode="singleTop"
             android:parentActivityName=".presentation.teacher.management.ManagementActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.MainActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.SplashScreenActivity"
             android:launchMode="singleTop"
@@ -208,6 +203,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name=".GenericFileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>

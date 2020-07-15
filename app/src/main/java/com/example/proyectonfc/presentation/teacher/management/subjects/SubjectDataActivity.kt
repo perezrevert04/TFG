@@ -3,9 +3,12 @@ package com.example.proyectonfc.presentation.teacher.management.subjects
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.R
 import com.example.proyectonfc.db.DataBase
+import com.example.proyectonfc.use_cases.CommandVoiceActivity
 import com.example.proyectonfc.model.Subject
 import kotlinx.android.synthetic.main.activity_subject_data.*
 
@@ -38,6 +41,23 @@ class SubjectDataActivity : AppCompatActivity() {
             val intent = Intent(it.context, Grupos::class.java)
             intent.putExtra("ASIGNATURA", code)
             startActivity(intent)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_voice, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.command_voice -> {
+            val intent = Intent(this, CommandVoiceActivity::class.java)
+            this.startActivity(intent)
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
         }
     }
 

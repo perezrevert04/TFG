@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="Divider">
@@ -29,6 +30,7 @@
     </style>
 
     <style name="AppTheme.PrimaryButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/rounded_shape</item>
     </style>
 
@@ -43,5 +45,11 @@
         <item name="android:textSize">10sp</item>
         <item name="android:textColor">@color/colorSecondaryAccent</item>
         <item name="android:background">@drawable/rounded_shape</item>
+    </style>
+
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/colorSecondary</item>
+        <item name="colorPrimaryDark">@color/colorSecondaryDark</item>
+        <item name="colorAccent">@color/colorSecondaryAccent</item>
     </style>
 </resources>

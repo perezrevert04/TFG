@@ -7,7 +7,6 @@
     tools:context=".LinkCardNfcActivity">
 
     <ImageView
-        android:id="@+id/imageViewNfcLogo"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -18,7 +17,6 @@
         app:srcCompat="@drawable/nfc" />
 
     <TextView
-        android:id="@+id/textViewInfo3"
         style="@style/Label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

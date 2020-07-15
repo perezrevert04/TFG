@@ -10,7 +10,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -69,8 +71,6 @@ public class RegistroAlumnos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registro_alumnos);
 
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
-
         androidIds = new ArrayList<>();
 
         biometry = new Biometry(this, "Autenticación", "Identifíquese para cancelar el parte.");
@@ -109,20 +109,30 @@ public class RegistroAlumnos extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                backAlert();
+                return true;
+        }
+        return true;
+    }
+
     private void nextActivity() {
         open = false;
 
         Intent intent = new Intent(this, CreacionParte.class);
         intent.putExtra("listaIdentificadores", listaIdentificadores);
         intent.putExtra("ReportObject", report);
-        startActivityForResult(intent, CreacionParte.REQ_CODE);
+        startActivityForResult(intent, CreacionParte.CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CreacionParte.REQ_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == CreacionParte.CODE && resultCode == Activity.RESULT_OK) {
             advertise.stop();
 
             Intent intent = new Intent(this, MainActivity.class);
@@ -157,8 +167,9 @@ public class RegistroAlumnos extends AppCompatActivity {
             biometry.authenticate( () -> {
                 advertise.stop();
                 open = false;
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                onBackPressed();
+//                Intent intent = new Intent(this, MainActivity.class);
+//                startActivity(intent);
                 finish();
                 return null;
             });
