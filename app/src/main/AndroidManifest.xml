@@ -30,7 +30,7 @@
             android:name=".use_cases.CommandVoiceActivity"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"/>
+            android:theme="@style/AppTheme.Dialog"/>
         <activity
             android:name=".presentation.teacher.management.subjects.EditGroupActivity"
             android:launchMode="singleTop"
@@ -87,7 +87,7 @@
             android:label="Filtrar"
             android:parentActivityName=".presentation.teacher.management.consults.ShowReportsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+            android:theme="@style/AppTheme.Dialog" />
         <activity
             android:name=".presentation.teacher.management.consults.ShowReportsActivity"
             android:label="Consultar partes"

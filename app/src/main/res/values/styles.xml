@@ -46,4 +46,10 @@
         <item name="android:textColor">@color/colorSecondaryAccent</item>
         <item name="android:background">@drawable/rounded_shape</item>
     </style>
+
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/colorSecondary</item>
+        <item name="colorPrimaryDark">@color/colorSecondaryDark</item>
+        <item name="colorAccent">@color/colorSecondaryAccent</item>
+    </style>
 </resources>
