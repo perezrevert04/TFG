@@ -159,7 +159,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.management.subjects.NuevoAlumno"
-            android:label="Nuevo Alumno"
+            android:label="Nuevo alumno"
             android:launchMode="singleTop"
             android:parentActivityName=".presentation.teacher.management.subjects.Alumnos"
             android:screenOrientation="portrait" />
