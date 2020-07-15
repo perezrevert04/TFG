@@ -3,11 +3,12 @@ package com.example.proyectonfc.presentation
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.R
+import com.example.proyectonfc.gestures.CommandVoiceActivity
 import com.example.proyectonfc.presentation.teacher.management.ManagementActivity
 import com.example.proyectonfc.presentation.teacher.report.AsignaturasProfesor
 import com.example.proyectonfc.use_cases.ManagePermissions
@@ -19,8 +20,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_main)
 
         permissions = ManagePermissions(this)
@@ -45,16 +44,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_voice, menu)
+        return true
+    }
 
-        val decorView = window.decorView
-        decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.command_voice -> {
+            val intent = Intent(this, CommandVoiceActivity::class.java)
+            this.startActivity(intent)
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

@@ -5,7 +5,6 @@
     android:id="@+id/relativeLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     tools:context=".presentation.MainActivity">
 
 
@@ -38,7 +37,7 @@
         android:id="@+id/imageView5"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@drawable/upv"
+        android:src="@drawable/upv_logo_blue"
         app:layout_constraintBottom_toTopOf="@+id/buttonStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/colorPrimary"
     android:layout_height="match_parent"
     tools:context=".presentation.student.MainStudentActivity">
 
@@ -34,11 +35,10 @@
         android:id="@+id/imageView8"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/buttonSign"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/upv_logo_blue" />
+        app:srcCompat="@drawable/upv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
