@@ -13,7 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
-import com.example.proyectonfc.gestures.CommandVoiceActivity
+import com.example.proyectonfc.use_cases.CommandVoiceActivity
 import com.example.proyectonfc.logic.ReportManager
 import com.example.proyectonfc.model.Report
 import com.example.proyectonfc.model.ReportFilter

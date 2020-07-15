@@ -8,7 +8,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
-import com.example.proyectonfc.db.DataBase
 import com.example.proyectonfc.logic.PdfManager
 import com.example.proyectonfc.logic.ReportManager
 import com.example.proyectonfc.model.Person
@@ -26,6 +25,8 @@ class ReportDataActivity : AppCompatActivity() {
     private lateinit var report: Report
     private lateinit var manager: ReportManager
     private lateinit var attendanceList: ArrayList<Student>
+
+    /* TODO: Gestionar comandos por voz */
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

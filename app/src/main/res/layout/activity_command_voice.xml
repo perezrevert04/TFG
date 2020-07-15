@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:maxWidth="0px"
     android:maxHeight="0px"
-    tools:context=".gestures.CommandVoiceActivity">
+    tools:context=".use_cases.CommandVoiceActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

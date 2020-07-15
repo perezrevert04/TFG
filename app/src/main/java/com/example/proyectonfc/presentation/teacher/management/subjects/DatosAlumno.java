@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
-import com.example.proyectonfc.gestures.CommandVoiceActivity;
+import com.example.proyectonfc.use_cases.CommandVoiceActivity;
 
 public class DatosAlumno extends AppCompatActivity {
 

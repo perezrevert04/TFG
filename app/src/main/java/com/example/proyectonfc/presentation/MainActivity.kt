@@ -8,7 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.R
-import com.example.proyectonfc.gestures.CommandVoiceActivity
+import com.example.proyectonfc.use_cases.CommandVoiceActivity
 import com.example.proyectonfc.presentation.teacher.management.ManagementActivity
 import com.example.proyectonfc.presentation.teacher.report.AsignaturasProfesor
 import com.example.proyectonfc.use_cases.ManagePermissions

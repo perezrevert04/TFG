@@ -8,7 +8,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
-import com.example.proyectonfc.gestures.CommandVoiceActivity
+import com.example.proyectonfc.use_cases.CommandVoiceActivity
 import com.example.proyectonfc.model.Person
 import com.example.proyectonfc.presentation.teacher.management.consults.ShowReportsActivity
 import com.example.proyectonfc.presentation.teacher.management.subjects.Configuracion

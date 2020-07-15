@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.proyectonfc.Global;
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
-import com.example.proyectonfc.gestures.CommandVoiceActivity;
+import com.example.proyectonfc.use_cases.CommandVoiceActivity;
 import com.example.proyectonfc.model.Group;
 import com.example.proyectonfc.model.Report;
 import com.example.proyectonfc.model.Subject;

@@ -125,14 +125,14 @@ public class RegistroAlumnos extends AppCompatActivity {
         Intent intent = new Intent(this, CreacionParte.class);
         intent.putExtra("listaIdentificadores", listaIdentificadores);
         intent.putExtra("ReportObject", report);
-        startActivityForResult(intent, CreacionParte.REQ_CODE);
+        startActivityForResult(intent, CreacionParte.CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CreacionParte.REQ_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == CreacionParte.CODE && resultCode == Activity.RESULT_OK) {
             advertise.stop();
 
             Intent intent = new Intent(this, MainActivity.class);

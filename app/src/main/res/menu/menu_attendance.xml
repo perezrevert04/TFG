@@ -3,6 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/command_voice"
+        android:icon="@drawable/ic_baseline_keyboard_voice_24"
+        android:title=""
+        app:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/action_attendance"
         android:orderInCategory="1"
         android:title="Ver listado de asistencia 🎓✒️"
