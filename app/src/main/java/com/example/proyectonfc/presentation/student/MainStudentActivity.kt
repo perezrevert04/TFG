@@ -18,7 +18,6 @@ class MainStudentActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_student)
 
         permissions = ManagePermissions(this)
-        permissions.handle()
 
         buttonSign.setOnClickListener { startActivity( Intent(this, StudentSignActivity::class.java) ) }
         buttonInfo.setOnClickListener { startActivity( Intent(this, ManageStudentDataActivity::class.java) ) }
@@ -42,6 +41,11 @@ class MainStudentActivity : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        permissions.handle()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

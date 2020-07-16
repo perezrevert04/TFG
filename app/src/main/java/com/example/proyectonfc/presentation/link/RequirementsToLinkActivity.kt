@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
-import com.example.proyectonfc.LinkCardQRActivity
 import com.example.proyectonfc.R
 import kotlinx.android.synthetic.main.activity_requirements_to_link.*
 

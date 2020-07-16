@@ -42,7 +42,6 @@ class LinkBiometricPromptActivity : AppCompatActivity() {
             if (database.addLinkedPerson(person)) {
                 startActivity(Intent(this, SplashScreenActivity::class.java))
                 toast("Vinculado con éxito. ¡Bienvenido!")
-                finish()
             }
             else {
                 toast("Se ha producido un error: inténtalo de nuevo más tarde")

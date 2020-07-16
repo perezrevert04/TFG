@@ -71,7 +71,7 @@
             android:name=".presentation.link.LinkCardNfcActivity"
             android:label="Vincular carnet"
             android:launchMode="singleTop"
-            android:parentActivityName=".LinkCardQRActivity"
+            android:parentActivityName=".presentation.link.LinkCardQRActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.report.AttendanceActivity"
@@ -103,10 +103,10 @@
             android:name=".presentation.link.LinkBiometricPromptActivity"
             android:label="Vincular carnet"
             android:launchMode="singleTop"
-            android:parentActivityName=".LinkCardQRActivity"
+            android:parentActivityName=".presentation.link.LinkCardQRActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".LinkCardQRActivity"
+            android:name=".presentation.link.LinkCardQRActivity"
             android:label="Vincular carnet"
             android:launchMode="singleTop"
             android:parentActivityName=".presentation.link.RequirementsToLinkActivity"
