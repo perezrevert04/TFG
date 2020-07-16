@@ -168,8 +168,6 @@ public class RegistroAlumnos extends AppCompatActivity {
                 advertise.stop();
                 open = false;
                 onBackPressed();
-//                Intent intent = new Intent(this, MainActivity.class);
-//                startActivity(intent);
                 finish();
                 return null;
             });

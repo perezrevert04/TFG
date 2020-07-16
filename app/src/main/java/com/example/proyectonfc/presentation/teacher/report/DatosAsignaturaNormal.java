@@ -16,10 +16,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.proyectonfc.Global;
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
-import com.example.proyectonfc.use_cases.CommandVoiceActivity;
 import com.example.proyectonfc.model.Group;
 import com.example.proyectonfc.model.Report;
 import com.example.proyectonfc.model.Subject;
+import com.example.proyectonfc.use_cases.CommandVoiceActivity;
+import com.example.proyectonfc.util.biometric.Biometry;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -40,11 +41,14 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
     private EditText editTextHour;
     private EditText editTextDuration;
 
+    private Biometry biometry;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datos_asignatura_normal);
 
+        biometry = new Biometry(this, "Autenticación", "Autenticación biométrica para iniciar el parte");
         dataBase = ((Global) getApplication()).getOldDatabase();
 
         textViewDegree = findViewById(R.id.textViewDegree);
@@ -63,24 +67,30 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
         consultarHoraMenos();
 
         Button buttonStart = findViewById(R.id.buttonStart);
-        buttonStart.setOnClickListener( v -> {
-
-            Intent intent = new Intent(v.getContext(), RegistroAlumnos.class);
-
-            subject.setLanguage( editTextLanguage.getText().toString() );
-            subject.setDuration( editTextDuration.getText().toString() );
-
-            group.setName( editTextGroup.getText().toString() );
-            group.setHour( editTextHour.getText().toString() );
-            group.setClassroom( editTextClassroom.getText().toString() );
-
-            Report report = new Report(subject, group);
-
-            intent.putExtra("ReportObject", report);
-
-            startActivity(intent);
+        buttonStart.setOnClickListener( view -> {
+            biometry.authenticate( () -> {
+                startReport();
+                return null;
+            });
         });
 
+    }
+
+    private void startReport() {
+        Intent intent = new Intent(this, RegistroAlumnos.class);
+
+        subject.setLanguage( editTextLanguage.getText().toString() );
+        subject.setDuration( editTextDuration.getText().toString() );
+
+        group.setName( editTextGroup.getText().toString() );
+        group.setHour( editTextHour.getText().toString() );
+        group.setClassroom( editTextClassroom.getText().toString() );
+
+        Report report = new Report(subject, group);
+
+        intent.putExtra("ReportObject", report);
+
+        startActivity(intent);
     }
 
     @Override
