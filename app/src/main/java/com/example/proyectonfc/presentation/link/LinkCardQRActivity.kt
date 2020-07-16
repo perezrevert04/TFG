@@ -10,9 +10,8 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.model.Person
 import com.example.proyectonfc.model.Role
-import com.example.proyectonfc.presentation.link.LinkBiometricPromptActivity
-import com.example.proyectonfc.presentation.link.LinkCardNfcActivity
 import com.example.proyectonfc.presentation.CaptureActivityPortrait
+import com.example.proyectonfc.presentation.link.LinkCardNfcActivity
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_link_card_qr.*
 import org.jetbrains.anko.toast
@@ -104,13 +103,7 @@ class LinkCardQRActivity : AppCompatActivity() {
                 alertDialog.dismiss()
 
                 if (loaded) {
-                    val cl = if (person.isStudent()) {
-                        LinkCardNfcActivity::class.java
-                    } else {
-                        LinkBiometricPromptActivity::class.java
-                    }
-
-                    val intent = Intent(this, cl)
+                    val intent = Intent(this, LinkCardNfcActivity::class.java)
                     intent.putExtra(Person.CARD_INFO, person)
                     startActivity(intent)
                 }
