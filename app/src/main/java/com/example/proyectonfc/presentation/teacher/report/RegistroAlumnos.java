@@ -188,8 +188,6 @@ public class RegistroAlumnos extends AppCompatActivity {
         open = true;
     }
 
-    /* TODO: ¿¿¿ Se pueden dar condiciones de carrera entre NFC y Nearby ??? */
-
     /*** INICIO LECTOR NFC ***/
 
     @Override

@@ -92,7 +92,6 @@ class CreacionParte : AppCompatActivity() {
             val array = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
             val string = array[0]
 
-            /* TODO: REFECTORIZAR ESTO (EXTRAER CLASE) */
             val jw = JaroWinklerSimilarity()
 
             when {
