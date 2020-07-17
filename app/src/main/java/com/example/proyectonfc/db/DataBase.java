@@ -9,9 +9,7 @@ import com.example.proyectonfc.model.Group;
 import com.example.proyectonfc.model.Student;
 import com.example.proyectonfc.model.Subject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DataBase extends SQLiteOpenHelper {
@@ -21,8 +19,6 @@ public class DataBase extends SQLiteOpenHelper {
     private static final String TABLA_ALUMNO = "CREATE TABLE ALUMNO(ID TEXT PRIMARY KEY, DNI TEXT, NOMBRE TEXT)";
     private static final String TABLA_ASIGNATURA = "CREATE TABLE ASIGNATURA(ID TEXT PRIMARY KEY, NOMBRE TEXT, TITULACION TEXT, CURSO TEXT, ER_GESTORA TEXT, IDIOMA TEXT, DURACION TEXT)";
     private static final String TABLA_GRUPO = "CREATE TABLE GRUPO(ID TEXT PRIMARY KEY, GRUPO TEXT, H_ENTRADA NUMERIC, H_SALIDA NUMERIC, AULA TEXT)";
-    private String listDni = null;
-    private String listNombre = null;
 
     public DataBase(Context context) {
         super(context, NOMBRE_DB, null, VERSION_DB);
@@ -187,39 +183,5 @@ public class DataBase extends SQLiteOpenHelper {
             db.close();
         }
     }
-
-    public void consultarAlumno(String asignatura, String identificador) {
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT id, dni, nombre FROM ALUMNO WHERE id ='"+asignatura+identificador+"'",null);
-        String listDni1= null;
-        String listNombre1=null;
-
-        if(cursor != null){
-            cursor.moveToFirst();
-            do {
-                listDni1 =cursor.getString(1);
-                listNombre1 =cursor.getString(2);
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        db.close();
-        this.setListDni(listDni1);
-        this.setListNombre(listNombre1);
-    }
-
-    public void setListDni(String listDni){
-        this.listDni = listDni;
-    }
-    public void setListNombre(String listNombre){
-        this.listNombre = listNombre;
-    }
-    public String getListDni(){
-        return this.listDni;
-    }
-    public String getListNombre(){
-        return this.listNombre;
-    }
-
 
 }
