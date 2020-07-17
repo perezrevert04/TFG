@@ -9,7 +9,11 @@ import com.example.proyectonfc.model.Group;
 import com.example.proyectonfc.model.Student;
 import com.example.proyectonfc.model.Subject;
 
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class DataBase extends SQLiteOpenHelper {
@@ -166,6 +170,53 @@ public class DataBase extends SQLiteOpenHelper {
             db.execSQL("INSERT INTO GRUPO VALUES('"+identificador+"','"+grupo+"','"+h_entrada+"','"+h_salida+"','"+aula+"') ");
             db.close();
         }
+    }
+
+    public Map<String, Group> getGroups(String subjectCode) {
+        Map<String, Group> map = new HashMap<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        if (db != null) {
+            String sql = "SELECT  * FROM GRUPO WHERE id LIKE '" + subjectCode + "%'";
+            Cursor cursor = db.rawQuery(sql, null);
+
+            Group group;
+            while (cursor.moveToNext()) {
+                String code = cursor.getString(0);
+                String name = cursor.getString(1);
+                String hour = cursor.getString(2);
+                String end = cursor.getString(3);
+                String classroom = cursor.getString(4);
+
+                group = new Group(code, name, classroom, hour, end);
+                map.put(code, group);
+            }
+
+            cursor.close();
+        }
+
+        return map;
+    }
+
+    public Group getCurrentGroup(String subjectCode) {
+        Group group = new Group();
+
+        Map<String, Group> map = getGroups(subjectCode);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HHmm", new Locale("es", "ES"));
+        int currentTime = Integer.parseInt( sdf.format( new Date() ) );
+
+        Group gr;
+        for (Map.Entry<String, Group> entry : map.entrySet()) {
+            gr = entry.getValue();
+
+            int start = Integer.parseInt( gr.getHour().replace(":", "") );
+            int end = Integer.parseInt( gr.getEnd().replace(":", "") );
+
+            if (start <= currentTime && currentTime <= end) group = entry.getValue();
+        }
+
+        return group;
     }
 
     public void borrarGrupo(String identificador, String grupo) {

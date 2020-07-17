@@ -1,8 +1,6 @@
 package com.example.proyectonfc.presentation.teacher.report;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,9 +19,6 @@ import com.example.proyectonfc.model.Report;
 import com.example.proyectonfc.model.Subject;
 import com.example.proyectonfc.use_cases.CommandVoiceActivity;
 import com.example.proyectonfc.util.biometric.Biometry;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 public class DatosAsignaturaNormal extends AppCompatActivity {
 
@@ -64,7 +59,7 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
         String code = getIntent().getStringExtra( "ASIGNATURA");
 
         getSubject(code);
-        consultarHoraMenos();
+        getGroup(code);
 
         Button buttonStart = findViewById(R.id.buttonStart);
         buttonStart.setOnClickListener( view -> {
@@ -125,47 +120,17 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
     }
 
 
-    private void consultarHoraMenos() {
-        SQLiteDatabase db=dataBase.getReadableDatabase();
+    private void getGroup(String code) {
+        group = dataBase.getCurrentGroup(code);
 
-        Calendar calendarioIgual = Calendar.getInstance();
-        calendarioIgual.add(Calendar.MINUTE, 0);
-
-        String horaIgual =  new SimpleDateFormat("HH:mm").format(calendarioIgual.getTime());
-
-        Calendar calendarioMas = Calendar.getInstance();
-        calendarioMas.add(Calendar.MINUTE, 0);
-
-        String horaMas =  new SimpleDateFormat("HH").format(calendarioMas.getTime());
-
-        //select * from asignatura
-        Cursor cursor=db.rawQuery("SELECT * FROM GRUPO WHERE id LIKE '" + subject.getCode() + "%' AND h_entrada BETWEEN "+"'"+horaMas+":00' AND "+"'"+horaIgual+"'", null);
-
-        if (cursor.getCount() == 0) {
+        if (group.getCode().isEmpty()) {
             Toast.makeText(getApplicationContext(), "La asignatura no tiene un grupo con este horario", Toast.LENGTH_SHORT).show();
-
-            editTextGroup.setText("");
-            editTextHour.setText("");
-            editTextClassroom.setText("");
             editTextDuration.setText("");
-
-            group = new Group();
-        } else {
-            while (cursor.moveToNext()) {
-                group = new Group(
-                        cursor.getString(0), // code
-                        cursor.getString(1), // name
-                        cursor.getString(4), // classroom
-                        cursor.getString(2), // hour
-                        cursor.getString(3)  // end
-                );
-            }
-
-            editTextGroup.setText( group.getName() );
-            editTextHour.setText( group.getHour() );
-            editTextClassroom.setText( group.getClassroom() );
         }
 
+        editTextGroup.setText( group.getName() );
+        editTextHour.setText( group.getHour() );
+        editTextClassroom.setText( group.getClassroom() );
 
     }
 
