@@ -139,7 +139,7 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
         String horaMas =  new SimpleDateFormat("HH").format(calendarioMas.getTime());
 
         //select * from asignatura
-        Cursor cursor=db.rawQuery("SELECT * FROM GRUPO WHERE h_entrada BETWEEN "+"'"+horaMas+":00' AND "+"'"+horaIgual+"'", null);
+        Cursor cursor=db.rawQuery("SELECT * FROM GRUPO WHERE id LIKE '" + subject.getCode() + "%' AND h_entrada BETWEEN "+"'"+horaMas+":00' AND "+"'"+horaIgual+"'", null);
 
         if (cursor.getCount() == 0) {
             Toast.makeText(getApplicationContext(), "La asignatura no tiene un grupo con este horario", Toast.LENGTH_SHORT).show();
