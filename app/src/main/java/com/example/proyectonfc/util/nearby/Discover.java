@@ -159,9 +159,8 @@ public class Discover implements NearbyInterface {
     }
 
     @Override
-    public void sendPayload(String endpointId, String identifier) {
+    public void sendPayload(String endpointId, byte[] msg) {
         Log.d(NearbyInterface.LOG, "Sending payload");
-        byte[] bytes = identifier.getBytes(StandardCharsets.UTF_8);
-        mConnectionsClient.sendPayload(endpointId, Payload.fromBytes(bytes));
+        mConnectionsClient.sendPayload(endpointId, Payload.fromBytes(msg));
     }
 }

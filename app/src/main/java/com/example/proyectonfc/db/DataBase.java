@@ -6,7 +6,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.proyectonfc.model.Group;
+import com.example.proyectonfc.model.Student;
 import com.example.proyectonfc.model.Subject;
+
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class DataBase extends SQLiteOpenHelper {
 
@@ -15,8 +23,6 @@ public class DataBase extends SQLiteOpenHelper {
     private static final String TABLA_ALUMNO = "CREATE TABLE ALUMNO(ID TEXT PRIMARY KEY, DNI TEXT, NOMBRE TEXT)";
     private static final String TABLA_ASIGNATURA = "CREATE TABLE ASIGNATURA(ID TEXT PRIMARY KEY, NOMBRE TEXT, TITULACION TEXT, CURSO TEXT, ER_GESTORA TEXT, IDIOMA TEXT, DURACION TEXT)";
     private static final String TABLA_GRUPO = "CREATE TABLE GRUPO(ID TEXT PRIMARY KEY, GRUPO TEXT, H_ENTRADA NUMERIC, H_SALIDA NUMERIC, AULA TEXT)";
-    private String listDni = null;
-    private String listNombre = null;
 
     public DataBase(Context context) {
         super(context, NOMBRE_DB, null, VERSION_DB);
@@ -38,6 +44,28 @@ public class DataBase extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS PROFESOR");
 
         onCreate(sqLiteDatabase);
+    }
+
+    public Subject getSubjectById(String code) {
+        Subject subject = new Subject();
+        subject.setCode(code);
+
+        SQLiteDatabase db = getReadableDatabase();
+        if (db != null) {
+            String sql = "SELECT * FROM ASIGNATURA WHERE id = '" + code + "'";
+            Cursor cursor = db.rawQuery(sql, null);
+
+            while (cursor.moveToNext()) {
+                subject.setName( cursor.getString(1) );
+                subject.setDegree( cursor.getString(2) );
+                subject.setSchoolYear( cursor.getString(3) );
+                subject.setDepartment( cursor.getString(4) );
+                subject.setLanguage( cursor.getString(5) );
+                subject.setDuration( cursor.getString(6) );
+            }
+        }
+
+        return subject;
     }
 
     public void borrarTodoProfesores(String identificador) {
@@ -71,6 +99,27 @@ public class DataBase extends SQLiteOpenHelper {
             db.execSQL("INSERT INTO ALUMNO VALUES('"+identificador+"','"+dni+"','"+nombre+"') ");
             db.close();
         }
+    }
+
+    public Map<String, Student> getAllStudents(String code) {
+        Map<String, Student> map = new HashMap<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        if (db != null) {
+            String sql = "SELECT * FROM ALUMNO WHERE id LIKE '" + code + "%'";
+            Cursor cursor = db.rawQuery(sql, null);
+
+            String id, dni, name;
+            while (cursor.moveToNext()) {
+                 id = cursor.getString(0);
+                 dni = cursor.getString(1);
+                 name = cursor.getString(2);
+
+                 map.put(id, new Student(id, dni, name));
+            }
+        }
+
+        return map;
     }
 
     public void deleteStudent(String id) {
@@ -123,6 +172,53 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
+    public Map<String, Group> getGroups(String subjectCode) {
+        Map<String, Group> map = new HashMap<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+        if (db != null) {
+            String sql = "SELECT  * FROM GRUPO WHERE id LIKE '" + subjectCode + "%'";
+            Cursor cursor = db.rawQuery(sql, null);
+
+            Group group;
+            while (cursor.moveToNext()) {
+                String code = cursor.getString(0);
+                String name = cursor.getString(1);
+                String hour = cursor.getString(2);
+                String end = cursor.getString(3);
+                String classroom = cursor.getString(4);
+
+                group = new Group(code, name, classroom, hour, end);
+                map.put(code, group);
+            }
+
+            cursor.close();
+        }
+
+        return map;
+    }
+
+    public Group getCurrentGroup(String subjectCode) {
+        Group group = new Group();
+
+        Map<String, Group> map = getGroups(subjectCode);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HHmm", new Locale("es", "ES"));
+        int currentTime = Integer.parseInt( sdf.format( new Date() ) );
+
+        Group gr;
+        for (Map.Entry<String, Group> entry : map.entrySet()) {
+            gr = entry.getValue();
+
+            int start = Integer.parseInt( gr.getHour().replace(":", "") );
+            int end = Integer.parseInt( gr.getEnd().replace(":", "") );
+
+            if (start <= currentTime && currentTime <= end) group = entry.getValue();
+        }
+
+        return group;
+    }
+
     public void borrarGrupo(String identificador, String grupo) {
         SQLiteDatabase db = getWritableDatabase();
         if(db!=null) {
@@ -138,39 +234,5 @@ public class DataBase extends SQLiteOpenHelper {
             db.close();
         }
     }
-
-    public void consultarAlumno(String asignatura, String identificador) {
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT id, dni, nombre FROM ALUMNO WHERE id ='"+asignatura+identificador+"'",null);
-        String listDni1= null;
-        String listNombre1=null;
-
-        if(cursor != null){
-            cursor.moveToFirst();
-            do {
-                listDni1 =cursor.getString(1);
-                listNombre1 =cursor.getString(2);
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        db.close();
-        this.setListDni(listDni1);
-        this.setListNombre(listNombre1);
-    }
-
-    public void setListDni(String listDni){
-        this.listDni = listDni;
-    }
-    public void setListNombre(String listNombre){
-        this.listNombre = listNombre;
-    }
-    public String getListDni(){
-        return this.listDni;
-    }
-    public String getListNombre(){
-        return this.listNombre;
-    }
-
 
 }

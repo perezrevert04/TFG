@@ -1,17 +1,14 @@
-package com.example.proyectonfc.clases
+package com.example.proyectonfc.presentation.teacher.report
 
 import android.app.Activity
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.R
+import com.example.proyectonfc.use_cases.CommandVoice
 import kotlinx.android.synthetic.main.activity_add_comment.*
 import org.jetbrains.anko.toast
-import java.util.*
-
-const val REQ_CODE = 100
 
 class AddComment : AppCompatActivity() {
 
@@ -31,25 +28,18 @@ class AddComment : AppCompatActivity() {
         }
 
         speak.setOnClickListener {
-            val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Habla")
-            try {
-                startActivityForResult(intent, REQ_CODE)
-            } catch (a: ActivityNotFoundException) {
-                toast("Lo sentimos, tu dispositivo no soporta esta versión")
-            } }
+            CommandVoice.launchVoice(this, "Habla para añadir observación")
+        }
+
+        if (intent.getBooleanExtra("openVoice", false)) speak.performClick()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQ_CODE) {
-            if (resultCode == RESULT_OK && null != data) {
-                val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-                val comment = valueComment.text.toString() + " " + result[0].capitalize() + "."
-                valueComment.setText(comment.trim())
-            }
+        if (requestCode == CommandVoice.COMMAND_VOICE_CODE && resultCode == RESULT_OK && null != data) {
+            val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            val comment = valueComment.text.toString() + " " + result[0].capitalize() + "."
+            valueComment.setText(comment.trim())
         }
     }
 }

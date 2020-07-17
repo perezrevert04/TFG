@@ -4,7 +4,7 @@ import java.io.Serializable
 
 class Person : Serializable {
 
-    var identifier: String = "predefined_id"
+    var identifier: String = ""
     var name: String = ""
     var dni: String = ""
     var card: String = ""

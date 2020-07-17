@@ -4,8 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.R
 import com.example.proyectonfc.use_cases.ManagePermissions
@@ -17,12 +15,9 @@ class MainStudentActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_main_student)
 
         permissions = ManagePermissions(this)
-        permissions.handle()
 
         buttonSign.setOnClickListener { startActivity( Intent(this, StudentSignActivity::class.java) ) }
         buttonInfo.setOnClickListener { startActivity( Intent(this, ManageStudentDataActivity::class.java) ) }
@@ -46,6 +41,11 @@ class MainStudentActivity : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        permissions.handle()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

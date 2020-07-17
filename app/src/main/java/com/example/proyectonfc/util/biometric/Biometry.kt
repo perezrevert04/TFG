@@ -17,7 +17,7 @@ class Biometry(
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
-    private fun prepareBiometry(method: () -> Unit) {
+    private fun prepareBiometry(facial: Boolean = false, method: () -> Unit) {
         executor = ContextCompat.getMainExecutor(context)
         biometricPrompt = BiometricPrompt(context as FragmentActivity, executor, object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
@@ -39,6 +39,7 @@ class Biometry(
         promptInfo = BiometricPrompt.PromptInfo.Builder()
                 .setTitle(title)
                 .setSubtitle(subtitle)
+                .setConfirmationRequired(!facial)
                 .setDeviceCredentialAllowed(true)
                 .build()
     }

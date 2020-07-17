@@ -5,5 +5,6 @@ enum class NearbyCode(val code: Int, val msg: String) {
     UNREGISTERED(1, "No estás dado de alta en esta asignatura..."),
     DUPLICATED(2, "Ya tienes registrada la asistencia en esta asignatura..."),
     SUCCESS(3, "Fichaje realizado con éxito."),
-    CLOSING(4, "No has podido fichar. El profesor ya está cerrando el parte...");
+    CLOSING(4, "No has podido fichar. El profesor ya está cerrando el parte..."),
+    ANDROID_ID(5, "Ya se ha registrado una asistencia desde este dispositivo");
 }

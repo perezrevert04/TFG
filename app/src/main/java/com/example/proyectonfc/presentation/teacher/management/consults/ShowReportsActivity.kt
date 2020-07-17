@@ -3,6 +3,8 @@ package com.example.proyectonfc.presentation.teacher.management.consults
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -11,6 +13,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
+import com.example.proyectonfc.use_cases.CommandVoiceActivity
+import com.example.proyectonfc.logic.ReportManager
 import com.example.proyectonfc.model.Report
 import com.example.proyectonfc.model.ReportFilter
 import kotlinx.android.synthetic.main.activity_show_reports.*
@@ -19,21 +23,22 @@ import org.jetbrains.anko.toast
 
 class ShowReportsActivity : AppCompatActivity() {
 
-    private val database by lazy { (application as Global).database }
-
     private var reportsList: MutableList<String> = mutableListOf()
     private lateinit var reports: ListView
     private lateinit var allReports: ArrayList<Report>
 
     private var filter = ReportFilter()
+    private lateinit var manager: ReportManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_reports)
 
-        allReports = database.getAllReports()
+        manager = ReportManager(this, (application as Global).database)
 
-        allReports.forEach { reportsList.add("\n" + it.toString() + "\n") }
+        allReports = manager.getAllReports()
+
+        allReports.forEach { reportsList.add( it.toString() ) }
 
         reports = findViewById<View>(R.id.listView) as ListView
         updateAdapter()
@@ -56,13 +61,30 @@ class ShowReportsActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_voice, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.command_voice -> {
+            val intent = Intent(this, CommandVoiceActivity::class.java)
+            this.startActivity(intent)
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ReportFilterActivity.REQ_CODE && resultCode == Activity.RESULT_OK) {
             filter = data?.getSerializableExtra(ReportFilterActivity.EXTRA_FILTER) as ReportFilter
-            allReports = database.filterReports(filter)
+            allReports = manager.filterReports(filter)
             reportsList = mutableListOf()
-            allReports.forEach { reportsList.add("\n" + it.toString() + "\n") }
+            allReports.forEach { reportsList.add( it.toString() ) }
             updateAdapter()
 
             toast("Resultados: " + reportsList.size)
@@ -72,11 +94,11 @@ class ShowReportsActivity : AppCompatActivity() {
     private fun showAlert(position: Int) {
         val report = allReports[position]
         val builder = AlertDialog.Builder(this)
-        builder.setTitle( report.subjectCode ).setMessage( "$report\n\n¿Desea eliminar los datos de este parte?" )
+        builder.setTitle( report.subject.code ).setMessage( "$report\n\n¿Desea eliminar los datos de este parte?" )
 
         builder.setNegativeButton("Cancelar") { _, _ -> }
         builder.setPositiveButton("Eliminar") { _, _ ->
-            if (database.removeReport(report.id)) {
+            if (manager.removeReport(report.id)) {
                 allReports.removeAt(position)
                 reportsList.removeAt(position)
                 updateAdapter()

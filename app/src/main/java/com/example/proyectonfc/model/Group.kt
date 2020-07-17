@@ -8,4 +8,6 @@ class Group (
         var classroom: String,
         var hour: String,
         var end: String
-) : Serializable
+) : Serializable {
+    constructor(): this("", "", "", "", "")
+}

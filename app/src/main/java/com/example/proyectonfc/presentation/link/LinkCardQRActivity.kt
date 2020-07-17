@@ -1,4 +1,4 @@
-package com.example.proyectonfc
+package com.example.proyectonfc.presentation.link
 
 import android.app.AlertDialog
 import android.content.Context
@@ -8,10 +8,9 @@ import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.proyectonfc.R
 import com.example.proyectonfc.model.Person
 import com.example.proyectonfc.model.Role
-import com.example.proyectonfc.presentation.link.LinkBiometricPromptActivity
-import com.example.proyectonfc.presentation.link.LinkCardNfcActivity
 import com.example.proyectonfc.presentation.CaptureActivityPortrait
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_link_card_qr.*
@@ -23,7 +22,6 @@ const val BASE_URL = "https://www.upv.es/pls/oalu/sic_tui.inicio?p_tui="
 const val END_URL = "&P_IDIOMA=c"
 
 const val MEME_URL = "https://ih1.redbubble.net/image.805673899.5571/flat,128x128,075,t.u8.jpg"
-const val QR_CODE_EXAMPLE = "Ojalá vivas tiempos interesantes"
 
 class LinkCardQRActivity : AppCompatActivity() {
 
@@ -54,12 +52,13 @@ class LinkCardQRActivity : AppCompatActivity() {
         if (result.contents == null) {
             toast("Escaneo cancelado")
         } else {
+
             val strParts = result.contents.split("/".toRegex()).toTypedArray()
             val scanned = strParts[strParts.size - 1]
 
             if (!isNetworkAvailable()) {
                 toast("Se necesita acceso a internet")
-            } else if (scanned == QR_CODE_EXAMPLE) {
+            } else if (result.contents == MEME_URL) {
                 webView ().loadUrl(MEME_URL)
             } else {
                 getWebsiteInfo(BASE_URL + scanned + END_URL)
@@ -104,13 +103,7 @@ class LinkCardQRActivity : AppCompatActivity() {
                 alertDialog.dismiss()
 
                 if (loaded) {
-                    val cl = if (person.isStudent()) {
-                        LinkCardNfcActivity::class.java
-                    } else {
-                        LinkBiometricPromptActivity::class.java
-                    }
-
-                    val intent = Intent(this, cl)
+                    val intent = Intent(this, LinkCardNfcActivity::class.java)
                     intent.putExtra(Person.CARD_INFO, person)
                     startActivity(intent)
                 }

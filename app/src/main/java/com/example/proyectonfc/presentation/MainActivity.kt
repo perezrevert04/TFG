@@ -3,11 +3,12 @@ package com.example.proyectonfc.presentation
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.R
+import com.example.proyectonfc.use_cases.CommandVoiceActivity
 import com.example.proyectonfc.presentation.teacher.management.ManagementActivity
 import com.example.proyectonfc.presentation.teacher.report.AsignaturasProfesor
 import com.example.proyectonfc.use_cases.ManagePermissions
@@ -15,16 +16,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var permissions: ManagePermissions
+    private lateinit var permissions: ManagePermissions
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_main)
 
+        setSupportActionBar(findViewById(R.id.my_toolbar))
+
         permissions = ManagePermissions(this)
-        permissions.handle()
 
         buttonStart.setOnClickListener { v: View ->
             val intent = Intent(v.context, AsignaturasProfesor::class.java)
@@ -45,6 +45,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_voice, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.command_voice -> {
+            val intent = Intent(this, CommandVoiceActivity::class.java)
+            this.startActivity(intent)
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onResume() {
         super.onResume()
 
@@ -55,6 +72,11 @@ class MainActivity : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        permissions.handle()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

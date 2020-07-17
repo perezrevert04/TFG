@@ -13,8 +13,8 @@ const val WES_PERMISSION_REQUEST_CODE = 1
 const val AFL_PERMISSION_REQUEST_CODE = 2
 
 const val ALERT_TITLE = "Permitir acceso"
-const val AFL_ALERT_MSG = "Esta aplicación utiliza la ubicación para poder realizar el fichaje de smartphone a smartphone."
-const val WES_ALERT_MSG = "Esta aplicación utiliza el sistema de almacenamiento del dispositivo para realizar algunas de sus funciones."
+const val AFL_ALERT_MSG = "Esta aplicación necesita acceder a la ubicación para poder realizar el fichaje de smartphone a smartphone."
+const val WES_ALERT_MSG = "Esta aplicación necesita acceder al sistema de almacenamiento del dispositivo para realizar algunas de sus funciones."
 
 class ManagePermissions( private val activity: Activity ) {
 
@@ -57,6 +57,5 @@ class ManagePermissions( private val activity: Activity ) {
         intent.addCategory(Intent.CATEGORY_DEFAULT)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         activity.startActivity(intent)
-        activity.finish()
     }
 }

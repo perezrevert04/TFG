@@ -56,7 +56,7 @@ class ReportFilterActivity : AppCompatActivity() {
     }
 
     private fun updateInput() {
-        val sdf = SimpleDateFormat("dd/MM/yyyy")
+        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale("es", "ES"))
         editTextDate.setText(sdf.format(calendar.time))
     }
 

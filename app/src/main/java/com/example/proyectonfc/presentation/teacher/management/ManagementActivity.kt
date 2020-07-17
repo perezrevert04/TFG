@@ -2,10 +2,13 @@ package com.example.proyectonfc.presentation.teacher.management
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
+import com.example.proyectonfc.use_cases.CommandVoiceActivity
 import com.example.proyectonfc.model.Person
 import com.example.proyectonfc.presentation.teacher.management.consults.ShowReportsActivity
 import com.example.proyectonfc.presentation.teacher.management.subjects.Configuracion
@@ -36,4 +39,22 @@ class ManagementActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_voice, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.command_voice -> {
+            val intent = Intent(this, CommandVoiceActivity::class.java)
+            this.startActivity(intent)
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
+    }
+
 }

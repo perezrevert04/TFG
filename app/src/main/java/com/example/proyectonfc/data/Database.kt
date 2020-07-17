@@ -5,10 +5,7 @@ import android.content.Context
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.example.proyectonfc.model.Person
-import com.example.proyectonfc.model.Report
-import com.example.proyectonfc.model.ReportFilter
-import com.example.proyectonfc.model.Role
+import com.example.proyectonfc.model.*
 
 const val DATABASE_NAME = "DATABASE_UPV.db"
 const val DATABASE_VERSION = 1
@@ -73,19 +70,23 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
     override fun addReport(report: Report): Boolean {
         val values = ContentValues().apply {
-            put("teacher", report.teacher)
-            put("subject_code", report.subjectCode)
-            put("subject_name", report.subjectName)
-            put("class", report.group)
-            put("classroom", report.classroom)
+            put("id", report.id)
             put("date", report.date)
-            put("hour", report.hour)
-            put("duration", report.duration)
-            put("attendance", report.attendance)
             put("comments", report.comments)
+            put("attendance", report.attendance)
+            put("subject_code", report.subject.code)
+            put("subject_name", report.subject.name)
+            put("subject_degree", report.subject.degree)
+            put("subject_school_year", report.subject.schoolYear)
+            put("subject_department", report.subject.department)
+            put("subject_language", report.subject.language)
+            put("subject_duration", report.subject.duration)
+            put("classroom", report.classroom)
+            put("group_name", report.group)
+            put("hour", report.hour)
         }
 
-        return writableDatabase.insert(TABLE_REPORT, null, values) > -1
+        return writableDatabase.insert(TABLE_REPORT, null, values) > 0
     }
 
     override fun getReportById(id: String): Report {
@@ -93,17 +94,21 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         cursor.moveToFirst()
 
         val report = Report()
-        report.id = cursor.getInt(0)
-        report.teacher = cursor.getString(1)
-        report.subjectCode = cursor.getString(2)
-        report.subjectName = cursor.getString(3)
-        report.group = cursor.getString(4)
-        report.classroom = cursor.getString(5)
-        report.date = cursor.getString(6)
-        report.hour = cursor.getString(7)
-        report.duration = cursor.getString(8)
-        report.attendance = cursor.getInt(9)
-        report.comments = cursor.getString(10)
+
+        report.id = cursor.getString(0)
+        report.date = cursor.getString(1)
+        report.comments = cursor.getString(2)
+        report.attendance = cursor.getInt(3)
+        report.subject.code = cursor.getString(4)
+        report.subject.name = cursor.getString(5)
+        report.subject.degree = cursor.getString(6)
+        report.subject.schoolYear = cursor.getString(7)
+        report.subject.department = cursor.getString(8)
+        report.subject.language = cursor.getString(9)
+        report.subject.duration = cursor.getString(10)
+        report.classroom = cursor.getString(11)
+        report.group = cursor.getString(12)
+        report.hour = cursor.getString(13)
 
         cursor.close()
 
@@ -119,17 +124,20 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         while (cursor.moveToNext()) {
             report = Report()
 
-            report.id = cursor.getInt(0)
-            report.teacher = cursor.getString(1)
-            report.subjectCode = cursor.getString(2)
-            report.subjectName = cursor.getString(3)
-            report.group = cursor.getString(4)
-            report.classroom = cursor.getString(5)
-            report.date = cursor.getString(6)
-            report.hour = cursor.getString(7)
-            report.duration = cursor.getString(8)
-            report.attendance = cursor.getInt(9)
-            report.comments = cursor.getString(10)
+            report.id = cursor.getString(0)
+            report.date = cursor.getString(1)
+            report.comments = cursor.getString(2)
+            report.attendance = cursor.getInt(3)
+            report.subject.code = cursor.getString(4)
+            report.subject.name = cursor.getString(5)
+            report.subject.degree = cursor.getString(6)
+            report.subject.schoolYear = cursor.getString(7)
+            report.subject.department = cursor.getString(8)
+            report.subject.language = cursor.getString(9)
+            report.subject.duration = cursor.getString(10)
+            report.classroom = cursor.getString(11)
+            report.group = cursor.getString(12)
+            report.hour = cursor.getString(13)
 
             array.add(report)
         }
@@ -145,7 +153,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         val sql = "SELECT * FROM $TABLE_REPORT " +
                 "WHERE (subject_code LiKE '%${filter.subject}%' OR " +
                 "subject_name LiKE '%${filter.subject}%') AND " +
-                "class LiKE '%${filter.group}%' AND " +
+                "group_name LiKE '%${filter.group}%' AND " +
                 "date LIKE '%${filter.date}%'"
 
         val cursor = readableDatabase.rawQuery(sql, null)
@@ -154,17 +162,20 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         while (cursor.moveToNext()) {
             report = Report()
 
-            report.id = cursor.getInt(0)
-            report.teacher = cursor.getString(1)
-            report.subjectCode = cursor.getString(2)
-            report.subjectName = cursor.getString(3)
-            report.group = cursor.getString(4)
-            report.classroom = cursor.getString(5)
-            report.date = cursor.getString(6)
-            report.hour = cursor.getString(7)
-            report.duration = cursor.getString(8)
-            report.attendance = cursor.getInt(9)
-            report.comments = cursor.getString(10)
+            report.id = cursor.getString(0)
+            report.date = cursor.getString(1)
+            report.comments = cursor.getString(2)
+            report.attendance = cursor.getInt(3)
+            report.subject.code = cursor.getString(4)
+            report.subject.name = cursor.getString(5)
+            report.subject.degree = cursor.getString(6)
+            report.subject.schoolYear = cursor.getString(7)
+            report.subject.department = cursor.getString(8)
+            report.subject.language = cursor.getString(9)
+            report.subject.duration = cursor.getString(10)
+            report.classroom = cursor.getString(11)
+            report.group = cursor.getString(12)
+            report.hour = cursor.getString(13)
 
             array.add(report)
         }
@@ -174,8 +185,8 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return array
     }
 
-    override fun removeReport(id: Int): Boolean {
-        return writableDatabase.delete(TABLE_REPORT, "_id = $id", null) > 0
+    override fun removeReport(id: String): Boolean {
+        return writableDatabase.delete(TABLE_REPORT, "id = $id", null) > 0
     }
 
     private fun createLinkedPersonTable(db: SQLiteDatabase) {
@@ -195,17 +206,20 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     private fun createReportTable(db: SQLiteDatabase) {
         db.execSQL(
                 "CREATE TABLE $TABLE_REPORT (" +
-                        "_id INTEGER PRIMARY KEY AUTOINCREMENT , " +
-                        "teacher TEXT , " +
-                        "subject_code TEXT , " +
-                        "subject_name TEXT , " +
-                        "class TEXT , " +
-                        "classroom TEXT ," +
+                        "id TEXT PRIMARY KEY , " +
                         "date TEXT , " +
-                        "hour TEXT , " +
-                        "duration TEXT ," +
+                        "comments TEXT , " +
                         "attendance INTEGER , " +
-                        "comments TEXT " +
+                        "subject_code TEXT , " +
+                        "subject_name TEXT ," +
+                        "subject_degree TEXT , " +
+                        "subject_school_year TEXT , " +
+                        "subject_department TEXT , " +
+                        "subject_language TEXT , " +
+                        "subject_duration TEXT , " +
+                        "classroom TEXT , " +
+                        "group_name TEXT ," +
+                        "hour TEXT " +
                         ")"
         )
     }
