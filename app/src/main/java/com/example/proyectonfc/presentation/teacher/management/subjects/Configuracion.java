@@ -17,6 +17,7 @@ import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
 import com.example.proyectonfc.use_cases.CommandVoiceActivity;
 import com.example.proyectonfc.presentation.MainActivity;
+import com.r0adkll.slidr.Slidr;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -62,6 +63,7 @@ public class Configuracion extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.configuracion);
+        Slidr.attach(this);
 
         dataBase = new DataBase(getApplicationContext());
         ListView asignaturas = (ListView) findViewById(R.id.listaAsignaturas);

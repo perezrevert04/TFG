@@ -51,6 +51,7 @@
             android:name=".presentation.teacher.management.ManagementActivity"
             android:label="Mis datos"
             android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Slider"
             android:parentActivityName=".presentation.MainActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -188,6 +189,7 @@
             android:label="Mis asignaturas"
             android:launchMode="singleTop"
             android:parentActivityName=".presentation.teacher.management.ManagementActivity"
+            android:theme="@style/AppTheme.Slider"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.MainActivity"
