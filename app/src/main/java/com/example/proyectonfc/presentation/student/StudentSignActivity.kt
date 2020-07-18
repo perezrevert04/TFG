@@ -16,6 +16,7 @@ import com.example.proyectonfc.util.nearby.NearbyCouple
 import com.google.android.gms.nearby.connection.Payload
 import com.google.android.gms.nearby.connection.PayloadCallback
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate
+import com.r0adkll.slidr.Slidr
 import kotlinx.android.synthetic.main.activity_student_sign.*
 import org.jetbrains.anko.toast
 import java.nio.charset.StandardCharsets
@@ -35,6 +36,7 @@ class StudentSignActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_sign)
+        Slidr.attach(this)
 
         biometry = Biometry(this, title = "Autenticación", subtitle = "Ficha con tu huella.")
 

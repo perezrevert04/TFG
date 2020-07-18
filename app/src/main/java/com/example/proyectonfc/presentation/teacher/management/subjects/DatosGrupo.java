@@ -15,6 +15,7 @@ import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
 import com.example.proyectonfc.use_cases.CommandVoiceActivity;
 import com.example.proyectonfc.model.Group;
+import com.r0adkll.slidr.Slidr;
 
 public class DatosGrupo extends AppCompatActivity {
 
@@ -49,6 +50,7 @@ public class DatosGrupo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datos_grupo);
+        Slidr.attach(this);
 
         dataBase = new DataBase(getApplicationContext());
 

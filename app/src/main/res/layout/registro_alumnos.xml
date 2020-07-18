@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.teacher.report.RegistroAlumnos"
+    android:background="@color/background_material_light"
     tools:ignore="MissingDefaultResource">
 
     <TextView

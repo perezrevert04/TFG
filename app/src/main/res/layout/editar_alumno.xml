@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
+    android:background="@color/background_material_light"
     tools:context=".presentation.teacher.management.subjects.EditarAlumno">
 
     <Button

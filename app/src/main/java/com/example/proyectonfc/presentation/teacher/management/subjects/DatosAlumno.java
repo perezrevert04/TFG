@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
 import com.example.proyectonfc.use_cases.CommandVoiceActivity;
+import com.r0adkll.slidr.Slidr;
 
 public class DatosAlumno extends AppCompatActivity {
 
@@ -41,6 +42,7 @@ public class DatosAlumno extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datos_alumno);
+        Slidr.attach(this);
 
         dataBase = new DataBase(getApplicationContext());
 

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.Global
 import com.example.proyectonfc.R
 import com.example.proyectonfc.model.Person
+import com.r0adkll.slidr.Slidr
 import kotlinx.android.synthetic.main.activity_manage_student_data.*
 
 class ManageStudentDataActivity : AppCompatActivity() {
@@ -14,6 +15,7 @@ class ManageStudentDataActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_student_data)
+        Slidr.attach(this)
 
         this.textViewRole3.text = linked.role.role
         this.textViewStudentIdentifier3.text = linked.identifier
