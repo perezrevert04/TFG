@@ -45,6 +45,7 @@
         <activity
             android:name=".presentation.teacher.management.subjects.SubjectDataActivity"
             android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Slider"
             android:parentActivityName=".presentation.teacher.management.subjects.Configuracion"
             android:screenOrientation="portrait" />
         <activity
