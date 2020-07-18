@@ -17,6 +17,7 @@ import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
 import com.example.proyectonfc.use_cases.CommandVoiceActivity;
 import com.example.proyectonfc.model.Grupo;
+import com.r0adkll.slidr.Slidr;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -57,6 +58,7 @@ public class Grupos extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.grupos);
+        Slidr.attach(this);
 
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
         setTitle("Grupos de " + asignatura);

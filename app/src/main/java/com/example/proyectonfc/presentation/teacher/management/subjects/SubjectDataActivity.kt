@@ -8,8 +8,9 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.R
 import com.example.proyectonfc.db.DataBase
-import com.example.proyectonfc.use_cases.CommandVoiceActivity
 import com.example.proyectonfc.model.Subject
+import com.example.proyectonfc.use_cases.CommandVoiceActivity
+import com.r0adkll.slidr.Slidr
 import kotlinx.android.synthetic.main.activity_subject_data.*
 
 class SubjectDataActivity : AppCompatActivity() {
@@ -20,6 +21,7 @@ class SubjectDataActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_subject_data)
+        Slidr.attach(this)
 
         code = intent.getStringExtra("ASIGNATURA")
         title = code

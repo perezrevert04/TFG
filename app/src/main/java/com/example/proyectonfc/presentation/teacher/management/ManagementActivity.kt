@@ -12,6 +12,7 @@ import com.example.proyectonfc.use_cases.CommandVoiceActivity
 import com.example.proyectonfc.model.Person
 import com.example.proyectonfc.presentation.teacher.management.consults.ShowReportsActivity
 import com.example.proyectonfc.presentation.teacher.management.subjects.Configuracion
+import com.r0adkll.slidr.Slidr
 import kotlinx.android.synthetic.main.activity_management.*
 
 class ManagementActivity : AppCompatActivity() {
@@ -21,6 +22,7 @@ class ManagementActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_management)
+        Slidr.attach(this)
 
         textViewRoleTeacher.text = linked.role.role
         textViewTeacherName.text = linked.name

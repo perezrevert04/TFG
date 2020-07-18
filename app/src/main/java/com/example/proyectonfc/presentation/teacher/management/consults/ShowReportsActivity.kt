@@ -17,6 +17,7 @@ import com.example.proyectonfc.use_cases.CommandVoiceActivity
 import com.example.proyectonfc.logic.ReportManager
 import com.example.proyectonfc.model.Report
 import com.example.proyectonfc.model.ReportFilter
+import com.r0adkll.slidr.Slidr
 import kotlinx.android.synthetic.main.activity_show_reports.*
 import org.jetbrains.anko.toast
 
@@ -33,6 +34,7 @@ class ShowReportsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_reports)
+        Slidr.attach(this)
 
         manager = ReportManager(this, (application as Global).database)
 

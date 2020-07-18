@@ -17,6 +17,7 @@ import com.example.proyectonfc.model.Report
 import com.example.proyectonfc.model.Student
 import com.example.proyectonfc.presentation.teacher.report.AttendanceActivity
 import com.example.proyectonfc.use_cases.CommandVoice
+import com.r0adkll.slidr.Slidr
 import kotlinx.android.synthetic.main.activity_report_data.*
 import org.apache.commons.text.similarity.JaroWinklerSimilarity
 import org.jetbrains.anko.toast
@@ -33,6 +34,7 @@ class ReportDataActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_report_data)
+        Slidr.attach(this)
 
         report = intent.getSerializableExtra(EXTRA_REPORT) as Report
         manager = ReportManager(this, (application as Global).database)

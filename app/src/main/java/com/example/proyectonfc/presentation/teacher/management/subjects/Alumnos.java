@@ -14,9 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.proyectonfc.R;
 import com.example.proyectonfc.db.DataBase;
-import com.example.proyectonfc.use_cases.CommandVoiceActivity;
 import com.example.proyectonfc.model.Alumno;
+import com.example.proyectonfc.use_cases.CommandVoiceActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.r0adkll.slidr.Slidr;
 
 import java.util.ArrayList;
 
@@ -40,6 +41,7 @@ public class Alumnos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alumnos);
+        Slidr.attach(this);
 
         asignatura = getIntent().getStringExtra( "ASIGNATURA");
         dataBase = new DataBase(getApplicationContext());
