@@ -80,6 +80,7 @@
         <activity
             android:name=".presentation.teacher.report.AttendanceActivity"
             android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Slider"
             android:parentActivityName=".presentation.teacher.report.CreacionParte"
             android:screenOrientation="portrait" />
         <activity

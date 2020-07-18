@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectonfc.R
+import com.r0adkll.slidr.Slidr
 import kotlinx.android.synthetic.main.activity_attendance.*
 
 class AttendanceActivity : AppCompatActivity() {
@@ -15,6 +16,7 @@ class AttendanceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_attendance)
+        Slidr.attach(this)
 
         attendanceList = intent.getStringArrayListExtra(ATTENDANCE_LIST)
         title = "Asistentes: " + attendanceList.size
