@@ -5,7 +5,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- Transition between activities -->
         <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
+
+        <!-- Swipe back -->
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
@@ -21,7 +25,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!-- Fullscreen activity -->
         <item name="android:windowFullscreen">true</item>
+        <!-- Transition between activities -->
         <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
     </style>
 
