@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Alumnos" >
+    android:background="@color/background_material_light"
+    tools:context=".presentation.teacher.management.subjects.Alumnos" >
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddStudent"

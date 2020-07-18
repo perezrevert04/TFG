@@ -83,6 +83,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.management.consults.ReportDataActivity"
+            android:theme="@style/AppTheme.Slider"
             android:parentActivityName=".presentation.teacher.management.consults.ShowReportsActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -94,6 +95,7 @@
         <activity
             android:name=".presentation.teacher.management.consults.ShowReportsActivity"
             android:label="Consultar partes"
+            android:theme="@style/AppTheme.Slider"
             android:launchMode="singleTop"
             android:parentActivityName=".presentation.teacher.management.ManagementActivity"
             android:screenOrientation="portrait" />
@@ -134,12 +136,14 @@
         <activity
             android:name=".presentation.teacher.management.subjects.DatosGrupo"
             android:label="Datos Grupo"
+            android:theme="@style/AppTheme.Slider"
             android:launchMode="singleTop"
             android:parentActivityName=".presentation.teacher.management.subjects.Grupos"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.management.subjects.Grupos"
             android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Slider"
             android:parentActivityName=".presentation.teacher.management.subjects.SubjectDataActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -152,12 +156,14 @@
             android:name=".presentation.teacher.report.DatosAsignaturaNormal"
             android:label="Datos de la clase"
             android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Slider"
             android:parentActivityName=".presentation.teacher.report.AsignaturasProfesor"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.teacher.report.AsignaturasProfesor"
             android:label="Seleccionar asignatura"
             android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Slider"
             android:parentActivityName=".presentation.MainActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -175,6 +181,7 @@
         <activity
             android:name=".presentation.teacher.management.subjects.DatosAlumno"
             android:label="Datos Alumno"
+            android:theme="@style/AppTheme.Slider"
             android:launchMode="singleTop"
             android:parentActivityName=".presentation.teacher.management.subjects.Alumnos"
             android:screenOrientation="portrait" />
@@ -182,6 +189,7 @@
             android:name=".presentation.teacher.management.subjects.Alumnos"
             android:label="Alumnos Asignatura"
             android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Slider"
             android:parentActivityName=".presentation.teacher.management.subjects.SubjectDataActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -19,6 +19,7 @@ import com.example.proyectonfc.model.Report;
 import com.example.proyectonfc.model.Subject;
 import com.example.proyectonfc.use_cases.CommandVoiceActivity;
 import com.example.proyectonfc.util.biometric.Biometry;
+import com.r0adkll.slidr.Slidr;
 
 public class DatosAsignaturaNormal extends AppCompatActivity {
 
@@ -42,6 +43,7 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datos_asignatura_normal);
+        Slidr.attach(this);
 
         biometry = new Biometry(this, "Autenticación", "Autenticación biométrica para iniciar el parte");
         dataBase = ((Global) getApplication()).getOldDatabase();
