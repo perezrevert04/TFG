@@ -111,11 +111,11 @@ public class DataBase extends SQLiteOpenHelper {
 
             String id, dni, name;
             while (cursor.moveToNext()) {
-                 id = cursor.getString(0);
+                 id = cursor.getString(0).replace(code, "");
                  dni = cursor.getString(1);
                  name = cursor.getString(2);
 
-                 map.put(id, new Student(id, dni, name));
+                 map.put(code + id, new Student(id, dni, name));
             }
         }
 
