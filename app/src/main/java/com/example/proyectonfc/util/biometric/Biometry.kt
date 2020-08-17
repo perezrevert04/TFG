@@ -5,7 +5,6 @@ import android.widget.Toast
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
-import java.util.concurrent.Executor
 
 class Biometry(
         val context: Context,
@@ -13,12 +12,11 @@ class Biometry(
         var subtitle: String = "Use su huella para identificarse."
 ) {
 
-    private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
     private fun prepareBiometry(facial: Boolean = false, method: () -> Unit) {
-        executor = ContextCompat.getMainExecutor(context)
+        val executor = ContextCompat.getMainExecutor(context)
         biometricPrompt = BiometricPrompt(context as FragmentActivity, executor, object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)
