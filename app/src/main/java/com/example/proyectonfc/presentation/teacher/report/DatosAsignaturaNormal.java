@@ -65,7 +65,7 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
 
         Button buttonStart = findViewById(R.id.buttonStart);
         buttonStart.setOnClickListener( view -> {
-            biometry.authenticate( () -> {
+            biometry.authenticate(true, () -> {
                 startReport();
                 return null;
             });

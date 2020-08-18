@@ -12,12 +12,11 @@ class Biometry(
         var subtitle: String = "Use su huella para identificarse."
 ) {
 
-    private lateinit var biometricPrompt: BiometricPrompt
-    private lateinit var promptInfo: BiometricPrompt.PromptInfo
+    fun authenticate(facial: Boolean = false, method: () -> Unit) {
 
-    private fun prepareBiometry(facial: Boolean = false, method: () -> Unit) {
         val executor = ContextCompat.getMainExecutor(context)
-        biometricPrompt = BiometricPrompt(context as FragmentActivity, executor, object : BiometricPrompt.AuthenticationCallback() {
+
+        val biometricPrompt = BiometricPrompt(context as FragmentActivity, executor, object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)
                 toast("Authentication error: $errString")
@@ -34,16 +33,13 @@ class Biometry(
             }
         })
 
-        promptInfo = BiometricPrompt.PromptInfo.Builder()
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
                 .setTitle(title)
                 .setSubtitle(subtitle)
                 .setConfirmationRequired(!facial)
                 .setDeviceCredentialAllowed(true)
                 .build()
-    }
 
-    fun authenticate(method: () -> Unit) {
-        prepareBiometry { method() }
         biometricPrompt.authenticate(promptInfo)
     }
 
