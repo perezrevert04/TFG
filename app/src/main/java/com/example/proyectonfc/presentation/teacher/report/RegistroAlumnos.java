@@ -164,14 +164,12 @@ public class RegistroAlumnos extends AppCompatActivity {
 
         builder.setNegativeButton("No", (dialog, which) -> {});
         builder.setPositiveButton("Sí", (dialog, which) -> {
-            biometry.authenticate(false, () -> {
-                advertise.stop();
-                open = false;
-                onBackPressed();
-                finish();
-                return null;
-            });
+            advertise.stop();
+            open = false;
+            onBackPressed();
+            finish();
         });
+
         AlertDialog dialog = builder.create();
         dialog.show();
     }

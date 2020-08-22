@@ -25,7 +25,8 @@ class MainStudentActivity : AppCompatActivity() {
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         return if (keyCode == KeyEvent.KEYCODE_BACK) {
-            false
+            finishAffinity()
+            true
         } else {
             return super.onKeyDown(keyCode, event)
         }

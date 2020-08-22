@@ -83,13 +83,13 @@ public class Advertise implements NearbyInterface {
                     Log.d(NearbyInterface.LOG, "¡SE HA CONECTADO!");
                     break;
                 case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
-                    Log.d(NearbyInterface.LOG, "he connection was rejected by one or both sides.");
+                    Log.d(NearbyInterface.LOG, "The connection was rejected by one or both sides.");
                     break;
                 case ConnectionsStatusCodes.STATUS_ERROR:
-                    Log.d(NearbyInterface.LOG, "he connection broke before it was able to be accepted.");
+                    Log.d(NearbyInterface.LOG, "The connection broke before it was able to be accepted.");
                     break;
                 default:
-                    Log.d(NearbyInterface.LOG, "nknown status code");
+                    Log.d(NearbyInterface.LOG, "Unknown status code");
             }
         }
 
