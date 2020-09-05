@@ -14,24 +14,11 @@ class Biometry(
 
     fun authenticate(facial: Boolean = false, method: () -> Unit) {
 
-        val executor = ContextCompat.getMainExecutor(context)
-
-        val biometricPrompt = BiometricPrompt(context as FragmentActivity, executor, object : BiometricPrompt.AuthenticationCallback() {
-            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                super.onAuthenticationError(errorCode, errString)
-                toast("Authentication error: $errString")
-            }
-
-            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                super.onAuthenticationSucceeded(result)
-                method()
-            }
-
-            override fun onAuthenticationFailed() {
-                super.onAuthenticationFailed()
-                toast("Authentication failed")
-            }
-        })
+        val biometricPrompt = BiometricPrompt(
+                context as FragmentActivity, // fragmentActivity
+                ContextCompat.getMainExecutor(context), // executor
+                callback(method) // authenticationCallback
+        )
 
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
                 .setTitle(title)
@@ -41,6 +28,29 @@ class Biometry(
                 .build()
 
         biometricPrompt.authenticate(promptInfo)
+    }
+
+    private fun callback(method: () -> Unit) : BiometricPrompt.AuthenticationCallback {
+        return object : BiometricPrompt.AuthenticationCallback() {
+            override fun onAuthenticationError(
+                    errorCode: Int, errString: CharSequence
+            ) {
+                super.onAuthenticationError(errorCode, errString)
+                toast("Error de autenticación: $errString")
+            }
+
+            override fun onAuthenticationSucceeded(
+                    result: BiometricPrompt.AuthenticationResult
+            ) {
+                super.onAuthenticationSucceeded(result)
+                method()
+            }
+
+            override fun onAuthenticationFailed() {
+                super.onAuthenticationFailed()
+                toast("Autenticación fallida")
+            }
+        }
     }
 
     private fun toast(text: String) {
