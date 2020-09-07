@@ -74,7 +74,7 @@ public class DatosAsignaturaNormal extends AppCompatActivity {
     }
 
     private void startReport() {
-        Intent intent = new Intent(this, RegistroAlumnos.class);
+        Intent intent = new Intent(this, TeacherSignActivity.class);
 
         subject.setLanguage( editTextLanguage.getText().toString() );
         subject.setDuration( editTextDuration.getText().toString() );

@@ -47,7 +47,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RegistroAlumnos extends AppCompatActivity {
+public class TeacherSignActivity extends AppCompatActivity {
 
     private Advertise advertise;
 

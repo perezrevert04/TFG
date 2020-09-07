@@ -123,7 +123,7 @@
             android:name=".presentation.teacher.report.CreacionParte"
             android:label="Datos del parte"
             android:launchMode="singleTop"
-            android:parentActivityName=".presentation.teacher.report.RegistroAlumnos"
+            android:parentActivityName=".presentation.teacher.report.TeacherSignActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.CaptureActivityPortrait"
@@ -142,7 +142,7 @@
             android:parentActivityName=".presentation.teacher.management.subjects.SubjectDataActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".presentation.teacher.report.RegistroAlumnos"
+            android:name=".presentation.teacher.report.TeacherSignActivity"
             android:label="Registro Alumnos"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
