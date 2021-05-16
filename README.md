@@ -10,4 +10,5 @@ teléfono inteligente. La aplicación tiene dos vistas independientes:
 - Vista alumno: permite a los alumnos fichar desde su propio teléfono inteligente. 
 
 **La nota obtenida en este trabajo fue Matrícula de Honor (10).**
+
 Se puede consultar en: https://riunet.upv.es/handle/10251/151246.
